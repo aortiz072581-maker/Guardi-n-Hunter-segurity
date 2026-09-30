@@ -96,33 +96,74 @@ def find_subdomains(domain):
             "errors": [str(exc)],
         }
 
-
 def run_hunt(domain, official_assets=None, asset_manager=None):
     """
     Hunter pasivo/autorizado.
 
-    La ejecución de red solamente ocurre cuando esta función
-    es llamada explícitamente por el operador.
+    El descubrimiento solamente puede ejecutarse cuando:
+    - run_hunt() es llamado explícitamente;
+    - el dominio es válido;
+    - el dominio está expresamente autorizado.
 
-    Asset Manager permite centralizar los assets autorizados.
+    Los activos descubiertos quedan como discovered/review.
+    Nunca se convierten automáticamente en autorizados.
     """
 
     domain = normalize_name(domain)
 
+    base_result = {
+        "domain": domain,
+        "source": "subfinder",
+        "status": "blocked",
+        "total": 0,
+        "subdomains": [],
+        "known_assets": [],
+        "review_assets": [],
+        "shadow_subdomains": [],
+        "shown_exposures": [],
+        "errors": [],
+    }
+
+    # Fail closed ante entrada inválida.
+    if not domain:
+        base_result["errors"] = [
+            "Dominio vacío o inválido."
+        ]
+        return base_result
+
+    # AssetManager es la fuente preferida de autorización.
     if asset_manager is not None:
-        authorized = asset_manager.get_authorized()
+        authorized_source = asset_manager.get_authorized()
     else:
-        authorized = official_assets or []
+        authorized_source = official_assets or []
 
     authorized = {
         normalize_name(item)
-        for item in authorized
+        for item in authorized_source
         if normalize_name(item)
     }
 
+    # IMPORTANTE:
+    # La autorización se verifica ANTES de find_subdomains().
+    # Un argumento proporcionado por el operador no equivale
+    # automáticamente a autorización.
+    if domain not in authorized:
+        base_result["errors"] = [
+            f"Dominio no autorizado para Hunter: {domain}"
+        ]
+        return base_result
+
+    # Solo llegamos aquí si el dominio está autorizado.
     result = find_subdomains(domain)
 
-    subdomains = result["subdomains"]
+    subdomains = [
+        normalize_name(item)
+        for item in result.get("subdomains", [])
+        if normalize_name(item)
+    ]
+
+    # Eliminar duplicados conservando orden.
+    subdomains = list(dict.fromkeys(subdomains))
 
     known_assets = [
         item
@@ -136,7 +177,9 @@ def run_hunt(domain, official_assets=None, asset_manager=None):
         if item not in authorized
     ]
 
-    if asset_manager is not None:
+    # Los descubrimientos se registran como discovered.
+    # NO se promueven automáticamente a authorized.
+    if asset_manager is not None and subdomains:
         asset_manager.import_discovered(
             subdomains,
             source="hunter",
@@ -145,12 +188,12 @@ def run_hunt(domain, official_assets=None, asset_manager=None):
     return {
         "domain": domain,
         "source": "subfinder",
-        "status": result["status"],
+        "status": result.get("status", "error"),
         "total": len(subdomains),
         "subdomains": subdomains,
         "known_assets": known_assets,
         "review_assets": review_assets,
         "shadow_subdomains": review_assets,
         "shown_exposures": [],
-        "errors": result["errors"],
+        "errors": result.get("errors", []),
     }

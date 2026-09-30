@@ -1,0 +1,2148 @@
+{
+  "audit_version": 5,
+  "contract_tested": 225,
+  "contract_tested_modules": [
+    "guardian_hunter.alerts",
+    "guardian_hunter.analysis.phase19_signal",
+    "guardian_hunter.assets",
+    "guardian_hunter.assurance.continuous",
+    "guardian_hunter.audit.authorization_hardening",
+    "guardian_hunter.audit.authorization_integration_audit",
+    "guardian_hunter.audit.authorization_traceability_audit",
+    "guardian_hunter.audit.e2e_authorization_response_audit",
+    "guardian_hunter.audit.evidence_persistence_audit",
+    "guardian_hunter.audit.incident_state_recovery_audit",
+    "guardian_hunter.audit.phase18_interface_audit",
+    "guardian_hunter.audit.phase46",
+    "guardian_hunter.audit.self_integrity_audit",
+    "guardian_hunter.audit.tamper_detection_audit",
+    "guardian_hunter.audit.trail",
+    "guardian_hunter.authorization.contract",
+    "guardian_hunter.authorization.decision_response_adapter",
+    "guardian_hunter.authorization.phase18_bridge",
+    "guardian_hunter.baseline.phase47",
+    "guardian_hunter.cases.manager",
+    "guardian_hunter.commercial.phase161",
+    "guardian_hunter.commercial.phase162",
+    "guardian_hunter.commercial.phase163",
+    "guardian_hunter.commercial.phase164",
+    "guardian_hunter.commercial.phase165",
+    "guardian_hunter.commercial.phase166",
+    "guardian_hunter.commercial.phase167",
+    "guardian_hunter.commercial.phase168",
+    "guardian_hunter.commercial.phase169",
+    "guardian_hunter.commercial.phase170",
+    "guardian_hunter.compliance.phase48",
+    "guardian_hunter.correlation.advanced",
+    "guardian_hunter.correlation.network_hardware",
+    "guardian_hunter.correlation.phase19_correlation",
+    "guardian_hunter.dashboard.phase28",
+    "guardian_hunter.decision.engine",
+    "guardian_hunter.decision.phase20_context",
+    "guardian_hunter.decision.phase20_decision",
+    "guardian_hunter.delivery.phase181",
+    "guardian_hunter.delivery.phase182",
+    "guardian_hunter.delivery.phase183",
+    "guardian_hunter.delivery.phase184",
+    "guardian_hunter.delivery.phase185",
+    "guardian_hunter.delivery.phase186",
+    "guardian_hunter.delivery.phase187",
+    "guardian_hunter.delivery.phase188",
+    "guardian_hunter.delivery.phase189",
+    "guardian_hunter.delivery.phase190",
+    "guardian_hunter.due_diligence.dependency_inventory",
+    "guardian_hunter.email.phase126",
+    "guardian_hunter.email.phase127_130",
+    "guardian_hunter.email.phase131_134",
+    "guardian_hunter.evidence.incident",
+    "guardian_hunter.evidence.persistence",
+    "guardian_hunter.evidence.store",
+    "guardian_hunter.finalization.phase49",
+    "guardian_hunter.finalization.phase50",
+    "guardian_hunter.governance.phase101_response_audit",
+    "guardian_hunter.governance.phase102_response_final",
+    "guardian_hunter.governance.phase103_response_system",
+    "guardian_hunter.governance.phase105_response_release",
+    "guardian_hunter.governance.phase106_response_continuity",
+    "guardian_hunter.governance.phase107_response_assurance",
+    "guardian_hunter.governance.phase109_response_review",
+    "guardian_hunter.governance.phase110_response_readiness",
+    "guardian_hunter.governance.phase111_response_governance",
+    "guardian_hunter.governance.phase113_response_audit",
+    "guardian_hunter.governance.phase114_response_gate",
+    "guardian_hunter.governance.phase115_state_snapshot",
+    "guardian_hunter.governance.phase117_safety_invariants",
+    "guardian_hunter.governance.phase118_master_gate",
+    "guardian_hunter.governance.phase120_tamper_gate",
+    "guardian_hunter.governance.phase122_release_gate",
+    "guardian_hunter.governance.phase123_baseline",
+    "guardian_hunter.governance.phase125_policy_lock",
+    "guardian_hunter.governance.phase126_continuity_gate",
+    "guardian_hunter.governance.phase127_attestation",
+    "guardian_hunter.governance.phase129_consistency_lock",
+    "guardian_hunter.governance.phase130_master_gate",
+    "guardian_hunter.governance.phase131_master_handoff",
+    "guardian_hunter.governance.phase133_continuity_lock",
+    "guardian_hunter.governance.phase134_master_gate",
+    "guardian_hunter.governance.phase31_governance",
+    "guardian_hunter.governance.phase34_release",
+    "guardian_hunter.governance.phase35_controls",
+    "guardian_hunter.governance.phase37_continuity",
+    "guardian_hunter.governance.phase38_operations",
+    "guardian_hunter.governance.phase39_posture",
+    "guardian_hunter.governance.phase40_decision",
+    "guardian_hunter.governance.phase41_audit",
+    "guardian_hunter.governance.phase42_readiness",
+    "guardian_hunter.governance.phase51_control_snapshot",
+    "guardian_hunter.governance.phase53_state_gate",
+    "guardian_hunter.governance.phase54_continuity",
+    "guardian_hunter.governance.phase55_evidence_continuity",
+    "guardian_hunter.governance.phase57_recovery_gate",
+    "guardian_hunter.governance.phase58_operational_readiness",
+    "guardian_hunter.governance.phase59_incident_continuity",
+    "guardian_hunter.governance.phase61_consolidation",
+    "guardian_hunter.governance.phase62_system_readiness",
+    "guardian_hunter.governance.phase63_threat_continuity",
+    "guardian_hunter.governance.phase65_decision_continuity",
+    "guardian_hunter.governance.phase66_response_gate",
+    "guardian_hunter.governance.phase67_traceability",
+    "guardian_hunter.governance.phase69_assurance",
+    "guardian_hunter.governance.phase70_closure",
+    "guardian_hunter.governance.phase71_baseline_continuity",
+    "guardian_hunter.governance.phase73_final_review",
+    "guardian_hunter.governance.phase74_monitoring_readiness",
+    "guardian_hunter.governance.phase75_evidence_readiness",
+    "guardian_hunter.governance.phase77_incident_review",
+    "guardian_hunter.governance.phase78_observability",
+    "guardian_hunter.governance.phase79_telemetry_continuity",
+    "guardian_hunter.governance.phase81_monitoring_review",
+    "guardian_hunter.governance.phase82_continuous_readiness",
+    "guardian_hunter.governance.phase83_signal_continuity",
+    "guardian_hunter.governance.phase85_decision_review",
+    "guardian_hunter.governance.phase86_decision_continuity",
+    "guardian_hunter.governance.phase87_response_review",
+    "guardian_hunter.governance.phase89_response_assurance",
+    "guardian_hunter.governance.phase90_response_continuity",
+    "guardian_hunter.governance.phase91_response_supervision",
+    "guardian_hunter.governance.phase93_response_assurance",
+    "guardian_hunter.governance.phase94_response_operational_continuity",
+    "guardian_hunter.governance.phase95_response_governance",
+    "guardian_hunter.governance.phase97_response_release",
+    "guardian_hunter.governance.phase98_response_readiness",
+    "guardian_hunter.governance.phase99_response_control",
+    "guardian_hunter.governance.response",
+    "guardian_hunter.hardening.phase20",
+    "guardian_hunter.hardening.phase21",
+    "guardian_hunter.hardening.phase26",
+    "guardian_hunter.health.monitor",
+    "guardian_hunter.incident.lifecycle",
+    "guardian_hunter.incident.state",
+    "guardian_hunter.incident_intel.context",
+    "guardian_hunter.integration",
+    "guardian_hunter.integrity.self_integrity",
+    "guardian_hunter.intelligence",
+    "guardian_hunter.metrics.security",
+    "guardian_hunter.network.defense",
+    "guardian_hunter.network.phase18_anomaly",
+    "guardian_hunter.network.phase18_baseline",
+    "guardian_hunter.network.phase18_case_bridge",
+    "guardian_hunter.network.phase18_connection",
+    "guardian_hunter.network.phase18_containment",
+    "guardian_hunter.network.phase18_correlation",
+    "guardian_hunter.network.phase18_decision",
+    "guardian_hunter.network.phase18_diff",
+    "guardian_hunter.network.phase18_dns",
+    "guardian_hunter.network.phase18_evidence",
+    "guardian_hunter.network.phase18_final",
+    "guardian_hunter.network.phase18_integration",
+    "guardian_hunter.network.phase18_listener",
+    "guardian_hunter.network.phase18_recovery",
+    "guardian_hunter.network.phase18_regression",
+    "guardian_hunter.network.phase18_remediation",
+    "guardian_hunter.network.phase18_response_gate",
+    "guardian_hunter.network.phase18_risk",
+    "guardian_hunter.network.phase18_snapshot",
+    "guardian_hunter.network.phase18_timeline",
+    "guardian_hunter.normalizer",
+    "guardian_hunter.omniroute.phase135_138_preflight",
+    "guardian_hunter.pipeline",
+    "guardian_hunter.policy.guard",
+    "guardian_hunter.product.api_contract",
+    "guardian_hunter.product.buyer_readiness",
+    "guardian_hunter.product.demo",
+    "guardian_hunter.product.metrics",
+    "guardian_hunter.product.readiness",
+    "guardian_hunter.readiness.assessment",
+    "guardian_hunter.recovery.planner",
+    "guardian_hunter.release.phase171",
+    "guardian_hunter.release.phase172",
+    "guardian_hunter.release.phase173",
+    "guardian_hunter.release.phase174",
+    "guardian_hunter.release.phase175",
+    "guardian_hunter.release.phase176",
+    "guardian_hunter.release.phase177",
+    "guardian_hunter.release.phase178",
+    "guardian_hunter.release.phase179",
+    "guardian_hunter.release.phase180",
+    "guardian_hunter.release.release_manifest",
+    "guardian_hunter.release.release_readiness",
+    "guardian_hunter.release.test_evidence",
+    "guardian_hunter.reports",
+    "guardian_hunter.reports.phase29",
+    "guardian_hunter.response",
+    "guardian_hunter.response.phase19",
+    "guardian_hunter.response.phase21_orchestrator",
+    "guardian_hunter.response.phase22_consolidation",
+    "guardian_hunter.response.phase25",
+    "guardian_hunter.risk",
+    "guardian_hunter.risk_analytics.engine",
+    "guardian_hunter.runtime.node_runtime",
+    "guardian_hunter.simulation.safe",
+    "guardian_hunter.soc.operations",
+    "guardian_hunter.tamper.detection",
+    "guardian_hunter.threatintel.fusion",
+    "guardian_hunter.validation.controls",
+    "guardian_hunter.verification.phase100_response_evidence",
+    "guardian_hunter.verification.phase104_response_system_integrity",
+    "guardian_hunter.verification.phase108_response_traceability",
+    "guardian_hunter.verification.phase112_response_chain",
+    "guardian_hunter.verification.phase116_continuity",
+    "guardian_hunter.verification.phase119_integrity_chain",
+    "guardian_hunter.verification.phase121_safety_consistency",
+    "guardian_hunter.verification.phase124_drift",
+    "guardian_hunter.verification.phase128_attestation_integrity",
+    "guardian_hunter.verification.phase132_handoff_integrity",
+    "guardian_hunter.verification.phase32_verification",
+    "guardian_hunter.verification.phase33_health",
+    "guardian_hunter.verification.phase36_integrity",
+    "guardian_hunter.verification.phase52_integrity_chain",
+    "guardian_hunter.verification.phase56_alert_continuity",
+    "guardian_hunter.verification.phase60_response_continuity",
+    "guardian_hunter.verification.phase64_risk_continuity",
+    "guardian_hunter.verification.phase68_recovery_continuity",
+    "guardian_hunter.verification.phase72_integrity_reconciliation",
+    "guardian_hunter.verification.phase76_alert_reconciliation",
+    "guardian_hunter.verification.phase80_event_reconciliation",
+    "guardian_hunter.verification.phase84_correlation_reconciliation",
+    "guardian_hunter.verification.phase88_response_integrity",
+    "guardian_hunter.verification.phase92_response_reconciliation",
+    "guardian_hunter.verification.phase96_response_chain"
+  ],
+  "logical_phase_map": {
+    "100": {
+      "modules": [
+        "guardian_hunter.verification.phase100_response_evidence"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "101": {
+      "modules": [
+        "guardian_hunter.governance.phase101_response_audit"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "102": {
+      "modules": [
+        "guardian_hunter.governance.phase102_response_final"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "103": {
+      "modules": [
+        "guardian_hunter.governance.phase103_response_system"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "104": {
+      "modules": [
+        "guardian_hunter.verification.phase104_response_system_integrity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "105": {
+      "modules": [
+        "guardian_hunter.governance.phase105_response_release"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "106": {
+      "modules": [
+        "guardian_hunter.governance.phase106_response_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "107": {
+      "modules": [
+        "guardian_hunter.governance.phase107_response_assurance"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "108": {
+      "modules": [
+        "guardian_hunter.verification.phase108_response_traceability"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "109": {
+      "modules": [
+        "guardian_hunter.governance.phase109_response_review"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "110": {
+      "modules": [
+        "guardian_hunter.governance.phase110_response_readiness"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "111": {
+      "modules": [
+        "guardian_hunter.governance.phase111_response_governance"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "112": {
+      "modules": [
+        "guardian_hunter.verification.phase112_response_chain"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "113": {
+      "modules": [
+        "guardian_hunter.governance.phase113_response_audit"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "114": {
+      "modules": [
+        "guardian_hunter.governance.phase114_response_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "115": {
+      "modules": [
+        "guardian_hunter.governance.phase115_state_snapshot"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "116": {
+      "modules": [
+        "guardian_hunter.verification.phase116_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "117": {
+      "modules": [
+        "guardian_hunter.governance.phase117_safety_invariants"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "118": {
+      "modules": [
+        "guardian_hunter.governance.phase118_master_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "119": {
+      "modules": [
+        "guardian_hunter.verification.phase119_integrity_chain"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "120": {
+      "modules": [
+        "guardian_hunter.governance.phase120_tamper_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "121": {
+      "modules": [
+        "guardian_hunter.verification.phase121_safety_consistency"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "122": {
+      "modules": [
+        "guardian_hunter.governance.phase122_release_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "123": {
+      "modules": [
+        "guardian_hunter.governance.phase123_baseline"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "124": {
+      "modules": [
+        "guardian_hunter.verification.phase124_drift"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "125": {
+      "modules": [
+        "guardian_hunter.governance.phase125_policy_lock"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "126": {
+      "modules": [
+        "guardian_hunter.email.phase126",
+        "guardian_hunter.governance.phase126_continuity_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "127": {
+      "modules": [
+        "guardian_hunter.email.phase127_130",
+        "guardian_hunter.governance.phase127_attestation"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "128": {
+      "modules": [
+        "guardian_hunter.email.phase127_130",
+        "guardian_hunter.verification.phase128_attestation_integrity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "129": {
+      "modules": [
+        "guardian_hunter.email.phase127_130",
+        "guardian_hunter.governance.phase129_consistency_lock"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "130": {
+      "modules": [
+        "guardian_hunter.email.phase127_130",
+        "guardian_hunter.governance.phase130_master_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "131": {
+      "modules": [
+        "guardian_hunter.email.phase131_134",
+        "guardian_hunter.governance.phase131_master_handoff"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "132": {
+      "modules": [
+        "guardian_hunter.email.phase131_134",
+        "guardian_hunter.verification.phase132_handoff_integrity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "133": {
+      "modules": [
+        "guardian_hunter.email.phase131_134",
+        "guardian_hunter.governance.phase133_continuity_lock"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "134": {
+      "modules": [
+        "guardian_hunter.email.phase131_134",
+        "guardian_hunter.governance.phase134_master_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "135": {
+      "modules": [
+        "guardian_hunter.omniroute.phase135_138_preflight"
+      ],
+      "source_kind": [
+        "physical",
+        "semantic"
+      ]
+    },
+    "136": {
+      "modules": [
+        "guardian_hunter.omniroute.phase135_138_preflight"
+      ],
+      "source_kind": [
+        "physical",
+        "semantic"
+      ]
+    },
+    "137": {
+      "modules": [
+        "guardian_hunter.omniroute.phase135_138_preflight"
+      ],
+      "source_kind": [
+        "physical",
+        "semantic"
+      ]
+    },
+    "138": {
+      "modules": [
+        "guardian_hunter.omniroute.phase135_138_preflight"
+      ],
+      "source_kind": [
+        "physical",
+        "semantic"
+      ]
+    },
+    "139": {
+      "modules": [
+        "guardian_hunter.runtime.node_runtime"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "140": {
+      "modules": [
+        "guardian_hunter.runtime.node_runtime"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "141": {
+      "modules": [
+        "guardian_hunter.runtime.node_runtime"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "142": {
+      "modules": [
+        "guardian_hunter.product.demo"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "143": {
+      "modules": [
+        "guardian_hunter.product.api_contract"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "145": {
+      "modules": [
+        "guardian_hunter.product.metrics"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "150": {
+      "modules": [
+        "guardian_hunter.product.readiness"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "151": {
+      "modules": [
+        "guardian_hunter.release.release_manifest"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "152": {
+      "modules": [
+        "guardian_hunter.due_diligence.dependency_inventory"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "153": {
+      "modules": [
+        "guardian_hunter.release.test_evidence"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "159": {
+      "modules": [
+        "guardian_hunter.release.release_readiness"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "160": {
+      "modules": [
+        "guardian_hunter.product.buyer_readiness"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "161": {
+      "modules": [
+        "guardian_hunter.commercial.phase161"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "162": {
+      "modules": [
+        "guardian_hunter.commercial.phase162"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "163": {
+      "modules": [
+        "guardian_hunter.commercial.phase163"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "164": {
+      "modules": [
+        "guardian_hunter.commercial.phase164"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "165": {
+      "modules": [
+        "guardian_hunter.commercial.phase165"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "166": {
+      "modules": [
+        "guardian_hunter.commercial.phase166"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "167": {
+      "modules": [
+        "guardian_hunter.commercial.phase167"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "168": {
+      "modules": [
+        "guardian_hunter.commercial.phase168"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "169": {
+      "modules": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "170": {
+      "modules": [
+        "guardian_hunter.commercial.phase170"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "171": {
+      "modules": [
+        "guardian_hunter.release.phase171"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "172": {
+      "modules": [
+        "guardian_hunter.release.phase172"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "173": {
+      "modules": [
+        "guardian_hunter.release.phase173"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "174": {
+      "modules": [
+        "guardian_hunter.release.phase174"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "175": {
+      "modules": [
+        "guardian_hunter.release.phase175"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "176": {
+      "modules": [
+        "guardian_hunter.release.phase176"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "177": {
+      "modules": [
+        "guardian_hunter.release.phase177"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "178": {
+      "modules": [
+        "guardian_hunter.release.phase178"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "179": {
+      "modules": [
+        "guardian_hunter.release.phase179"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "18": {
+      "modules": [
+        "guardian_hunter.audit.phase18_interface_audit",
+        "guardian_hunter.authorization.phase18_bridge",
+        "guardian_hunter.network.phase18_anomaly",
+        "guardian_hunter.network.phase18_baseline",
+        "guardian_hunter.network.phase18_case_bridge",
+        "guardian_hunter.network.phase18_connection",
+        "guardian_hunter.network.phase18_containment",
+        "guardian_hunter.network.phase18_correlation",
+        "guardian_hunter.network.phase18_decision",
+        "guardian_hunter.network.phase18_diff",
+        "guardian_hunter.network.phase18_dns",
+        "guardian_hunter.network.phase18_evidence",
+        "guardian_hunter.network.phase18_final",
+        "guardian_hunter.network.phase18_integration",
+        "guardian_hunter.network.phase18_listener",
+        "guardian_hunter.network.phase18_recovery",
+        "guardian_hunter.network.phase18_regression",
+        "guardian_hunter.network.phase18_remediation",
+        "guardian_hunter.network.phase18_response_gate",
+        "guardian_hunter.network.phase18_risk",
+        "guardian_hunter.network.phase18_snapshot",
+        "guardian_hunter.network.phase18_timeline"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "180": {
+      "modules": [
+        "guardian_hunter.release.phase180"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "181": {
+      "modules": [
+        "guardian_hunter.delivery.phase181"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "182": {
+      "modules": [
+        "guardian_hunter.delivery.phase182"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "183": {
+      "modules": [
+        "guardian_hunter.delivery.phase183"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "184": {
+      "modules": [
+        "guardian_hunter.delivery.phase184"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "185": {
+      "modules": [
+        "guardian_hunter.delivery.phase185"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "186": {
+      "modules": [
+        "guardian_hunter.delivery.phase186"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "187": {
+      "modules": [
+        "guardian_hunter.delivery.phase187"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "188": {
+      "modules": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "189": {
+      "modules": [
+        "guardian_hunter.delivery.phase189"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "19": {
+      "modules": [
+        "guardian_hunter.analysis.phase19_signal",
+        "guardian_hunter.correlation.phase19_correlation",
+        "guardian_hunter.response.phase19"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "190": {
+      "modules": [
+        "guardian_hunter.delivery.phase190"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "20": {
+      "modules": [
+        "guardian_hunter.decision.phase20_context",
+        "guardian_hunter.decision.phase20_decision",
+        "guardian_hunter.hardening.phase20"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "21": {
+      "modules": [
+        "guardian_hunter.hardening.phase21",
+        "guardian_hunter.response.phase21_orchestrator"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "22": {
+      "modules": [
+        "guardian_hunter.response.phase22_consolidation"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "23": {
+      "modules": [
+        "guardian_hunter.correlation.advanced"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "24": {
+      "modules": [
+        "guardian_hunter.evidence.incident"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "25": {
+      "modules": [
+        "guardian_hunter.response.phase25"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "26": {
+      "modules": [
+        "guardian_hunter.hardening.phase26"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "27": {
+      "modules": [
+        "guardian_hunter.health.monitor"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "28": {
+      "modules": [
+        "guardian_hunter.dashboard.phase28"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "29": {
+      "modules": [
+        "guardian_hunter.reports.phase29"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "30": {
+      "modules": [
+        "guardian_hunter.dashboard.phase28",
+        "guardian_hunter.reports.phase29"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "31": {
+      "modules": [
+        "guardian_hunter.governance.phase31_governance"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "32": {
+      "modules": [
+        "guardian_hunter.verification.phase32_verification"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "33": {
+      "modules": [
+        "guardian_hunter.verification.phase33_health"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "34": {
+      "modules": [
+        "guardian_hunter.governance.phase34_release"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "35": {
+      "modules": [
+        "guardian_hunter.governance.phase35_controls"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "36": {
+      "modules": [
+        "guardian_hunter.verification.phase36_integrity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "37": {
+      "modules": [
+        "guardian_hunter.governance.phase37_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "38": {
+      "modules": [
+        "guardian_hunter.governance.phase38_operations"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "39": {
+      "modules": [
+        "guardian_hunter.governance.phase39_posture"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "40": {
+      "modules": [
+        "guardian_hunter.governance.phase40_decision"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "41": {
+      "modules": [
+        "guardian_hunter.governance.phase41_audit"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "42": {
+      "modules": [
+        "guardian_hunter.governance.phase42_readiness"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "43": {
+      "modules": [
+        "guardian_hunter.cases.manager"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "44": {
+      "modules": [
+        "guardian_hunter.risk_analytics.engine"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "45": {
+      "modules": [
+        "guardian_hunter.readiness.assessment"
+      ],
+      "source_kind": [
+        "semantic"
+      ]
+    },
+    "46": {
+      "modules": [
+        "guardian_hunter.audit.phase46"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "47": {
+      "modules": [
+        "guardian_hunter.baseline.phase47"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "48": {
+      "modules": [
+        "guardian_hunter.compliance.phase48"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "49": {
+      "modules": [
+        "guardian_hunter.finalization.phase49"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "50": {
+      "modules": [
+        "guardian_hunter.finalization.phase50"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "51": {
+      "modules": [
+        "guardian_hunter.governance.phase51_control_snapshot"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "52": {
+      "modules": [
+        "guardian_hunter.verification.phase52_integrity_chain"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "53": {
+      "modules": [
+        "guardian_hunter.governance.phase53_state_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "54": {
+      "modules": [
+        "guardian_hunter.governance.phase54_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "55": {
+      "modules": [
+        "guardian_hunter.governance.phase55_evidence_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "56": {
+      "modules": [
+        "guardian_hunter.verification.phase56_alert_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "57": {
+      "modules": [
+        "guardian_hunter.governance.phase57_recovery_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "58": {
+      "modules": [
+        "guardian_hunter.governance.phase58_operational_readiness"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "59": {
+      "modules": [
+        "guardian_hunter.governance.phase59_incident_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "60": {
+      "modules": [
+        "guardian_hunter.verification.phase60_response_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "61": {
+      "modules": [
+        "guardian_hunter.governance.phase61_consolidation"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "62": {
+      "modules": [
+        "guardian_hunter.governance.phase62_system_readiness"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "63": {
+      "modules": [
+        "guardian_hunter.governance.phase63_threat_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "64": {
+      "modules": [
+        "guardian_hunter.verification.phase64_risk_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "65": {
+      "modules": [
+        "guardian_hunter.governance.phase65_decision_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "66": {
+      "modules": [
+        "guardian_hunter.governance.phase66_response_gate"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "67": {
+      "modules": [
+        "guardian_hunter.governance.phase67_traceability"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "68": {
+      "modules": [
+        "guardian_hunter.verification.phase68_recovery_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "69": {
+      "modules": [
+        "guardian_hunter.governance.phase69_assurance"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "70": {
+      "modules": [
+        "guardian_hunter.governance.phase70_closure"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "71": {
+      "modules": [
+        "guardian_hunter.governance.phase71_baseline_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "72": {
+      "modules": [
+        "guardian_hunter.verification.phase72_integrity_reconciliation"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "73": {
+      "modules": [
+        "guardian_hunter.governance.phase73_final_review"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "74": {
+      "modules": [
+        "guardian_hunter.governance.phase74_monitoring_readiness"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "75": {
+      "modules": [
+        "guardian_hunter.governance.phase75_evidence_readiness"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "76": {
+      "modules": [
+        "guardian_hunter.verification.phase76_alert_reconciliation"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "77": {
+      "modules": [
+        "guardian_hunter.governance.phase77_incident_review"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "78": {
+      "modules": [
+        "guardian_hunter.governance.phase78_observability"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "79": {
+      "modules": [
+        "guardian_hunter.governance.phase79_telemetry_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "80": {
+      "modules": [
+        "guardian_hunter.verification.phase80_event_reconciliation"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "81": {
+      "modules": [
+        "guardian_hunter.governance.phase81_monitoring_review"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "82": {
+      "modules": [
+        "guardian_hunter.governance.phase82_continuous_readiness"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "83": {
+      "modules": [
+        "guardian_hunter.governance.phase83_signal_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "84": {
+      "modules": [
+        "guardian_hunter.verification.phase84_correlation_reconciliation"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "85": {
+      "modules": [
+        "guardian_hunter.governance.phase85_decision_review"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "86": {
+      "modules": [
+        "guardian_hunter.governance.phase86_decision_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "87": {
+      "modules": [
+        "guardian_hunter.governance.phase87_response_review"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "88": {
+      "modules": [
+        "guardian_hunter.verification.phase88_response_integrity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "89": {
+      "modules": [
+        "guardian_hunter.governance.phase89_response_assurance"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "90": {
+      "modules": [
+        "guardian_hunter.governance.phase90_response_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "91": {
+      "modules": [
+        "guardian_hunter.governance.phase91_response_supervision"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "92": {
+      "modules": [
+        "guardian_hunter.verification.phase92_response_reconciliation"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "93": {
+      "modules": [
+        "guardian_hunter.governance.phase93_response_assurance"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "94": {
+      "modules": [
+        "guardian_hunter.governance.phase94_response_operational_continuity"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "95": {
+      "modules": [
+        "guardian_hunter.governance.phase95_response_governance"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "96": {
+      "modules": [
+        "guardian_hunter.verification.phase96_response_chain"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "97": {
+      "modules": [
+        "guardian_hunter.governance.phase97_response_release"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "98": {
+      "modules": [
+        "guardian_hunter.governance.phase98_response_readiness"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    },
+    "99": {
+      "modules": [
+        "guardian_hunter.governance.phase99_response_control"
+      ],
+      "source_kind": [
+        "physical"
+      ]
+    }
+  },
+  "logical_phase_numbers": [
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    145,
+    150,
+    151,
+    152,
+    153,
+    159,
+    160,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171,
+    172,
+    173,
+    174,
+    175,
+    176,
+    177,
+    178,
+    179,
+    180,
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    189,
+    190
+  ],
+  "orphan_candidate_modules": [],
+  "orphan_candidates": 0,
+  "package_initializer_modules": [
+    "guardian_hunter",
+    "guardian_hunter.assurance",
+    "guardian_hunter.audit",
+    "guardian_hunter.authorization",
+    "guardian_hunter.cases",
+    "guardian_hunter.config",
+    "guardian_hunter.core",
+    "guardian_hunter.dashboard",
+    "guardian_hunter.decision",
+    "guardian_hunter.email",
+    "guardian_hunter.evidence",
+    "guardian_hunter.governance",
+    "guardian_hunter.hardening",
+    "guardian_hunter.hardware",
+    "guardian_hunter.health",
+    "guardian_hunter.incident",
+    "guardian_hunter.incident_intel",
+    "guardian_hunter.metrics",
+    "guardian_hunter.network",
+    "guardian_hunter.policy",
+    "guardian_hunter.readiness",
+    "guardian_hunter.recovery",
+    "guardian_hunter.risk_analytics",
+    "guardian_hunter.runtime",
+    "guardian_hunter.simulation",
+    "guardian_hunter.soc",
+    "guardian_hunter.threatintel",
+    "guardian_hunter.utils",
+    "guardian_hunter.validation"
+  ],
+  "package_initializers": 29,
+  "physical_phase_numbers": [
+    18,
+    19,
+    20,
+    21,
+    22,
+    25,
+    26,
+    28,
+    29,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171,
+    172,
+    173,
+    174,
+    175,
+    176,
+    177,
+    178,
+    179,
+    180,
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    189,
+    190
+  ],
+  "productive_python_files": 307,
+  "regular_orphan_candidate_modules": [],
+  "regular_orphan_candidates": 0,
+  "runtime_connected": 122,
+  "runtime_connected_modules": [
+    "guardian_hunter.alerts",
+    "guardian_hunter.alerts.engine",
+    "guardian_hunter.alerts.history",
+    "guardian_hunter.analysis",
+    "guardian_hunter.analysis.engine",
+    "guardian_hunter.assessment",
+    "guardian_hunter.assessment.dns",
+    "guardian_hunter.assessment.http",
+    "guardian_hunter.assessment.safe",
+    "guardian_hunter.assessment.services",
+    "guardian_hunter.assessment.tls",
+    "guardian_hunter.assets",
+    "guardian_hunter.assets.manager",
+    "guardian_hunter.audit.authorization_hardening",
+    "guardian_hunter.audit.authorization_traceability_audit",
+    "guardian_hunter.audit.e2e_authorization_response_audit",
+    "guardian_hunter.audit.evidence_persistence_audit",
+    "guardian_hunter.audit.incident_state_recovery_audit",
+    "guardian_hunter.audit.phase18_interface_audit",
+    "guardian_hunter.audit.self_integrity_audit",
+    "guardian_hunter.audit.tamper_detection_audit",
+    "guardian_hunter.audit.trail",
+    "guardian_hunter.authorization.contract",
+    "guardian_hunter.authorization.decision_response_adapter",
+    "guardian_hunter.authorization.phase18_bridge",
+    "guardian_hunter.automation",
+    "guardian_hunter.automation.scheduler",
+    "guardian_hunter.commercial.phase161",
+    "guardian_hunter.commercial.phase162",
+    "guardian_hunter.commercial.phase163",
+    "guardian_hunter.commercial.phase164",
+    "guardian_hunter.commercial.phase165",
+    "guardian_hunter.commercial.phase166",
+    "guardian_hunter.commercial.phase167",
+    "guardian_hunter.commercial.phase168",
+    "guardian_hunter.commercial.phase169",
+    "guardian_hunter.commercial.phase170",
+    "guardian_hunter.config.settings",
+    "guardian_hunter.core.logger",
+    "guardian_hunter.correlation",
+    "guardian_hunter.correlation.engine",
+    "guardian_hunter.correlation.network_hardware",
+    "guardian_hunter.dashboard.cli",
+    "guardian_hunter.dashboard.pro",
+    "guardian_hunter.database",
+    "guardian_hunter.database.store",
+    "guardian_hunter.decision.engine",
+    "guardian_hunter.defensive",
+    "guardian_hunter.defensive.headers",
+    "guardian_hunter.defensive.tls_policy",
+    "guardian_hunter.delivery.phase181",
+    "guardian_hunter.delivery.phase182",
+    "guardian_hunter.delivery.phase183",
+    "guardian_hunter.delivery.phase184",
+    "guardian_hunter.delivery.phase185",
+    "guardian_hunter.delivery.phase186",
+    "guardian_hunter.delivery.phase187",
+    "guardian_hunter.delivery.phase188",
+    "guardian_hunter.delivery.phase189",
+    "guardian_hunter.delivery.phase190",
+    "guardian_hunter.evidence.persistence",
+    "guardian_hunter.governance.phase115_state_snapshot",
+    "guardian_hunter.governance.phase117_safety_invariants",
+    "guardian_hunter.governance.phase118_master_gate",
+    "guardian_hunter.governance.phase120_tamper_gate",
+    "guardian_hunter.governance.phase122_release_gate",
+    "guardian_hunter.governance.phase131_master_handoff",
+    "guardian_hunter.governance.phase133_continuity_lock",
+    "guardian_hunter.governance.phase134_master_gate",
+    "guardian_hunter.hardening.phase20",
+    "guardian_hunter.hardening.phase21",
+    "guardian_hunter.hardware.detector",
+    "guardian_hunter.history",
+    "guardian_hunter.history.engine",
+    "guardian_hunter.history.monitor",
+    "guardian_hunter.incident.state",
+    "guardian_hunter.integration.e2e_defensive_flow",
+    "guardian_hunter.integration.passive_host_observation",
+    "guardian_hunter.integrity.self_integrity",
+    "guardian_hunter.intelligence",
+    "guardian_hunter.intelligence.catalog",
+    "guardian_hunter.intelligence.enhanced",
+    "guardian_hunter.intelligence.matcher",
+    "guardian_hunter.main",
+    "guardian_hunter.modules",
+    "guardian_hunter.modules.hunter",
+    "guardian_hunter.network.inventory",
+    "guardian_hunter.normalizer",
+    "guardian_hunter.normalizer.core",
+    "guardian_hunter.pipeline",
+    "guardian_hunter.pipeline.engine",
+    "guardian_hunter.platform",
+    "guardian_hunter.platform.engine",
+    "guardian_hunter.policy.guard",
+    "guardian_hunter.release.phase171",
+    "guardian_hunter.release.phase172",
+    "guardian_hunter.release.phase173",
+    "guardian_hunter.release.phase174",
+    "guardian_hunter.release.phase175",
+    "guardian_hunter.release.phase176",
+    "guardian_hunter.release.phase177",
+    "guardian_hunter.release.phase178",
+    "guardian_hunter.release.phase179",
+    "guardian_hunter.release.phase180",
+    "guardian_hunter.reports",
+    "guardian_hunter.reports.export",
+    "guardian_hunter.response",
+    "guardian_hunter.response.containment",
+    "guardian_hunter.response.orchestrator",
+    "guardian_hunter.response.phase19",
+    "guardian_hunter.response.policy",
+    "guardian_hunter.risk",
+    "guardian_hunter.risk.engine",
+    "guardian_hunter.simulation.safe",
+    "guardian_hunter.system",
+    "guardian_hunter.system.state",
+    "guardian_hunter.tamper",
+    "guardian_hunter.tamper.detection",
+    "guardian_hunter.verification.phase116_continuity",
+    "guardian_hunter.verification.phase119_integrity_chain",
+    "guardian_hunter.verification.phase121_safety_consistency",
+    "guardian_hunter.verification.phase132_handoff_integrity"
+  ],
+  "runtime_or_contract": 274,
+  "safety": {
+    "guardian_hunter.evidence.persistence": {
+      "DRY_RUN": true,
+      "HUMAN_REVIEW_REQUIRED": true,
+      "READ_ONLY": true,
+      "REAL_EXECUTION_BLOCKED": true,
+      "RESPONSE_LOCKED": true
+    },
+    "guardian_hunter.incident.state": {
+      "DRY_RUN": true,
+      "HUMAN_REVIEW_REQUIRED": true,
+      "READ_ONLY": true,
+      "REAL_EXECUTION_BLOCKED": true,
+      "RESPONSE_LOCKED": true
+    }
+  },
+  "safety_verified": true,
+  "semantic_phase_numbers": [
+    23,
+    24,
+    27,
+    30,
+    43,
+    44,
+    45,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    145,
+    150,
+    151,
+    152,
+    153,
+    159,
+    160
+  ],
+  "standalone_tool_modules": [
+    "guardian_hunter.audit.connectivity_audit_v2",
+    "guardian_hunter.audit.connectivity_audit_v5",
+    "guardian_hunter.audit.decision_response_adapter_audit",
+    "guardian_hunter.audit.full_system_audit_1_134"
+  ],
+  "standalone_tools": 4,
+  "uncovered_module_names": [
+    "guardian_hunter",
+    "guardian_hunter.assurance",
+    "guardian_hunter.audit",
+    "guardian_hunter.audit.connectivity_audit_v2",
+    "guardian_hunter.audit.connectivity_audit_v5",
+    "guardian_hunter.audit.decision_response_adapter_audit",
+    "guardian_hunter.audit.full_system_audit_1_134",
+    "guardian_hunter.authorization",
+    "guardian_hunter.cases",
+    "guardian_hunter.config",
+    "guardian_hunter.core",
+    "guardian_hunter.dashboard",
+    "guardian_hunter.decision",
+    "guardian_hunter.email",
+    "guardian_hunter.evidence",
+    "guardian_hunter.governance",
+    "guardian_hunter.hardening",
+    "guardian_hunter.hardware",
+    "guardian_hunter.health",
+    "guardian_hunter.incident",
+    "guardian_hunter.incident_intel",
+    "guardian_hunter.metrics",
+    "guardian_hunter.network",
+    "guardian_hunter.policy",
+    "guardian_hunter.readiness",
+    "guardian_hunter.recovery",
+    "guardian_hunter.risk_analytics",
+    "guardian_hunter.runtime",
+    "guardian_hunter.simulation",
+    "guardian_hunter.soc",
+    "guardian_hunter.threatintel",
+    "guardian_hunter.utils",
+    "guardian_hunter.validation"
+  ],
+  "uncovered_modules": 33,
+  "unmapped_logical_milestones": [
+    144,
+    146,
+    147,
+    148,
+    149,
+    154,
+    155,
+    156,
+    157,
+    158
+  ]
+}

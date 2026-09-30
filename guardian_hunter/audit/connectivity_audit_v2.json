@@ -1,0 +1,3712 @@
+{
+  "audit_version": 3,
+  "python_files": 375,
+  "phase_files": 170,
+  "connected": 47,
+  "isolated": 123,
+  "missing_file_mappings": [
+    43,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148,
+    149,
+    150,
+    151,
+    152,
+    153,
+    154,
+    155,
+    156,
+    157,
+    158,
+    159,
+    160
+  ],
+  "phase_coverage": {
+    "18": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/audit/phase18_interface_audit.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/authorization/phase18_bridge.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_anomaly.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_baseline.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_case_bridge.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_connection.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_containment.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_correlation.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_decision.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_diff.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_dns.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_evidence.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_final.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_integration.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_listener.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_recovery.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_regression.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_remediation.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_response_gate.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_risk.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_snapshot.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_timeline.py"
+    ],
+    "19": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/analysis/phase19_signal.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/correlation/phase19_correlation.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/response/phase19.py"
+    ],
+    "20": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/decision/phase20_context.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/decision/phase20_decision.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/hardening/phase20.py"
+    ],
+    "21": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/hardening/phase21.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/response/phase21_orchestrator.py"
+    ],
+    "22": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/response/phase22_consolidation.py"
+    ],
+    "23": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/correlation/advanced.py"
+    ],
+    "24": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/evidence/incident.py"
+    ],
+    "25": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/response/phase25.py"
+    ],
+    "26": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/hardening/phase26.py"
+    ],
+    "27": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/health/monitor.py"
+    ],
+    "28": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/dashboard/phase28.py"
+    ],
+    "29": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/reports/phase29.py"
+    ],
+    "30": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/dashboard/phase28.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/reports/phase29.py"
+    ],
+    "31": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase31_governance.py"
+    ],
+    "32": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase32_verification.py"
+    ],
+    "33": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase33_health.py"
+    ],
+    "34": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase34_release.py"
+    ],
+    "35": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase35_controls.py"
+    ],
+    "36": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase36_integrity.py"
+    ],
+    "37": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase37_continuity.py"
+    ],
+    "38": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase38_operations.py"
+    ],
+    "39": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase39_posture.py"
+    ],
+    "40": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase40_decision.py"
+    ],
+    "41": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase41_audit.py"
+    ],
+    "42": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase42_readiness.py"
+    ],
+    "43": [],
+    "44": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/risk_analytics/engine.py"
+    ],
+    "45": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/readiness/assessment.py"
+    ],
+    "46": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/audit/phase46.py"
+    ],
+    "47": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/baseline/phase47.py"
+    ],
+    "48": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/compliance/phase48.py"
+    ],
+    "49": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/finalization/phase49.py"
+    ],
+    "50": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/finalization/phase50.py"
+    ],
+    "51": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase51_control_snapshot.py"
+    ],
+    "52": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase52_integrity_chain.py"
+    ],
+    "53": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase53_state_gate.py"
+    ],
+    "54": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase54_continuity.py"
+    ],
+    "55": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase55_evidence_continuity.py"
+    ],
+    "56": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase56_alert_continuity.py"
+    ],
+    "57": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase57_recovery_gate.py"
+    ],
+    "58": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase58_operational_readiness.py"
+    ],
+    "59": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase59_incident_continuity.py"
+    ],
+    "60": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase60_response_continuity.py"
+    ],
+    "61": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase61_consolidation.py"
+    ],
+    "62": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase62_system_readiness.py"
+    ],
+    "63": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase63_threat_continuity.py"
+    ],
+    "64": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase64_risk_continuity.py"
+    ],
+    "65": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase65_decision_continuity.py"
+    ],
+    "66": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase66_response_gate.py"
+    ],
+    "67": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase67_traceability.py"
+    ],
+    "68": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase68_recovery_continuity.py"
+    ],
+    "69": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase69_assurance.py"
+    ],
+    "70": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase70_closure.py"
+    ],
+    "71": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase71_baseline_continuity.py"
+    ],
+    "72": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase72_integrity_reconciliation.py"
+    ],
+    "73": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase73_final_review.py"
+    ],
+    "74": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase74_monitoring_readiness.py"
+    ],
+    "75": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase75_evidence_readiness.py"
+    ],
+    "76": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase76_alert_reconciliation.py"
+    ],
+    "77": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase77_incident_review.py"
+    ],
+    "78": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase78_observability.py"
+    ],
+    "79": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase79_telemetry_continuity.py"
+    ],
+    "80": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase80_event_reconciliation.py"
+    ],
+    "81": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase81_monitoring_review.py"
+    ],
+    "82": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase82_continuous_readiness.py"
+    ],
+    "83": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase83_signal_continuity.py"
+    ],
+    "84": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase84_correlation_reconciliation.py"
+    ],
+    "85": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase85_decision_review.py"
+    ],
+    "86": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase86_decision_continuity.py"
+    ],
+    "87": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase87_response_review.py"
+    ],
+    "88": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase88_response_integrity.py"
+    ],
+    "89": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase89_response_assurance.py"
+    ],
+    "90": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase90_response_continuity.py"
+    ],
+    "91": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase91_response_supervision.py"
+    ],
+    "92": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase92_response_reconciliation.py"
+    ],
+    "93": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase93_response_assurance.py"
+    ],
+    "94": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase94_response_operational_continuity.py"
+    ],
+    "95": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase95_response_governance.py"
+    ],
+    "96": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase96_response_chain.py"
+    ],
+    "97": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase97_response_release.py"
+    ],
+    "98": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase98_response_readiness.py"
+    ],
+    "99": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase99_response_control.py"
+    ],
+    "100": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase100_response_evidence.py"
+    ],
+    "101": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase101_response_audit.py"
+    ],
+    "102": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase102_response_final.py"
+    ],
+    "103": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase103_response_system.py"
+    ],
+    "104": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase104_response_system_integrity.py"
+    ],
+    "105": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase105_response_release.py"
+    ],
+    "106": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase106_response_continuity.py"
+    ],
+    "107": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase107_response_assurance.py"
+    ],
+    "108": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase108_response_traceability.py"
+    ],
+    "109": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase109_response_review.py"
+    ],
+    "110": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase110_response_readiness.py"
+    ],
+    "111": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase111_response_governance.py"
+    ],
+    "112": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase112_response_chain.py"
+    ],
+    "113": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase113_response_audit.py"
+    ],
+    "114": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase114_response_gate.py"
+    ],
+    "115": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase115_state_snapshot.py"
+    ],
+    "116": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase116_continuity.py"
+    ],
+    "117": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase117_safety_invariants.py"
+    ],
+    "118": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase118_master_gate.py"
+    ],
+    "119": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase119_integrity_chain.py"
+    ],
+    "120": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase120_tamper_gate.py"
+    ],
+    "121": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase121_safety_consistency.py"
+    ],
+    "122": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase122_release_gate.py"
+    ],
+    "123": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase123_baseline.py"
+    ],
+    "124": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase124_drift.py"
+    ],
+    "125": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase125_policy_lock.py"
+    ],
+    "126": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase126.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase126_continuity_gate.py"
+    ],
+    "127": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase127_130.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase127_attestation.py"
+    ],
+    "128": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase127_130.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase128_attestation_integrity.py"
+    ],
+    "129": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase127_130.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase129_consistency_lock.py"
+    ],
+    "130": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase127_130.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase130_master_gate.py"
+    ],
+    "131": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase131_134.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase131_master_handoff.py"
+    ],
+    "132": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase131_134.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase132_handoff_integrity.py"
+    ],
+    "133": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase131_134.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase133_continuity_lock.py"
+    ],
+    "134": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase131_134.py",
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase134_master_gate.py"
+    ],
+    "135": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/omniroute/phase135_138_preflight.py"
+    ],
+    "136": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/omniroute/phase135_138_preflight.py"
+    ],
+    "137": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/omniroute/phase135_138_preflight.py"
+    ],
+    "138": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/omniroute/phase135_138_preflight.py"
+    ],
+    "139": [],
+    "140": [],
+    "141": [],
+    "142": [],
+    "143": [],
+    "144": [],
+    "145": [],
+    "146": [],
+    "147": [],
+    "148": [],
+    "149": [],
+    "150": [],
+    "151": [],
+    "152": [],
+    "153": [],
+    "154": [],
+    "155": [],
+    "156": [],
+    "157": [],
+    "158": [],
+    "159": [],
+    "160": [],
+    "161": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase161.py"
+    ],
+    "162": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase162.py"
+    ],
+    "163": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase163.py"
+    ],
+    "164": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase164.py"
+    ],
+    "165": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase165.py"
+    ],
+    "166": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase166.py"
+    ],
+    "167": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase167.py"
+    ],
+    "168": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase168.py"
+    ],
+    "169": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase169.py"
+    ],
+    "170": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase170.py"
+    ],
+    "171": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase171.py"
+    ],
+    "172": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase172.py"
+    ],
+    "173": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase173.py"
+    ],
+    "174": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase174.py"
+    ],
+    "175": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase175.py"
+    ],
+    "176": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase176.py"
+    ],
+    "177": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase177.py"
+    ],
+    "178": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase178.py"
+    ],
+    "179": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase179.py"
+    ],
+    "180": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase180.py"
+    ],
+    "181": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase181.py"
+    ],
+    "182": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase182.py"
+    ],
+    "183": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase183.py"
+    ],
+    "184": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase184.py"
+    ],
+    "185": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase185.py"
+    ],
+    "186": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase186.py"
+    ],
+    "187": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase187.py"
+    ],
+    "188": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase188.py"
+    ],
+    "189": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase189.py"
+    ],
+    "190": [
+      "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase190.py"
+    ]
+  },
+  "functional_phase_map": {
+    "23": [
+      "guardian_hunter.correlation.advanced"
+    ],
+    "24": [
+      "guardian_hunter.evidence.incident"
+    ],
+    "27": [
+      "guardian_hunter.health.monitor"
+    ],
+    "30": [
+      "guardian_hunter.dashboard.phase28",
+      "guardian_hunter.reports.phase29"
+    ],
+    "44": [
+      "guardian_hunter.risk_analytics.engine"
+    ],
+    "45": [
+      "guardian_hunter.readiness.assessment"
+    ]
+  },
+  "phase18": [
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/audit/phase18_interface_audit.py",
+      "module": "guardian_hunter.audit.phase18_interface_audit",
+      "import": {
+        "module": "guardian_hunter.audit.phase18_interface_audit",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/authorization/phase18_bridge.py",
+      "module": "guardian_hunter.authorization.phase18_bridge",
+      "import": {
+        "module": "guardian_hunter.authorization.phase18_bridge",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase181.py",
+      "module": "guardian_hunter.delivery.phase181",
+      "import": {
+        "module": "guardian_hunter.delivery.phase181",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase182.py",
+      "module": "guardian_hunter.delivery.phase182",
+      "import": {
+        "module": "guardian_hunter.delivery.phase182",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase183.py",
+      "module": "guardian_hunter.delivery.phase183",
+      "import": {
+        "module": "guardian_hunter.delivery.phase183",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase184.py",
+      "module": "guardian_hunter.delivery.phase184",
+      "import": {
+        "module": "guardian_hunter.delivery.phase184",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase185.py",
+      "module": "guardian_hunter.delivery.phase185",
+      "import": {
+        "module": "guardian_hunter.delivery.phase185",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase186.py",
+      "module": "guardian_hunter.delivery.phase186",
+      "import": {
+        "module": "guardian_hunter.delivery.phase186",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase187.py",
+      "module": "guardian_hunter.delivery.phase187",
+      "import": {
+        "module": "guardian_hunter.delivery.phase187",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase188.py",
+      "module": "guardian_hunter.delivery.phase188",
+      "import": {
+        "module": "guardian_hunter.delivery.phase188",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase189.py",
+      "module": "guardian_hunter.delivery.phase189",
+      "import": {
+        "module": "guardian_hunter.delivery.phase189",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_anomaly.py",
+      "module": "guardian_hunter.network.phase18_anomaly",
+      "import": {
+        "module": "guardian_hunter.network.phase18_anomaly",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_baseline.py",
+      "module": "guardian_hunter.network.phase18_baseline",
+      "import": {
+        "module": "guardian_hunter.network.phase18_baseline",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_case_bridge.py",
+      "module": "guardian_hunter.network.phase18_case_bridge",
+      "import": {
+        "module": "guardian_hunter.network.phase18_case_bridge",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_connection.py",
+      "module": "guardian_hunter.network.phase18_connection",
+      "import": {
+        "module": "guardian_hunter.network.phase18_connection",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_containment.py",
+      "module": "guardian_hunter.network.phase18_containment",
+      "import": {
+        "module": "guardian_hunter.network.phase18_containment",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_correlation.py",
+      "module": "guardian_hunter.network.phase18_correlation",
+      "import": {
+        "module": "guardian_hunter.network.phase18_correlation",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_decision.py",
+      "module": "guardian_hunter.network.phase18_decision",
+      "import": {
+        "module": "guardian_hunter.network.phase18_decision",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_diff.py",
+      "module": "guardian_hunter.network.phase18_diff",
+      "import": {
+        "module": "guardian_hunter.network.phase18_diff",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_dns.py",
+      "module": "guardian_hunter.network.phase18_dns",
+      "import": {
+        "module": "guardian_hunter.network.phase18_dns",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_evidence.py",
+      "module": "guardian_hunter.network.phase18_evidence",
+      "import": {
+        "module": "guardian_hunter.network.phase18_evidence",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_final.py",
+      "module": "guardian_hunter.network.phase18_final",
+      "import": {
+        "module": "guardian_hunter.network.phase18_final",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_integration.py",
+      "module": "guardian_hunter.network.phase18_integration",
+      "import": {
+        "module": "guardian_hunter.network.phase18_integration",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_listener.py",
+      "module": "guardian_hunter.network.phase18_listener",
+      "import": {
+        "module": "guardian_hunter.network.phase18_listener",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_recovery.py",
+      "module": "guardian_hunter.network.phase18_recovery",
+      "import": {
+        "module": "guardian_hunter.network.phase18_recovery",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_regression.py",
+      "module": "guardian_hunter.network.phase18_regression",
+      "import": {
+        "module": "guardian_hunter.network.phase18_regression",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_remediation.py",
+      "module": "guardian_hunter.network.phase18_remediation",
+      "import": {
+        "module": "guardian_hunter.network.phase18_remediation",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_response_gate.py",
+      "module": "guardian_hunter.network.phase18_response_gate",
+      "import": {
+        "module": "guardian_hunter.network.phase18_response_gate",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_risk.py",
+      "module": "guardian_hunter.network.phase18_risk",
+      "import": {
+        "module": "guardian_hunter.network.phase18_risk",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_snapshot.py",
+      "module": "guardian_hunter.network.phase18_snapshot",
+      "import": {
+        "module": "guardian_hunter.network.phase18_snapshot",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_timeline.py",
+      "module": "guardian_hunter.network.phase18_timeline",
+      "import": {
+        "module": "guardian_hunter.network.phase18_timeline",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase180.py",
+      "module": "guardian_hunter.release.phase180",
+      "import": {
+        "module": "guardian_hunter.release.phase180",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase181_190.py",
+      "module": "guardian_hunter.tests.test_phase181_190",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase181_190",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase18_authorization_bridge.py",
+      "module": "guardian_hunter.tests.test_phase18_authorization_bridge",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase18_authorization_bridge",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase18_block1.py",
+      "module": "guardian_hunter.tests.test_phase18_block1",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase18_block1",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase18_block2.py",
+      "module": "guardian_hunter.tests.test_phase18_block2",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase18_block2",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase18_block3.py",
+      "module": "guardian_hunter.tests.test_phase18_block3",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase18_block3",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase18_block4.py",
+      "module": "guardian_hunter.tests.test_phase18_block4",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase18_block4",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase18_block5.py",
+      "module": "guardian_hunter.tests.test_phase18_block5",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase18_block5",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase18_integration.py",
+      "module": "guardian_hunter.tests.test_phase18_integration",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase18_integration",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase18_interface_audit.py",
+      "module": "guardian_hunter.tests.test_phase18_interface_audit",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase18_interface_audit",
+        "ok": true
+      }
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/tests/test_phase18_response.py",
+      "module": "guardian_hunter.tests.test_phase18_response",
+      "import": {
+        "module": "guardian_hunter.tests.test_phase18_response",
+        "ok": true
+      }
+    }
+  ],
+  "pytest": {
+    "executed": true,
+    "returncode": 0,
+    "stdout": "........................................................................ [ 29%]\n........................................................................ [ 58%]\n........................................................................ [ 87%]\n................................                                         [100%]\n248 passed in 1.71s\n",
+    "stderr": ""
+  },
+  "safety": {
+    "READ_ONLY": true,
+    "DRY_RUN": true,
+    "REAL_EXECUTION_BLOCKED": true,
+    "HUMAN_REVIEW_REQUIRED": true,
+    "RESPONSE_LOCKED": true,
+    "verified": true,
+    "sources": {
+      "guardian_hunter.evidence.persistence": {
+        "import_ok": true,
+        "values": {
+          "READ_ONLY": true,
+          "DRY_RUN": true,
+          "REAL_EXECUTION_BLOCKED": true,
+          "HUMAN_REVIEW_REQUIRED": true,
+          "RESPONSE_LOCKED": true
+        },
+        "all_locked": true
+      },
+      "guardian_hunter.incident.state": {
+        "import_ok": true,
+        "values": {
+          "READ_ONLY": true,
+          "DRY_RUN": true,
+          "REAL_EXECUTION_BLOCKED": true,
+          "HUMAN_REVIEW_REQUIRED": true,
+          "RESPONSE_LOCKED": true
+        },
+        "all_locked": true
+      }
+    }
+  },
+  "connectivity": [
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/analysis/phase19_signal.py",
+      "module": "guardian_hunter.analysis.phase19_signal",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/audit/phase18_interface_audit.py",
+      "module": "guardian_hunter.audit.phase18_interface_audit",
+      "imports": [
+        "__future__",
+        "ast",
+        "importlib",
+        "inspect",
+        "dataclasses",
+        "pathlib",
+        "typing",
+        "guardian_hunter.authorization.contract",
+        "guardian_hunter.authorization.phase18_bridge"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.authorization.contract",
+        "guardian_hunter.authorization.phase18_bridge"
+      ],
+      "incoming": [],
+      "outgoing": [
+        "guardian_hunter.authorization.phase18_bridge"
+      ],
+      "incoming_count": 0,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/audit/phase46.py",
+      "module": "guardian_hunter.audit.phase46",
+      "imports": [
+        "dataclasses",
+        "datetime"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/authorization/phase18_bridge.py",
+      "module": "guardian_hunter.authorization.phase18_bridge",
+      "imports": [
+        "__future__",
+        "time",
+        "dataclasses",
+        "typing",
+        "guardian_hunter.authorization.contract",
+        "guardian_hunter.authorization.contract"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.authorization.contract"
+      ],
+      "incoming": [
+        "guardian_hunter.audit.phase18_interface_audit"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/baseline/phase47.py",
+      "module": "guardian_hunter.baseline.phase47",
+      "imports": [
+        "dataclasses",
+        "hashlib"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase161.py",
+      "module": "guardian_hunter.commercial.phase161",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.commercial.phase162",
+        "guardian_hunter.commercial.phase169"
+      ],
+      "outgoing": [],
+      "incoming_count": 2,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase162.py",
+      "module": "guardian_hunter.commercial.phase162",
+      "imports": [
+        "guardian_hunter.commercial.phase161"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.commercial.phase161"
+      ],
+      "incoming": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "outgoing": [
+        "guardian_hunter.commercial.phase161"
+      ],
+      "incoming_count": 1,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase163.py",
+      "module": "guardian_hunter.commercial.phase163",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase164.py",
+      "module": "guardian_hunter.commercial.phase164",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase165.py",
+      "module": "guardian_hunter.commercial.phase165",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase166.py",
+      "module": "guardian_hunter.commercial.phase166",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase167.py",
+      "module": "guardian_hunter.commercial.phase167",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase168.py",
+      "module": "guardian_hunter.commercial.phase168",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase169.py",
+      "module": "guardian_hunter.commercial.phase169",
+      "imports": [
+        "guardian_hunter.commercial.phase161",
+        "guardian_hunter.commercial.phase162",
+        "guardian_hunter.commercial.phase163",
+        "guardian_hunter.commercial.phase164",
+        "guardian_hunter.commercial.phase165",
+        "guardian_hunter.commercial.phase166",
+        "guardian_hunter.commercial.phase167",
+        "guardian_hunter.commercial.phase168"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.commercial.phase161",
+        "guardian_hunter.commercial.phase162",
+        "guardian_hunter.commercial.phase163",
+        "guardian_hunter.commercial.phase164",
+        "guardian_hunter.commercial.phase165",
+        "guardian_hunter.commercial.phase166",
+        "guardian_hunter.commercial.phase167",
+        "guardian_hunter.commercial.phase168"
+      ],
+      "incoming": [
+        "guardian_hunter.commercial.phase170"
+      ],
+      "outgoing": [
+        "guardian_hunter.commercial.phase161",
+        "guardian_hunter.commercial.phase162",
+        "guardian_hunter.commercial.phase163",
+        "guardian_hunter.commercial.phase164",
+        "guardian_hunter.commercial.phase165",
+        "guardian_hunter.commercial.phase166",
+        "guardian_hunter.commercial.phase167",
+        "guardian_hunter.commercial.phase168"
+      ],
+      "incoming_count": 1,
+      "outgoing_count": 8,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/commercial/phase170.py",
+      "module": "guardian_hunter.commercial.phase170",
+      "imports": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "incoming": [],
+      "outgoing": [
+        "guardian_hunter.commercial.phase169"
+      ],
+      "incoming_count": 0,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/compliance/phase48.py",
+      "module": "guardian_hunter.compliance.phase48",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/correlation/phase19_correlation.py",
+      "module": "guardian_hunter.correlation.phase19_correlation",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/dashboard/phase28.py",
+      "module": "guardian_hunter.dashboard.phase28",
+      "imports": [
+        "datetime"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/decision/phase20_context.py",
+      "module": "guardian_hunter.decision.phase20_context",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/decision/phase20_decision.py",
+      "module": "guardian_hunter.decision.phase20_decision",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase181.py",
+      "module": "guardian_hunter.delivery.phase181",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase182.py",
+      "module": "guardian_hunter.delivery.phase182",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase183.py",
+      "module": "guardian_hunter.delivery.phase183",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase184.py",
+      "module": "guardian_hunter.delivery.phase184",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase185.py",
+      "module": "guardian_hunter.delivery.phase185",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase186.py",
+      "module": "guardian_hunter.delivery.phase186",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase187.py",
+      "module": "guardian_hunter.delivery.phase187",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase188.py",
+      "module": "guardian_hunter.delivery.phase188",
+      "imports": [
+        "guardian_hunter.delivery.phase181",
+        "guardian_hunter.delivery.phase182",
+        "guardian_hunter.delivery.phase183",
+        "guardian_hunter.delivery.phase184",
+        "guardian_hunter.delivery.phase185",
+        "guardian_hunter.delivery.phase186",
+        "guardian_hunter.delivery.phase187"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.delivery.phase181",
+        "guardian_hunter.delivery.phase182",
+        "guardian_hunter.delivery.phase183",
+        "guardian_hunter.delivery.phase184",
+        "guardian_hunter.delivery.phase185",
+        "guardian_hunter.delivery.phase186",
+        "guardian_hunter.delivery.phase187"
+      ],
+      "incoming": [
+        "guardian_hunter.delivery.phase189"
+      ],
+      "outgoing": [
+        "guardian_hunter.delivery.phase181",
+        "guardian_hunter.delivery.phase182",
+        "guardian_hunter.delivery.phase183",
+        "guardian_hunter.delivery.phase184",
+        "guardian_hunter.delivery.phase185",
+        "guardian_hunter.delivery.phase186",
+        "guardian_hunter.delivery.phase187"
+      ],
+      "incoming_count": 1,
+      "outgoing_count": 7,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase189.py",
+      "module": "guardian_hunter.delivery.phase189",
+      "imports": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "incoming": [
+        "guardian_hunter.delivery.phase190"
+      ],
+      "outgoing": [
+        "guardian_hunter.delivery.phase188"
+      ],
+      "incoming_count": 1,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/delivery/phase190.py",
+      "module": "guardian_hunter.delivery.phase190",
+      "imports": [
+        "guardian_hunter.delivery.phase189"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.delivery.phase189"
+      ],
+      "incoming": [],
+      "outgoing": [
+        "guardian_hunter.delivery.phase189"
+      ],
+      "incoming_count": 0,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase126.py",
+      "module": "guardian_hunter.email.phase126",
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "email",
+        "email.parser",
+        "email.message",
+        "hashlib",
+        "typing",
+        "re"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase127_130.py",
+      "module": "guardian_hunter.email.phase127_130",
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "pathlib",
+        "hashlib",
+        "re"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/email/phase131_134.py",
+      "module": "guardian_hunter.email.phase131_134",
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "datetime",
+        "hashlib",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/finalization/phase49.py",
+      "module": "guardian_hunter.finalization.phase49",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/finalization/phase50.py",
+      "module": "guardian_hunter.finalization.phase50",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase101_response_audit.py",
+      "module": "guardian_hunter.governance.phase101_response_audit",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase102_response_final.py",
+      "module": "guardian_hunter.governance.phase102_response_final",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase103_response_system.py",
+      "module": "guardian_hunter.governance.phase103_response_system",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase105_response_release.py",
+      "module": "guardian_hunter.governance.phase105_response_release",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase106_response_continuity.py",
+      "module": "guardian_hunter.governance.phase106_response_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase107_response_assurance.py",
+      "module": "guardian_hunter.governance.phase107_response_assurance",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase109_response_review.py",
+      "module": "guardian_hunter.governance.phase109_response_review",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase110_response_readiness.py",
+      "module": "guardian_hunter.governance.phase110_response_readiness",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase111_response_governance.py",
+      "module": "guardian_hunter.governance.phase111_response_governance",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase113_response_audit.py",
+      "module": "guardian_hunter.governance.phase113_response_audit",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase114_response_gate.py",
+      "module": "guardian_hunter.governance.phase114_response_gate",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase115_state_snapshot.py",
+      "module": "guardian_hunter.governance.phase115_state_snapshot",
+      "imports": [
+        "dataclasses",
+        "typing",
+        "json",
+        "hashlib"
+      ],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.governance.phase117_safety_invariants",
+        "guardian_hunter.governance.phase118_master_gate",
+        "guardian_hunter.governance.phase122_release_gate",
+        "guardian_hunter.verification.phase116_continuity",
+        "guardian_hunter.verification.phase121_safety_consistency"
+      ],
+      "outgoing": [],
+      "incoming_count": 5,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase117_safety_invariants.py",
+      "module": "guardian_hunter.governance.phase117_safety_invariants",
+      "imports": [
+        "dataclasses",
+        "guardian_hunter.governance.phase115_state_snapshot"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.governance.phase115_state_snapshot"
+      ],
+      "incoming": [
+        "guardian_hunter.governance.phase118_master_gate",
+        "guardian_hunter.verification.phase121_safety_consistency"
+      ],
+      "outgoing": [
+        "guardian_hunter.governance.phase115_state_snapshot"
+      ],
+      "incoming_count": 2,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase118_master_gate.py",
+      "module": "guardian_hunter.governance.phase118_master_gate",
+      "imports": [
+        "dataclasses",
+        "guardian_hunter.governance.phase115_state_snapshot",
+        "guardian_hunter.verification.phase116_continuity",
+        "guardian_hunter.governance.phase117_safety_invariants"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.governance.phase115_state_snapshot",
+        "guardian_hunter.governance.phase117_safety_invariants",
+        "guardian_hunter.verification.phase116_continuity"
+      ],
+      "incoming": [],
+      "outgoing": [
+        "guardian_hunter.governance.phase115_state_snapshot",
+        "guardian_hunter.governance.phase117_safety_invariants",
+        "guardian_hunter.verification.phase116_continuity"
+      ],
+      "incoming_count": 0,
+      "outgoing_count": 3,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase120_tamper_gate.py",
+      "module": "guardian_hunter.governance.phase120_tamper_gate",
+      "imports": [
+        "dataclasses",
+        "guardian_hunter.verification.phase119_integrity_chain"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.verification.phase119_integrity_chain"
+      ],
+      "incoming": [
+        "guardian_hunter.governance.phase122_release_gate",
+        "guardian_hunter.verification.phase121_safety_consistency"
+      ],
+      "outgoing": [
+        "guardian_hunter.verification.phase119_integrity_chain"
+      ],
+      "incoming_count": 2,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase122_release_gate.py",
+      "module": "guardian_hunter.governance.phase122_release_gate",
+      "imports": [
+        "dataclasses",
+        "guardian_hunter.governance.phase115_state_snapshot",
+        "guardian_hunter.verification.phase119_integrity_chain",
+        "guardian_hunter.governance.phase120_tamper_gate",
+        "guardian_hunter.verification.phase121_safety_consistency"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.governance.phase115_state_snapshot",
+        "guardian_hunter.governance.phase120_tamper_gate",
+        "guardian_hunter.verification.phase119_integrity_chain",
+        "guardian_hunter.verification.phase121_safety_consistency"
+      ],
+      "incoming": [],
+      "outgoing": [
+        "guardian_hunter.governance.phase115_state_snapshot",
+        "guardian_hunter.governance.phase120_tamper_gate",
+        "guardian_hunter.verification.phase119_integrity_chain",
+        "guardian_hunter.verification.phase121_safety_consistency"
+      ],
+      "incoming_count": 0,
+      "outgoing_count": 4,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase123_baseline.py",
+      "module": "guardian_hunter.governance.phase123_baseline",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase125_policy_lock.py",
+      "module": "guardian_hunter.governance.phase125_policy_lock",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase126_continuity_gate.py",
+      "module": "guardian_hunter.governance.phase126_continuity_gate",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase127_attestation.py",
+      "module": "guardian_hunter.governance.phase127_attestation",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase129_consistency_lock.py",
+      "module": "guardian_hunter.governance.phase129_consistency_lock",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase130_master_gate.py",
+      "module": "guardian_hunter.governance.phase130_master_gate",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase131_master_handoff.py",
+      "module": "guardian_hunter.governance.phase131_master_handoff",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.governance.phase134_master_gate"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase133_continuity_lock.py",
+      "module": "guardian_hunter.governance.phase133_continuity_lock",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.governance.phase134_master_gate"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase134_master_gate.py",
+      "module": "guardian_hunter.governance.phase134_master_gate",
+      "imports": [
+        "guardian_hunter.governance.phase131_master_handoff",
+        "guardian_hunter.verification.phase132_handoff_integrity",
+        "guardian_hunter.governance.phase133_continuity_lock"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.governance.phase131_master_handoff",
+        "guardian_hunter.governance.phase133_continuity_lock",
+        "guardian_hunter.verification.phase132_handoff_integrity"
+      ],
+      "incoming": [],
+      "outgoing": [
+        "guardian_hunter.governance.phase131_master_handoff",
+        "guardian_hunter.governance.phase133_continuity_lock",
+        "guardian_hunter.verification.phase132_handoff_integrity"
+      ],
+      "incoming_count": 0,
+      "outgoing_count": 3,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase31_governance.py",
+      "module": "guardian_hunter.governance.phase31_governance",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase34_release.py",
+      "module": "guardian_hunter.governance.phase34_release",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase35_controls.py",
+      "module": "guardian_hunter.governance.phase35_controls",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase37_continuity.py",
+      "module": "guardian_hunter.governance.phase37_continuity",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase38_operations.py",
+      "module": "guardian_hunter.governance.phase38_operations",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase39_posture.py",
+      "module": "guardian_hunter.governance.phase39_posture",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase40_decision.py",
+      "module": "guardian_hunter.governance.phase40_decision",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase41_audit.py",
+      "module": "guardian_hunter.governance.phase41_audit",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase42_readiness.py",
+      "module": "guardian_hunter.governance.phase42_readiness",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase51_control_snapshot.py",
+      "module": "guardian_hunter.governance.phase51_control_snapshot",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase53_state_gate.py",
+      "module": "guardian_hunter.governance.phase53_state_gate",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase54_continuity.py",
+      "module": "guardian_hunter.governance.phase54_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase55_evidence_continuity.py",
+      "module": "guardian_hunter.governance.phase55_evidence_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase57_recovery_gate.py",
+      "module": "guardian_hunter.governance.phase57_recovery_gate",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase58_operational_readiness.py",
+      "module": "guardian_hunter.governance.phase58_operational_readiness",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase59_incident_continuity.py",
+      "module": "guardian_hunter.governance.phase59_incident_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase61_consolidation.py",
+      "module": "guardian_hunter.governance.phase61_consolidation",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase62_system_readiness.py",
+      "module": "guardian_hunter.governance.phase62_system_readiness",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase63_threat_continuity.py",
+      "module": "guardian_hunter.governance.phase63_threat_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase65_decision_continuity.py",
+      "module": "guardian_hunter.governance.phase65_decision_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase66_response_gate.py",
+      "module": "guardian_hunter.governance.phase66_response_gate",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase67_traceability.py",
+      "module": "guardian_hunter.governance.phase67_traceability",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase69_assurance.py",
+      "module": "guardian_hunter.governance.phase69_assurance",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase70_closure.py",
+      "module": "guardian_hunter.governance.phase70_closure",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase71_baseline_continuity.py",
+      "module": "guardian_hunter.governance.phase71_baseline_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase73_final_review.py",
+      "module": "guardian_hunter.governance.phase73_final_review",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase74_monitoring_readiness.py",
+      "module": "guardian_hunter.governance.phase74_monitoring_readiness",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase75_evidence_readiness.py",
+      "module": "guardian_hunter.governance.phase75_evidence_readiness",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase77_incident_review.py",
+      "module": "guardian_hunter.governance.phase77_incident_review",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase78_observability.py",
+      "module": "guardian_hunter.governance.phase78_observability",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase79_telemetry_continuity.py",
+      "module": "guardian_hunter.governance.phase79_telemetry_continuity",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase81_monitoring_review.py",
+      "module": "guardian_hunter.governance.phase81_monitoring_review",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase82_continuous_readiness.py",
+      "module": "guardian_hunter.governance.phase82_continuous_readiness",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase83_signal_continuity.py",
+      "module": "guardian_hunter.governance.phase83_signal_continuity",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase85_decision_review.py",
+      "module": "guardian_hunter.governance.phase85_decision_review",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase86_decision_continuity.py",
+      "module": "guardian_hunter.governance.phase86_decision_continuity",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase87_response_review.py",
+      "module": "guardian_hunter.governance.phase87_response_review",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase89_response_assurance.py",
+      "module": "guardian_hunter.governance.phase89_response_assurance",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase90_response_continuity.py",
+      "module": "guardian_hunter.governance.phase90_response_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase91_response_supervision.py",
+      "module": "guardian_hunter.governance.phase91_response_supervision",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase93_response_assurance.py",
+      "module": "guardian_hunter.governance.phase93_response_assurance",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase94_response_operational_continuity.py",
+      "module": "guardian_hunter.governance.phase94_response_operational_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase95_response_governance.py",
+      "module": "guardian_hunter.governance.phase95_response_governance",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase97_response_release.py",
+      "module": "guardian_hunter.governance.phase97_response_release",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase98_response_readiness.py",
+      "module": "guardian_hunter.governance.phase98_response_readiness",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/governance/phase99_response_control.py",
+      "module": "guardian_hunter.governance.phase99_response_control",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/hardening/phase20.py",
+      "module": "guardian_hunter.hardening.phase20",
+      "imports": [
+        "pathlib",
+        "hashlib",
+        "json",
+        "os",
+        "platform"
+      ],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.hardening.phase21"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/hardening/phase21.py",
+      "module": "guardian_hunter.hardening.phase21",
+      "imports": [
+        "guardian_hunter.hardening.phase20",
+        "guardian_hunter.response.phase19"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.hardening.phase20",
+        "guardian_hunter.response.phase19"
+      ],
+      "incoming": [],
+      "outgoing": [
+        "guardian_hunter.hardening.phase20",
+        "guardian_hunter.response.phase19"
+      ],
+      "incoming_count": 0,
+      "outgoing_count": 2,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/hardening/phase26.py",
+      "module": "guardian_hunter.hardening.phase26",
+      "imports": [
+        "__future__",
+        "hashlib",
+        "json",
+        "datetime",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_anomaly.py",
+      "module": "guardian_hunter.network.phase18_anomaly",
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_baseline.py",
+      "module": "guardian_hunter.network.phase18_baseline",
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_case_bridge.py",
+      "module": "guardian_hunter.network.phase18_case_bridge",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_connection.py",
+      "module": "guardian_hunter.network.phase18_connection",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_containment.py",
+      "module": "guardian_hunter.network.phase18_containment",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_correlation.py",
+      "module": "guardian_hunter.network.phase18_correlation",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_decision.py",
+      "module": "guardian_hunter.network.phase18_decision",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_diff.py",
+      "module": "guardian_hunter.network.phase18_diff",
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_dns.py",
+      "module": "guardian_hunter.network.phase18_dns",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_evidence.py",
+      "module": "guardian_hunter.network.phase18_evidence",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_final.py",
+      "module": "guardian_hunter.network.phase18_final",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_integration.py",
+      "module": "guardian_hunter.network.phase18_integration",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_listener.py",
+      "module": "guardian_hunter.network.phase18_listener",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_recovery.py",
+      "module": "guardian_hunter.network.phase18_recovery",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_regression.py",
+      "module": "guardian_hunter.network.phase18_regression",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_remediation.py",
+      "module": "guardian_hunter.network.phase18_remediation",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_response_gate.py",
+      "module": "guardian_hunter.network.phase18_response_gate",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_risk.py",
+      "module": "guardian_hunter.network.phase18_risk",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_snapshot.py",
+      "module": "guardian_hunter.network.phase18_snapshot",
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/network/phase18_timeline.py",
+      "module": "guardian_hunter.network.phase18_timeline",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/omniroute/phase135_138_preflight.py",
+      "module": "guardian_hunter.omniroute.phase135_138_preflight",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase171.py",
+      "module": "guardian_hunter.release.phase171",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.release.phase178"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase172.py",
+      "module": "guardian_hunter.release.phase172",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.release.phase178"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase173.py",
+      "module": "guardian_hunter.release.phase173",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.release.phase178"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase174.py",
+      "module": "guardian_hunter.release.phase174",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.release.phase178"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase175.py",
+      "module": "guardian_hunter.release.phase175",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.release.phase178"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase176.py",
+      "module": "guardian_hunter.release.phase176",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.release.phase178"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase177.py",
+      "module": "guardian_hunter.release.phase177",
+      "imports": [],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.release.phase178"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase178.py",
+      "module": "guardian_hunter.release.phase178",
+      "imports": [
+        "guardian_hunter.release.phase171",
+        "guardian_hunter.release.phase172",
+        "guardian_hunter.release.phase173",
+        "guardian_hunter.release.phase174",
+        "guardian_hunter.release.phase175",
+        "guardian_hunter.release.phase176",
+        "guardian_hunter.release.phase177"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.release.phase171",
+        "guardian_hunter.release.phase172",
+        "guardian_hunter.release.phase173",
+        "guardian_hunter.release.phase174",
+        "guardian_hunter.release.phase175",
+        "guardian_hunter.release.phase176",
+        "guardian_hunter.release.phase177"
+      ],
+      "incoming": [
+        "guardian_hunter.release.phase179"
+      ],
+      "outgoing": [
+        "guardian_hunter.release.phase171",
+        "guardian_hunter.release.phase172",
+        "guardian_hunter.release.phase173",
+        "guardian_hunter.release.phase174",
+        "guardian_hunter.release.phase175",
+        "guardian_hunter.release.phase176",
+        "guardian_hunter.release.phase177"
+      ],
+      "incoming_count": 1,
+      "outgoing_count": 7,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase179.py",
+      "module": "guardian_hunter.release.phase179",
+      "imports": [
+        "guardian_hunter.release.phase178"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.release.phase178"
+      ],
+      "incoming": [
+        "guardian_hunter.release.phase180"
+      ],
+      "outgoing": [
+        "guardian_hunter.release.phase178"
+      ],
+      "incoming_count": 1,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/release/phase180.py",
+      "module": "guardian_hunter.release.phase180",
+      "imports": [
+        "guardian_hunter.release.phase179"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.release.phase179"
+      ],
+      "incoming": [],
+      "outgoing": [
+        "guardian_hunter.release.phase179"
+      ],
+      "incoming_count": 0,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/reports/phase29.py",
+      "module": "guardian_hunter.reports.phase29",
+      "imports": [
+        "datetime"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/response/phase19.py",
+      "module": "guardian_hunter.response.phase19",
+      "imports": [
+        "datetime",
+        "uuid"
+      ],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.hardening.phase21"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/response/phase21_orchestrator.py",
+      "module": "guardian_hunter.response.phase21_orchestrator",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/response/phase22_consolidation.py",
+      "module": "guardian_hunter.response.phase22_consolidation",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/response/phase25.py",
+      "module": "guardian_hunter.response.phase25",
+      "imports": [
+        "__future__",
+        "datetime",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase100_response_evidence.py",
+      "module": "guardian_hunter.verification.phase100_response_evidence",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase104_response_system_integrity.py",
+      "module": "guardian_hunter.verification.phase104_response_system_integrity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase108_response_traceability.py",
+      "module": "guardian_hunter.verification.phase108_response_traceability",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase112_response_chain.py",
+      "module": "guardian_hunter.verification.phase112_response_chain",
+      "imports": [
+        "hashlib",
+        "json",
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase116_continuity.py",
+      "module": "guardian_hunter.verification.phase116_continuity",
+      "imports": [
+        "dataclasses",
+        "guardian_hunter.governance.phase115_state_snapshot"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.governance.phase115_state_snapshot"
+      ],
+      "incoming": [
+        "guardian_hunter.governance.phase118_master_gate",
+        "guardian_hunter.verification.phase121_safety_consistency"
+      ],
+      "outgoing": [
+        "guardian_hunter.governance.phase115_state_snapshot"
+      ],
+      "incoming_count": 2,
+      "outgoing_count": 1,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase119_integrity_chain.py",
+      "module": "guardian_hunter.verification.phase119_integrity_chain",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.governance.phase120_tamper_gate",
+        "guardian_hunter.governance.phase122_release_gate"
+      ],
+      "outgoing": [],
+      "incoming_count": 2,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase121_safety_consistency.py",
+      "module": "guardian_hunter.verification.phase121_safety_consistency",
+      "imports": [
+        "dataclasses",
+        "guardian_hunter.governance.phase115_state_snapshot",
+        "guardian_hunter.verification.phase116_continuity",
+        "guardian_hunter.governance.phase117_safety_invariants",
+        "guardian_hunter.governance.phase120_tamper_gate"
+      ],
+      "guardian_imports": [
+        "guardian_hunter.governance.phase115_state_snapshot",
+        "guardian_hunter.governance.phase117_safety_invariants",
+        "guardian_hunter.governance.phase120_tamper_gate",
+        "guardian_hunter.verification.phase116_continuity"
+      ],
+      "incoming": [
+        "guardian_hunter.governance.phase122_release_gate"
+      ],
+      "outgoing": [
+        "guardian_hunter.governance.phase115_state_snapshot",
+        "guardian_hunter.governance.phase117_safety_invariants",
+        "guardian_hunter.governance.phase120_tamper_gate",
+        "guardian_hunter.verification.phase116_continuity"
+      ],
+      "incoming_count": 1,
+      "outgoing_count": 4,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase124_drift.py",
+      "module": "guardian_hunter.verification.phase124_drift",
+      "imports": [
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase128_attestation_integrity.py",
+      "module": "guardian_hunter.verification.phase128_attestation_integrity",
+      "imports": [
+        "hashlib",
+        "json",
+        "dataclasses"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase132_handoff_integrity.py",
+      "module": "guardian_hunter.verification.phase132_handoff_integrity",
+      "imports": [
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [
+        "guardian_hunter.governance.phase134_master_gate"
+      ],
+      "outgoing": [],
+      "incoming_count": 1,
+      "outgoing_count": 0,
+      "connected": true
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase32_verification.py",
+      "module": "guardian_hunter.verification.phase32_verification",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase33_health.py",
+      "module": "guardian_hunter.verification.phase33_health",
+      "imports": [
+        "dataclasses",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase36_integrity.py",
+      "module": "guardian_hunter.verification.phase36_integrity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "typing",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase52_integrity_chain.py",
+      "module": "guardian_hunter.verification.phase52_integrity_chain",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase56_alert_continuity.py",
+      "module": "guardian_hunter.verification.phase56_alert_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase60_response_continuity.py",
+      "module": "guardian_hunter.verification.phase60_response_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase64_risk_continuity.py",
+      "module": "guardian_hunter.verification.phase64_risk_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase68_recovery_continuity.py",
+      "module": "guardian_hunter.verification.phase68_recovery_continuity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase72_integrity_reconciliation.py",
+      "module": "guardian_hunter.verification.phase72_integrity_reconciliation",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase76_alert_reconciliation.py",
+      "module": "guardian_hunter.verification.phase76_alert_reconciliation",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase80_event_reconciliation.py",
+      "module": "guardian_hunter.verification.phase80_event_reconciliation",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase84_correlation_reconciliation.py",
+      "module": "guardian_hunter.verification.phase84_correlation_reconciliation",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase88_response_integrity.py",
+      "module": "guardian_hunter.verification.phase88_response_integrity",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase92_response_reconciliation.py",
+      "module": "guardian_hunter.verification.phase92_response_reconciliation",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    },
+    {
+      "file": "/data/data/com.termux/files/home/guardian-hunter/guardian_hunter/verification/phase96_response_chain.py",
+      "module": "guardian_hunter.verification.phase96_response_chain",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "json",
+        "typing"
+      ],
+      "guardian_imports": [],
+      "incoming": [],
+      "outgoing": [],
+      "incoming_count": 0,
+      "outgoing_count": 0,
+      "connected": false
+    }
+  ],
+  "isolated_modules": [
+    "guardian_hunter.analysis.phase19_signal",
+    "guardian_hunter.audit.phase46",
+    "guardian_hunter.baseline.phase47",
+    "guardian_hunter.compliance.phase48",
+    "guardian_hunter.correlation.phase19_correlation",
+    "guardian_hunter.dashboard.phase28",
+    "guardian_hunter.decision.phase20_context",
+    "guardian_hunter.decision.phase20_decision",
+    "guardian_hunter.email.phase126",
+    "guardian_hunter.email.phase127_130",
+    "guardian_hunter.email.phase131_134",
+    "guardian_hunter.finalization.phase49",
+    "guardian_hunter.finalization.phase50",
+    "guardian_hunter.governance.phase101_response_audit",
+    "guardian_hunter.governance.phase102_response_final",
+    "guardian_hunter.governance.phase103_response_system",
+    "guardian_hunter.governance.phase105_response_release",
+    "guardian_hunter.governance.phase106_response_continuity",
+    "guardian_hunter.governance.phase107_response_assurance",
+    "guardian_hunter.governance.phase109_response_review",
+    "guardian_hunter.governance.phase110_response_readiness",
+    "guardian_hunter.governance.phase111_response_governance",
+    "guardian_hunter.governance.phase113_response_audit",
+    "guardian_hunter.governance.phase114_response_gate",
+    "guardian_hunter.governance.phase123_baseline",
+    "guardian_hunter.governance.phase125_policy_lock",
+    "guardian_hunter.governance.phase126_continuity_gate",
+    "guardian_hunter.governance.phase127_attestation",
+    "guardian_hunter.governance.phase129_consistency_lock",
+    "guardian_hunter.governance.phase130_master_gate",
+    "guardian_hunter.governance.phase31_governance",
+    "guardian_hunter.governance.phase34_release",
+    "guardian_hunter.governance.phase35_controls",
+    "guardian_hunter.governance.phase37_continuity",
+    "guardian_hunter.governance.phase38_operations",
+    "guardian_hunter.governance.phase39_posture",
+    "guardian_hunter.governance.phase40_decision",
+    "guardian_hunter.governance.phase41_audit",
+    "guardian_hunter.governance.phase42_readiness",
+    "guardian_hunter.governance.phase51_control_snapshot",
+    "guardian_hunter.governance.phase53_state_gate",
+    "guardian_hunter.governance.phase54_continuity",
+    "guardian_hunter.governance.phase55_evidence_continuity",
+    "guardian_hunter.governance.phase57_recovery_gate",
+    "guardian_hunter.governance.phase58_operational_readiness",
+    "guardian_hunter.governance.phase59_incident_continuity",
+    "guardian_hunter.governance.phase61_consolidation",
+    "guardian_hunter.governance.phase62_system_readiness",
+    "guardian_hunter.governance.phase63_threat_continuity",
+    "guardian_hunter.governance.phase65_decision_continuity",
+    "guardian_hunter.governance.phase66_response_gate",
+    "guardian_hunter.governance.phase67_traceability",
+    "guardian_hunter.governance.phase69_assurance",
+    "guardian_hunter.governance.phase70_closure",
+    "guardian_hunter.governance.phase71_baseline_continuity",
+    "guardian_hunter.governance.phase73_final_review",
+    "guardian_hunter.governance.phase74_monitoring_readiness",
+    "guardian_hunter.governance.phase75_evidence_readiness",
+    "guardian_hunter.governance.phase77_incident_review",
+    "guardian_hunter.governance.phase78_observability",
+    "guardian_hunter.governance.phase79_telemetry_continuity",
+    "guardian_hunter.governance.phase81_monitoring_review",
+    "guardian_hunter.governance.phase82_continuous_readiness",
+    "guardian_hunter.governance.phase83_signal_continuity",
+    "guardian_hunter.governance.phase85_decision_review",
+    "guardian_hunter.governance.phase86_decision_continuity",
+    "guardian_hunter.governance.phase87_response_review",
+    "guardian_hunter.governance.phase89_response_assurance",
+    "guardian_hunter.governance.phase90_response_continuity",
+    "guardian_hunter.governance.phase91_response_supervision",
+    "guardian_hunter.governance.phase93_response_assurance",
+    "guardian_hunter.governance.phase94_response_operational_continuity",
+    "guardian_hunter.governance.phase95_response_governance",
+    "guardian_hunter.governance.phase97_response_release",
+    "guardian_hunter.governance.phase98_response_readiness",
+    "guardian_hunter.governance.phase99_response_control",
+    "guardian_hunter.hardening.phase26",
+    "guardian_hunter.network.phase18_anomaly",
+    "guardian_hunter.network.phase18_baseline",
+    "guardian_hunter.network.phase18_case_bridge",
+    "guardian_hunter.network.phase18_connection",
+    "guardian_hunter.network.phase18_containment",
+    "guardian_hunter.network.phase18_correlation",
+    "guardian_hunter.network.phase18_decision",
+    "guardian_hunter.network.phase18_diff",
+    "guardian_hunter.network.phase18_dns",
+    "guardian_hunter.network.phase18_evidence",
+    "guardian_hunter.network.phase18_final",
+    "guardian_hunter.network.phase18_integration",
+    "guardian_hunter.network.phase18_listener",
+    "guardian_hunter.network.phase18_recovery",
+    "guardian_hunter.network.phase18_regression",
+    "guardian_hunter.network.phase18_remediation",
+    "guardian_hunter.network.phase18_response_gate",
+    "guardian_hunter.network.phase18_risk",
+    "guardian_hunter.network.phase18_snapshot",
+    "guardian_hunter.network.phase18_timeline",
+    "guardian_hunter.omniroute.phase135_138_preflight",
+    "guardian_hunter.reports.phase29",
+    "guardian_hunter.response.phase21_orchestrator",
+    "guardian_hunter.response.phase22_consolidation",
+    "guardian_hunter.response.phase25",
+    "guardian_hunter.verification.phase100_response_evidence",
+    "guardian_hunter.verification.phase104_response_system_integrity",
+    "guardian_hunter.verification.phase108_response_traceability",
+    "guardian_hunter.verification.phase112_response_chain",
+    "guardian_hunter.verification.phase124_drift",
+    "guardian_hunter.verification.phase128_attestation_integrity",
+    "guardian_hunter.verification.phase32_verification",
+    "guardian_hunter.verification.phase33_health",
+    "guardian_hunter.verification.phase36_integrity",
+    "guardian_hunter.verification.phase52_integrity_chain",
+    "guardian_hunter.verification.phase56_alert_continuity",
+    "guardian_hunter.verification.phase60_response_continuity",
+    "guardian_hunter.verification.phase64_risk_continuity",
+    "guardian_hunter.verification.phase68_recovery_continuity",
+    "guardian_hunter.verification.phase72_integrity_reconciliation",
+    "guardian_hunter.verification.phase76_alert_reconciliation",
+    "guardian_hunter.verification.phase80_event_reconciliation",
+    "guardian_hunter.verification.phase84_correlation_reconciliation",
+    "guardian_hunter.verification.phase88_response_integrity",
+    "guardian_hunter.verification.phase92_response_reconciliation",
+    "guardian_hunter.verification.phase96_response_chain"
+  ]
+}

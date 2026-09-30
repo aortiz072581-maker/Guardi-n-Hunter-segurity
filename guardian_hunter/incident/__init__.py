@@ -1,1 +1,1 @@
-"""Guardian Hunter — Incident lifecycle."""
+"""Guardian Hunter incident state package."""

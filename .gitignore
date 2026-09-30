@@ -4,3 +4,28 @@ __pycache__/
 .env
 logs/*
 data/*
+
+# Local backups
+*.bak
+*.bak_*
+guardian_hunter-backup-*/
+guardian_hunter-phase*-backup-*/
+
+# Python/tool caches
+.pytest_cache/
+*.pyo
+
+# === Guardian Hunter generated/local files ===
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+*.bak
+*.bak[0-9]*
+*.tmp
+*.swp
+*.orig
+*.rej
+*~
+.DS_Store

@@ -1,7 +1,10 @@
-from guardian_hunter.dashboard.cli import (
-    render_dashboard,
-)
+"""
+Guardian Hunter dashboard package.
 
-__all__ = [
-    "render_dashboard",
-]
+Los entrypoints CLI no se importan automáticamente aquí.
+Esto evita efectos laterales y ejecución duplicada cuando se usa:
+
+    python -m guardian_hunter.dashboard.cli
+"""
+
+__all__ = []
