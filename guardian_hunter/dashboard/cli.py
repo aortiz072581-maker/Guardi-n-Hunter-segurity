@@ -2,6 +2,7 @@ import argparse
 
 from guardian_hunter.assets import AssetManager
 from guardian_hunter.database import Database
+from guardian_hunter.dashboard.diagnostic_cli import execute_diagnostic
 from guardian_hunter.modules import run_hunt
 
 
@@ -187,6 +188,20 @@ def build_parser():
         help="Dominio previamente autorizado",
     )
 
+
+    diagnostic_parser = subparsers.add_parser(
+        "diagnostic",
+        help=(
+            "Ejecutar diagnóstico defensivo "
+            "sobre un asset autorizado"
+        ),
+    )
+
+    diagnostic_parser.add_argument(
+        "domain",
+        help="Dominio previamente autorizado",
+    )
+
     return parser
 
 
@@ -216,6 +231,20 @@ def main(argv=None):
             return 2
 
         if result["status"] == "error":
+            return 1
+
+        return 0
+
+
+    if args.command == "diagnostic":
+        result = execute_diagnostic(
+            args.domain
+        )
+
+        if result.get("status") == "blocked":
+            return 2
+
+        if result.get("status") == "error":
             return 1
 
         return 0
