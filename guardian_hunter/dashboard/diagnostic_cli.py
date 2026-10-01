@@ -59,7 +59,7 @@ def execute_diagnostic(domain: str) -> dict:
         print(f"Confidence      : {diagnosis.get('confidence')}")
         print(
             f"Human review    : "
-            f"{diagnosis.get('human_review_required')}"
+            f"{diagnosis.get('requires_human_review')}"
         )
 
         recommendations = diagnosis.get(
