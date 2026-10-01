@@ -91,7 +91,13 @@ def run_defensive_flow(
 
     hunter_result = None
 
-    if run_hunter:
+    local_target = target.lower().rstrip(".") in {
+        "localhost",
+        "127.0.0.1",
+        "::1",
+    }
+
+    if run_hunter and not local_target:
         hunter_result = globals()["run_hunt"](
             target,
             asset_manager=asset_manager,
