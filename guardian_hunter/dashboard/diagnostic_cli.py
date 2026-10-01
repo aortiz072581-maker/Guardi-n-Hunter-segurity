@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from uuid import uuid4
+from pathlib import Path
 
 from guardian_hunter.assets import AssetManager
 from guardian_hunter.config.settings import DATA_DIR
@@ -11,6 +12,7 @@ from guardian_hunter.integration.e2e_diagnostic_flow import (
     run_diagnostic_defensive_flow,
 )
 from guardian_hunter.pipeline.engine import SecurityPipeline
+from guardian_hunter.integration.integrity_tamper import inspect_integrity_tamper
 
 
 EVIDENCE_FILE = DATA_DIR / "diagnostic_evidence.jsonl"
@@ -48,6 +50,25 @@ def execute_diagnostic(domain: str) -> dict:
     print(f"Read only       : {result.get('read_only', True)}")
     print(f"Dry run         : {result.get('dry_run', True)}")
     print(f"Response locked : {result.get('response_locked', True)}")
+
+    baseline = DATA_DIR / "integrity_baseline.json"
+    if baseline.exists():
+        security = inspect_integrity_tamper(
+            baseline,
+            Path.cwd(),
+        )
+        result["integrity_tamper"] = security
+
+        # Fail closed regardless of diagnostic outcome.
+        result["execution_allowed"] = False
+        result["response_locked"] = True
+
+        print()
+        print("SELF PROTECTION")
+        print(f"Integrity       : {security['integrity_state']}")
+        print(f"Tamper          : {security['tamper']['risk_level']}")
+        print(f"Integrity gate  : {security['integrity_fail_closed']}")
+        print(f"Tamper gate     : {security['tamper_fail_closed']}")
 
     diagnosis = result.get("diagnosis")
 
