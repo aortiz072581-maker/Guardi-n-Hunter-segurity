@@ -30,6 +30,23 @@ def main() -> int:
 
     if (workspace / ".git").exists():
         print("RESULT: FAIL")
+        print("REASON: WORKSPACE_GIT_FORBIDDEN")
+        return 1
+
+    protected = home / "guardian-hunter"
+
+    try:
+        if workspace.resolve() == protected.resolve():
+            print("RESULT: FAIL")
+            print("REASON: PROTECTED_WORKSPACE_FORBIDDEN")
+            return 1
+    except OSError:
+        print("RESULT: FAIL")
+        print("REASON: WORKSPACE_RESOLUTION_FAILED")
+        return 1
+
+    if (workspace / ".git").exists():
+        print("RESULT: FAIL")
         print("REASON: GIT_METADATA_PRESENT")
         return 1
 
