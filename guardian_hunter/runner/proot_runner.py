@@ -21,7 +21,7 @@ SAFE_ENV = {
 
 def main() -> int:
     home = Path.home()
-    workspace = home.parent / "guardian-agent"
+    workspace = home / "guardian-agent"
 
     if not workspace.is_dir():
         print("RESULT: FAIL")
