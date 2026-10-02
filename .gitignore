@@ -29,3 +29,5 @@ htmlcov/
 *.rej
 *~
 .DS_Store
+
+.test-results/

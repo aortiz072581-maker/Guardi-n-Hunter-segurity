@@ -191,3 +191,89 @@ def test_consolidated_recovery_stays_planning_only():
     assert recovery["automatic_recovery"] is False
     assert recovery["execution_allowed"] is False
     assert recovery["response_locked"] is True
+
+
+
+def test_consolidated_sensor_pipeline_is_fail_closed(tmp_path):
+    import json
+
+    from guardian_hunter.integrity.self_integrity import (
+        baseline_to_dict,
+        build_baseline,
+    )
+
+    protected = (
+        tmp_path
+        / "guardian_hunter"
+        / "authorization"
+        / "sample.py"
+    )
+    protected.parent.mkdir(parents=True)
+    protected.write_text("SAFE = True\n")
+
+    baseline = tmp_path / "baseline.json"
+    baseline.write_text(
+        json.dumps(
+            baseline_to_dict(build_baseline(tmp_path))
+        )
+    )
+
+    previous_hardware = {
+        "fingerprint": "HW-OLD",
+        "block_devices": [],
+    }
+    current_hardware = {
+        "fingerprint": "HW-NEW",
+        "block_devices": [{"name": "new-device"}],
+    }
+
+    previous_network = {
+        "addresses": ["10.0.0.2"],
+        "interfaces": "old-interface",
+        "routes": "old-route",
+        "neighbors": "old-neighbor",
+        "gateways": [],
+    }
+    current_network = {
+        "addresses": ["10.0.0.3"],
+        "interfaces": "new-interface",
+        "routes": "new-route",
+        "neighbors": "new-neighbor",
+        "gateways": ["10.0.0.1"],
+    }
+
+    result = run_consolidated_defensive_flow(
+        root=tmp_path,
+        baseline_file=baseline,
+        previous_hardware=previous_hardware,
+        previous_network=previous_network,
+        hardware=current_hardware,
+        network=current_network,
+    )
+
+    # Sensor observations reach the consolidated flow.
+    assert result["hardware"] == current_hardware
+    assert result["network"] == current_network
+
+    # Changes are detected and correlated.
+    assert result["hardware_changes"]["hardware_changed"] is True
+    assert result["network_changes"]["interfaces_changed"] is True
+    assert result["network_changes"]["routes_changed"] is True
+
+    signals = result["correlation"]["signals"]
+    assert "HARDWARE_CHANGED" in signals
+    assert "NETWORK_INTERFACE_CHANGED" in signals
+    assert "ROUTE_CHANGED" in signals
+
+    # The complete pipeline remains fail-closed.
+    assert result["read_only"] is True
+    assert result["dry_run"] is True
+    assert result["execution_allowed"] is False
+    assert result["real_execution_blocked"] is True
+    assert result["human_review_required"] is True
+    assert result["response_locked"] is True
+
+    recovery = result["recovery"]
+    assert recovery["automatic_recovery"] is False
+    assert recovery["execution_allowed"] is False
+    assert recovery["response_locked"] is True
