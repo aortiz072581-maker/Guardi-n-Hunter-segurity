@@ -21,6 +21,8 @@ from hashlib import sha256
 from time import time
 from typing import FrozenSet
 
+from guardian_hunter.security.trust_root import TrustResult
+
 
 # ==============================================================
 # NON-NEGOTIABLE SAFETY INVARIANTS
@@ -237,9 +239,14 @@ class AuthorizationEngine:
     It does not execute actions.
     """
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        trust_result: TrustResult | None = None,
+    ) -> None:
         self._used_nonces: set[str] = set()
         self.audit = AuthorizationAudit()
+        self._trust_result = trust_result
 
     def authorize(
         self,
@@ -352,9 +359,6 @@ class AuthorizationEngine:
                 identity.actor_id,
             )
 
-        # Reserve nonce only after structural validation.
-        self._used_nonces.add(request.nonce)
-
         # ------------------------------------------------------
         # Permission validation
         # ------------------------------------------------------
@@ -393,6 +397,60 @@ class AuthorizationEngine:
                 "safety invariants failed",
                 identity.actor_id,
             )
+
+        # ------------------------------------------------------
+        # RESPONSE TRUST GATE
+        # ------------------------------------------------------
+        # Structural validation, expiration, replay, permissions,
+        # human review and safety invariants have already passed.
+        #
+        # Response authorization requires an explicit verified
+        # Trust Root. Observation/analysis remain compatible with
+        # the migration path.
+        response_permissions = {
+            Permission.REQUEST_RESPONSE,
+            Permission.APPROVE_RESPONSE,
+        }
+
+        if request.action in response_permissions:
+            if self._trust_result is None:
+                return self._deny(
+                    request,
+                    AuthorizationState.DENIED,
+                    "trust root required for response authorization",
+                    identity.actor_id,
+                )
+
+            if not self._trust_result.trusted:
+                return self._deny(
+                    request,
+                    AuthorizationState.DENIED,
+                    "trust root verification failed: "
+                    + self._trust_result.reason,
+                    identity.actor_id,
+                )
+
+        # If a Trust Root was explicitly supplied for any other
+        # authorization operation, a failed verification remains
+        # fail-closed.
+        if (
+            self._trust_result is not None
+            and not self._trust_result.trusted
+        ):
+            return self._deny(
+                request,
+                AuthorizationState.DENIED,
+                "trust root verification failed: "
+                + self._trust_result.reason,
+                identity.actor_id,
+            )
+
+        # ------------------------------------------------------
+        # Commit anti-replay nonce
+        # ------------------------------------------------------
+        # A nonce becomes consumed only after all authorization
+        # gates, including Trust Root, have succeeded.
+        self._used_nonces.add(request.nonce)
 
         decision = AuthorizationDecision(
             state=AuthorizationState.APPROVED,

@@ -204,6 +204,34 @@ class EvidenceStore:
     def records(self) -> tuple[EvidenceRecord, ...]:
         return tuple(self._load())
 
+    def get(
+        self,
+        evidence_id: str,
+    ) -> EvidenceRecord | None:
+        """Return evidence only when the complete store is intact."""
+
+        if not evidence_id:
+            return None
+
+        verification = self.verify()
+
+        if verification.state != "EVIDENCE_INTEGRITY_OK":
+            return None
+
+        for record in self._load():
+            if record.evidence_id == evidence_id:
+                return record
+
+        return None
+
+    def contains_verified(
+        self,
+        evidence_id: str,
+    ) -> bool:
+        """Fail closed unless the requested evidence exists and is intact."""
+
+        return self.get(evidence_id) is not None
+
     def verify(self) -> EvidenceVerification:
         records = self._load()
 

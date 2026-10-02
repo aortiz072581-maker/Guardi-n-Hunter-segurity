@@ -1,10 +1,13 @@
 \
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from guardian_hunter.assets import AssetManager
 from guardian_hunter.authorization.contract import Role
 from guardian_hunter.evidence.persistence import EvidenceStore
 from guardian_hunter.integration import e2e_defensive_flow as flow
+from guardian_hunter.security.mode import Candidate
+from guardian_hunter.security.trust_root import TrustResult
 
 
 class FakePipeline:
@@ -91,6 +94,23 @@ def test_complete_defensive_flow_is_locked(
 
     pipeline = FakePipeline(assets)
 
+
+    trust = TrustResult(
+        trusted=True,
+        reason="TEST_TRUSTED",
+        policy_id="E2E_TEST_POLICY",
+        baseline_id="E2E_TEST_BASELINE",
+        verification_time=datetime.now(timezone.utc).isoformat(),
+    )
+
+    now = datetime.now(timezone.utc)
+    candidate = Candidate(
+        candidate_id="e2e-candidate-1",
+        evidence_id="e2e-e2e-auth-1",
+        created_at=now - timedelta(seconds=1),
+        expires_at=now + timedelta(minutes=5),
+    )
+
     result = flow.run_defensive_flow(
         target="example.test",
         asset_manager=assets,
@@ -103,6 +123,10 @@ def test_complete_defensive_flow_is_locked(
         authorization_id="e2e-auth-1",
         nonce="e2e-nonce-1",
         pipeline=pipeline,
+        trust_result=trust,
+        candidate=candidate,
+        approver="e2e-test-approver",
+        approval_reason="controlled defensive E2E approval",
     )
 
     assert pipeline.called

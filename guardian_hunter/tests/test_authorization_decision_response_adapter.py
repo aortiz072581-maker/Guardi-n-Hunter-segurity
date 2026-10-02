@@ -1,8 +1,12 @@
 """Tests for the controlled Authorization → Decision/Response adapter."""
 
 from time import time
+from datetime import datetime, timedelta, timezone
 
 from guardian_hunter.authorization.contract import Role
+from guardian_hunter.evidence.persistence import EvidenceStore
+from guardian_hunter.security.mode import Candidate
+from guardian_hunter.security.trust_root import TrustResult
 
 from guardian_hunter.authorization.decision_response_adapter import (
     AuthorizationDecisionResponseAdapter,
@@ -14,8 +18,43 @@ from guardian_hunter.authorization.decision_response_adapter import (
 )
 
 
-def make_adapter():
-    return AuthorizationDecisionResponseAdapter()
+def make_adapter(tmp_path=None):
+    # Negative/legacy tests keep the default fail-closed adapter.
+    if tmp_path is None:
+        return AuthorizationDecisionResponseAdapter()
+
+    trust = TrustResult(
+        trusted=True,
+        reason="TEST_TRUSTED",
+        policy_id="TEST_POLICY",
+        baseline_id="TEST_BASELINE",
+        verification_time=datetime.now(timezone.utc).isoformat(),
+    )
+
+    evidence_store = EvidenceStore(tmp_path / "adapter-evidence.jsonl")
+
+    evidence_id = "adapter-test-evidence"
+    evidence_store.append(
+        evidence_id=evidence_id,
+        event_type="ADAPTER_TEST",
+        timestamp=time(),
+        payload={"test": True},
+    )
+
+    adapter = AuthorizationDecisionResponseAdapter(
+        trust_result=trust,
+        evidence_store=evidence_store,
+    )
+
+    now = datetime.now(timezone.utc)
+    candidate = Candidate(
+        candidate_id="adapter-test-candidate",
+        evidence_id=evidence_id,
+        created_at=now - timedelta(seconds=1),
+        expires_at=now + timedelta(minutes=5),
+    )
+
+    return adapter, candidate
 
 
 def valid_kwargs():
@@ -48,11 +87,14 @@ def test_safety_invariants():
     assert adapter.safety_invariants_hold() is True
 
 
-def test_authorized_request_prepares_response_only():
-    adapter = make_adapter()
+def test_authorized_request_prepares_response_only(tmp_path):
+    adapter, candidate = make_adapter(tmp_path)
 
     result = adapter.authorize_and_prepare_response(
-        **valid_kwargs()
+        **valid_kwargs(),
+        candidate=candidate,
+        approver="adapter-test-approver",
+        approval_reason="controlled test approval",
     )
 
     assert result.authorized is True
@@ -108,14 +150,19 @@ def test_analyst_cannot_request_response():
     assert result.execution_allowed is False
 
 
-def test_operator_can_request_response():
-    adapter = make_adapter()
+def test_operator_can_request_response(tmp_path):
+    adapter, candidate = make_adapter(tmp_path)
 
     data = valid_kwargs()
     data["role"] = Role.OPERATOR
     data["nonce"] = "operator-request-nonce"
 
-    result = adapter.authorize_and_prepare_response(**data)
+    result = adapter.authorize_and_prepare_response(
+        **data,
+        candidate=candidate,
+        approver="adapter-test-approver",
+        approval_reason="controlled operator test approval",
+    )
 
     assert result.authorized is True
     assert result.execution_allowed is False
@@ -137,14 +184,26 @@ def test_expired_request_fails_closed():
     assert result.execution_allowed is False
 
 
-def test_replay_fails_closed():
-    adapter = make_adapter()
+def test_replay_fails_closed(tmp_path):
+    adapter, candidate = make_adapter(tmp_path)
 
     data = valid_kwargs()
     data["nonce"] = "replay-protection-nonce"
 
-    first = adapter.authorize_and_prepare_response(**data)
-    second = adapter.authorize_and_prepare_response(**data)
+    candidate_kwargs = {
+        "candidate": candidate,
+        "approver": "adapter-test-approver",
+        "approval_reason": "controlled replay test approval",
+    }
+
+    first = adapter.authorize_and_prepare_response(
+        **data,
+        **candidate_kwargs,
+    )
+    second = adapter.authorize_and_prepare_response(
+        **data,
+        **candidate_kwargs,
+    )
 
     assert first.authorized is True
     assert first.execution_allowed is False

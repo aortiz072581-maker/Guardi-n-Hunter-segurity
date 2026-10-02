@@ -50,6 +50,15 @@ from guardian_hunter.response.orchestrator import (
     create_incident,
 )
 
+from guardian_hunter.evidence.persistence import EvidenceStore
+from guardian_hunter.security.mode import (
+    AuthorizationError,
+    Candidate,
+    Mode,
+    authorize_candidate,
+)
+from guardian_hunter.security.trust_root import TrustResult
+
 
 READ_ONLY = True
 DRY_RUN = True
@@ -104,12 +113,19 @@ class AuthorizationDecisionResponseAdapter:
     def __init__(
         self,
         authorization_engine: AuthorizationEngine | None = None,
+        *,
+        trust_result: TrustResult | None = None,
+        evidence_store: EvidenceStore | None = None,
     ) -> None:
         self._authorization_engine = (
             authorization_engine
             if authorization_engine is not None
-            else AuthorizationEngine()
+            else AuthorizationEngine(
+                trust_result=trust_result
+            )
         )
+        self._trust_result = trust_result
+        self._evidence_store = evidence_store
 
     @staticmethod
     def _permission_from_action(action: str) -> Permission | None:
@@ -177,6 +193,9 @@ class AuthorizationDecisionResponseAdapter:
         risk_data: Mapping[str, Any] | None = None,
         issued_at: float | None = None,
         expires_at: float | None = None,
+        candidate: Candidate | None = None,
+        approver: str | None = None,
+        approval_reason: str | None = None,
     ) -> ControlledIntegrationResult:
         """
         Authorize first, then prepare a response.
@@ -392,6 +411,131 @@ class AuthorizationDecisionResponseAdapter:
                 action=action,
                 reason="AUTHORIZATION_EXECUTION_GATE_VIOLATION",
             )
+
+        # --------------------------------------------------------------
+        # CANDIDATE AUTHORIZATION GATE
+        #
+        # Response-related actions require:
+        #   - established trust,
+        #   - CANDIDATE state,
+        #   - persistent verified evidence,
+        #   - explicit human approver,
+        #   - explicit approval reason.
+        #
+        # The generic AuthorizationEngine approval alone is NOT
+        # sufficient to prepare a response.
+        # --------------------------------------------------------------
+
+        response_permissions = {
+            Permission.REQUEST_RESPONSE,
+            Permission.APPROVE_RESPONSE,
+        }
+
+        if permission in response_permissions:
+            if self._trust_result is None:
+                return self._hard_block(
+                    authorization_state=AuthorizationState.DENIED,
+                    authorization_id=authorization_id,
+                    request_id=request_id,
+                    actor_id=actor_id,
+                    action=action,
+                    reason="TRUST_RESULT_REQUIRED",
+                )
+
+            if not self._trust_result.trusted:
+                return self._hard_block(
+                    authorization_state=AuthorizationState.DENIED,
+                    authorization_id=authorization_id,
+                    request_id=request_id,
+                    actor_id=actor_id,
+                    action=action,
+                    reason="UNTRUSTED_RESPONSE_BLOCKED",
+                )
+
+            if self._evidence_store is None:
+                return self._hard_block(
+                    authorization_state=AuthorizationState.DENIED,
+                    authorization_id=authorization_id,
+                    request_id=request_id,
+                    actor_id=actor_id,
+                    action=action,
+                    reason="EVIDENCE_STORE_REQUIRED",
+                )
+
+            if candidate is None:
+                return self._hard_block(
+                    authorization_state=AuthorizationState.DENIED,
+                    authorization_id=authorization_id,
+                    request_id=request_id,
+                    actor_id=actor_id,
+                    action=action,
+                    reason="CANDIDATE_REQUIRED",
+                )
+
+            if not approver:
+                return self._hard_block(
+                    authorization_state=AuthorizationState.DENIED,
+                    authorization_id=authorization_id,
+                    request_id=request_id,
+                    actor_id=actor_id,
+                    action=action,
+                    reason="APPROVER_REQUIRED",
+                )
+
+            if not approval_reason:
+                return self._hard_block(
+                    authorization_state=AuthorizationState.DENIED,
+                    authorization_id=authorization_id,
+                    request_id=request_id,
+                    actor_id=actor_id,
+                    action=action,
+                    reason="APPROVAL_REASON_REQUIRED",
+                )
+
+            try:
+                authorized_mode, provenance = authorize_candidate(
+                    current=Mode.CANDIDATE,
+                    candidate=candidate,
+                    trust=self._trust_result,
+                    evidence_store=self._evidence_store,
+                    approver=approver,
+                    reason=approval_reason,
+                )
+            except AuthorizationError as exc:
+                return self._hard_block(
+                    authorization_state=AuthorizationState.DENIED,
+                    authorization_id=authorization_id,
+                    request_id=request_id,
+                    actor_id=actor_id,
+                    action=action,
+                    reason=(
+                        "CANDIDATE_AUTHORIZATION_DENIED:"
+                        + str(exc)
+                    ),
+                )
+
+            if authorized_mode is not Mode.AUTHORIZED:
+                return self._hard_block(
+                    authorization_state=AuthorizationState.DENIED,
+                    authorization_id=authorization_id,
+                    request_id=request_id,
+                    actor_id=actor_id,
+                    action=action,
+                    reason="AUTHORIZED_STATE_NOT_REACHED",
+                )
+
+            # Keep provenance available to downstream planning without
+            # granting execution capability.
+            risk_data = dict(risk_data or {})
+            risk_data["authorization_provenance"] = {
+                "candidate_id": provenance.candidate_id,
+                "evidence_id": provenance.evidence_id,
+                "approver": provenance.approver,
+                "reason": provenance.reason,
+                "authorized_at": (
+                    provenance.authorized_at.isoformat()
+                ),
+            }
 
         # --------------------------------------------------------------
         # RESPONSE PLANNING

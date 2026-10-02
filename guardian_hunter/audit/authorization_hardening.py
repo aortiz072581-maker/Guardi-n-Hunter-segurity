@@ -24,6 +24,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from guardian_hunter.security.trust_root import TrustResult
 from guardian_hunter.authorization.contract import (
     AuthorizationEngine,
     AuthorizationRequest,
@@ -40,6 +41,20 @@ from guardian_hunter.authorization.contract import (
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _trusted_engine() -> AuthorizationEngine:
+    """Audit-only engine with synthetic verified trust."""
+    trust = TrustResult(
+        trusted=True,
+        reason="AUDIT_TEST_TRUSTED",
+        policy_id="POLICY-AUDIT-TEST",
+        baseline_id="BASELINE-AUDIT-TEST",
+        verification_time=datetime.now(
+            timezone.utc
+        ).isoformat(),
+    )
+    return AuthorizationEngine(trust_result=trust)
 
 
 def _request(
@@ -193,7 +208,7 @@ def audit_permission_boundaries() -> None:
     ]
 
     for index, (role, action, expected) in enumerate(cases):
-        engine = AuthorizationEngine()
+        engine = _trusted_engine()
 
         identity = _identity(
             actor_id=f"boundary-{index}",
@@ -295,7 +310,7 @@ def audit_expiration() -> None:
 
 
 def audit_replay_protection() -> None:
-    engine = AuthorizationEngine()
+    engine = _trusted_engine()
 
     identity = _identity(
         actor_id="replay-001",

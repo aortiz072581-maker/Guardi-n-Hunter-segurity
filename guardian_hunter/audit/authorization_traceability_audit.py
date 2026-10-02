@@ -35,6 +35,8 @@ from guardian_hunter.authorization.decision_response_adapter import (
     AuthorizationDecisionResponseAdapter,
 )
 
+from guardian_hunter.security.trust_root import TrustResult
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -46,6 +48,18 @@ SAFETY = {
     "RESPONSE_LOCKED": True,
 }
 
+
+
+def _trusted_engine() -> AuthorizationEngine:
+    """Synthetic trust for audit-only positive authorization paths."""
+    trust = TrustResult(
+        trusted=True,
+        reason="AUDIT_TEST_TRUSTED",
+        policy_id="AUDIT_POLICY",
+        baseline_id="AUDIT_BASELINE",
+        verification_time="2026-01-01T00:00:00+00:00",
+    )
+    return AuthorizationEngine(trust_result=trust)
 
 def _check_fail_closed() -> tuple[bool, str]:
     engine = AuthorizationEngine()
@@ -107,7 +121,7 @@ def _check_actor_binding() -> tuple[bool, str]:
 
 
 def _check_replay() -> tuple[bool, str]:
-    engine = AuthorizationEngine()
+    engine = _trusted_engine()
 
     identity = Identity(
         actor_id="operator-replay",

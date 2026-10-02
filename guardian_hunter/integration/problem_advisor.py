@@ -15,6 +15,31 @@ def analyze_problem(name, ok):
             "Baseline eliminado, movido o no inicializado",
             "Verificar o regenerar un baseline autorizado",
         ),
+        "integrity_tamper": (
+            "Cambio detectado en archivos protegidos",
+            "Archivo protegido añadido, modificado o eliminado",
+            "Revisar el cambio y restaurar desde un checkpoint verificado si no fue autorizado",
+        ),
+        "hardware": (
+            "Cambio detectado en hardware",
+            "Inventario o dispositivo local cambió respecto al estado anterior",
+            "Revisar el dispositivo y confirmar si el cambio fue autorizado",
+        ),
+        "network": (
+            "Cambio detectado en red",
+            "Interfaz, dirección, ruta o vecino cambió respecto al estado anterior",
+            "Revisar el cambio de red y confirmar si corresponde al estado esperado",
+        ),
+        "hardware": (
+            "Cambio detectado en hardware",
+            "Inventario o dispositivo local cambió respecto al estado anterior",
+            "Revisar el dispositivo y confirmar si el cambio fue autorizado",
+        ),
+        "network": (
+            "Cambio detectado en red",
+            "Interfaz, dirección, ruta o vecino cambió respecto al estado anterior",
+            "Revisar el cambio de red y confirmar si corresponde al estado esperado",
+        ),
         "storage": (
             "Espacio de almacenamiento insuficiente",
             "Poco espacio libre disponible",

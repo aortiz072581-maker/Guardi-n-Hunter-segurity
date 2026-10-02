@@ -90,10 +90,14 @@ class Phase18AuthorizationBridge:
             "view_audit": Permission.VIEW_AUDIT,
         }
 
-        return mapping.get(
-            str(action).strip().lower(),
-            Permission.REQUEST_RESPONSE,
-        )
+        normalized = str(action).strip().lower()
+
+        if normalized not in mapping:
+            raise ValueError(
+                f"unknown authorization action: {normalized!r}"
+            )
+
+        return mapping[normalized]
 
     @staticmethod
     def _validate_phase18_event(
@@ -166,7 +170,28 @@ class Phase18AuthorizationBridge:
 
         actor_id = str(event["actor_id"])
         role = Role(str(event["role"]).upper())
-        action = self._permission_from_action(str(event["action"]))
+
+        try:
+            action = self._permission_from_action(
+                str(event["action"])
+            )
+        except ValueError:
+            decision = self._blocked_decision(
+                reason="unknown_action",
+                request_id=str(
+                    event.get("request_id", "invalid")
+                ),
+                authorization_id=str(
+                    event.get("authorization_id", "invalid")
+                ),
+                actor_id=actor_id,
+                action=str(event["action"]),
+            )
+
+            return Phase18AuthorizationResult(
+                decision=decision,
+                phase18_event_id=str(event["event_id"]),
+            )
 
         current = time.time() if now is None else float(now)
 

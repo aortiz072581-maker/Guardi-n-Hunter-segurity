@@ -1,13 +1,29 @@
 from guardian_hunter.authorization.contract import (
+    AuthorizationEngine,
     AuthorizationState,
     Permission,
     Role,
 )
+from guardian_hunter.security.trust_root import TrustResult
 from guardian_hunter.authorization.phase18_bridge import (
     Phase18AuthorizationBridge,
     safety_invariants_hold,
 )
 
+
+
+def make_trusted_bridge():
+    """Synthetic trusted fixture. Test-only; never production trust."""
+    trust = TrustResult(
+        trusted=True,
+        reason="TEST_TRUSTED",
+        policy_id="TEST_POLICY",
+        baseline_id="TEST_BASELINE",
+        verification_time="2026-01-01T00:00:00+00:00",
+    )
+    return Phase18AuthorizationBridge(
+        engine=AuthorizationEngine(trust_result=trust)
+    )
 
 def make_event(
     *,
@@ -32,7 +48,7 @@ def make_event(
 
 
 def test_phase18_bridge_authorizes_review_but_never_execution():
-    bridge = Phase18AuthorizationBridge()
+    bridge = make_trusted_bridge()
 
     result = bridge.authorize_phase18_event(
         make_event(),
@@ -144,7 +160,7 @@ def test_phase18_missing_identity_fails_closed():
 
 
 def test_phase18_replay_is_blocked():
-    bridge = Phase18AuthorizationBridge()
+    bridge = make_trusted_bridge()
 
     first = bridge.authorize_phase18_event(
         make_event(

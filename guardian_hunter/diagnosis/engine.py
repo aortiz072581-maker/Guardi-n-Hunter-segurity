@@ -80,6 +80,11 @@ def diagnose_problem(
         causes.append("TLS_CONFIGURATION_OR_CERTIFICATE_CHANGE")
         recommendations.append("REVIEW_TLS_CONFIGURATION_AND_CERTIFICATE_STATE")
 
+    if "integrity" in categories:
+        causes.append("PROTECTED_FILE_INTEGRITY_CHANGE")
+        recommendations.append("REVIEW_PROTECTED_FILE_CHANGES")
+        recommendations.append("VERIFY_CHANGE_AUTHORIZATION")
+
     if detected and not causes:
         causes.append("CORRELATED_ANOMALY_REQUIRES_FURTHER_ANALYSIS")
         recommendations.append("COLLECT_ADDITIONAL_READ_ONLY_EVIDENCE")

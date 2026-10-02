@@ -20,6 +20,8 @@ from guardian_hunter.evidence.persistence import (
     fail_closed as evidence_fail_closed,
     safety_invariants_hold as evidence_safety_invariants_hold,
 )
+from guardian_hunter.security.mode import Candidate
+from guardian_hunter.security.trust_root import TrustResult
 from guardian_hunter.modules.hunter import run_hunt
 from guardian_hunter.pipeline.engine import SecurityPipeline
 
@@ -66,6 +68,10 @@ def run_defensive_flow(
     nonce: str,
     pipeline: SecurityPipeline | None = None,
     adapter: AuthorizationDecisionResponseAdapter | None = None,
+    trust_result: TrustResult | None = None,
+    candidate: Candidate | None = None,
+    approver: str | None = None,
+    approval_reason: str | None = None,
     run_hunter: bool = True,
 ) -> dict[str, Any]:
     """Run the existing defensive chain.
@@ -165,7 +171,10 @@ def run_defensive_flow(
             "reason": "EVIDENCE_INTEGRITY_FAILED",
         }
 
-    adapter = adapter or AuthorizationDecisionResponseAdapter()
+    adapter = adapter or AuthorizationDecisionResponseAdapter(
+        trust_result=trust_result,
+        evidence_store=evidence_store,
+    )
 
     response = adapter.authorize_and_prepare_response(
         actor_id=actor_id,
@@ -178,6 +187,9 @@ def run_defensive_flow(
         reason=decision["decision"],
         target=target,
         risk_data=risk,
+        candidate=candidate,
+        approver=approver,
+        approval_reason=approval_reason,
     )
 
     return {

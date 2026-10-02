@@ -39,6 +39,10 @@ def inspect_integrity_tamper(
     return {
         "integrity_state": integrity.state,
         "integrity_fail_closed": integrity_fail_closed(integrity),
+        "added": integrity.added,
+        "modified": integrity.modified,
+        "deleted": integrity.deleted,
+        "unchanged": integrity.unchanged,
         "tamper": assessment_to_dict(tamper),
         "tamper_fail_closed": tamper_fail_closed(tamper),
         "execution_allowed": False,

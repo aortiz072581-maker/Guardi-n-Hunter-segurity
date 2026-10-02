@@ -1,5 +1,7 @@
 from dataclasses import replace
+from datetime import datetime, timezone
 
+from guardian_hunter.security.trust_root import TrustResult
 from guardian_hunter.authorization.contract import (
     AuthorizationEngine,
     AuthorizationState,
@@ -7,6 +9,20 @@ from guardian_hunter.authorization.contract import (
     Permission,
     Role,
 )
+
+
+def make_trusted_engine():
+    """Test-only engine with synthetic verified trust."""
+    trust = TrustResult(
+        trusted=True,
+        reason="TEST_TRUSTED",
+        policy_id="POLICY-TEST",
+        baseline_id="BASELINE-TEST",
+        verification_time=datetime.now(
+            timezone.utc
+        ).isoformat(),
+    )
+    return AuthorizationEngine(trust_result=trust)
 
 
 def make_request(
@@ -34,7 +50,7 @@ def make_request(
 
 
 def test_valid_authorization_is_approved_but_execution_stays_blocked():
-    engine = AuthorizationEngine()
+    engine = make_trusted_engine()
 
     identity = Identity(
         actor_id="operator-01",
@@ -169,7 +185,7 @@ def test_expired_authorization_is_denied():
 
 
 def test_replay_is_denied():
-    engine = AuthorizationEngine()
+    engine = make_trusted_engine()
 
     identity = Identity(
         actor_id="operator-01",
@@ -203,7 +219,7 @@ def test_replay_is_denied():
 
 
 def test_same_nonce_with_new_request_is_still_replayed():
-    engine = AuthorizationEngine()
+    engine = make_trusted_engine()
 
     identity = Identity(
         actor_id="operator-01",
