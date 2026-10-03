@@ -34,6 +34,7 @@ DENIED_PREFIXES = (
     "guardian_hunter/security/",
     "guardian_hunter/governance/",
     "guardian_hunter/containment/",
+    "guardian_hunter/harness/",
 )
 
 SENSITIVE_NAMES = frozenset({
