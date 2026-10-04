@@ -77,10 +77,27 @@ def run_audit() -> int:
         "execution_allowed=True" in source
     )
 
-    append_only = (
+    # Accept either the legacy text append implementation or the
+    # hardened append implementation.  The hardened form requires
+    # exclusive locking, end-of-file positioning, low-level writes,
+    # durability, and no-follow opening.
+    legacy_append = (
         'open("a"' in source
         or "open('a'" in source
     )
+
+    hardened_append = all(
+        marker in source
+        for marker in (
+            "os.O_NOFOLLOW",
+            "fcntl.LOCK_EX",
+            "os.SEEK_END",
+            "os.write(",
+            "os.fsync(",
+        )
+    )
+
+    append_only = legacy_append or hardened_append
 
     hash_chain = (
         "previous_hash" in source

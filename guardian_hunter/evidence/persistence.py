@@ -17,7 +17,9 @@ Safety invariants are hard-coded fail-closed.
 
 from __future__ import annotations
 
+import fcntl
 import json
+import os
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
@@ -128,13 +130,16 @@ class EvidenceStore:
     def __init__(self, path: Path):
         self.path = Path(path)
 
-    def _load(self) -> list[EvidenceRecord]:
-        if not self.path.exists():
-            return []
-
+    def _load_from_fd(self, fd: int) -> list[EvidenceRecord]:
         records: list[EvidenceRecord] = []
 
-        with self.path.open("r", encoding="utf-8") as handle:
+        os.lseek(fd, 0, os.SEEK_SET)
+
+        with os.fdopen(
+            os.dup(fd),
+            "r",
+            encoding="utf-8",
+        ) as handle:
             for line in handle:
                 line = line.strip()
 
@@ -147,6 +152,42 @@ class EvidenceStore:
 
         return records
 
+    def _open_secure(self) -> int:
+        self.path.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+            mode=0o700,
+        )
+
+        flags = (
+            os.O_RDWR
+            | os.O_CREAT
+            | os.O_NOFOLLOW
+            | os.O_CLOEXEC
+        )
+
+        try:
+            return os.open(self.path, flags, 0o600)
+        except OSError as exc:
+            raise RuntimeError(
+                "EVIDENCE_SECURE_OPEN_FAILED"
+            ) from exc
+
+    def _load(self) -> list[EvidenceRecord]:
+        if not self.path.exists():
+            return []
+
+        fd = self._open_secure()
+
+        try:
+            fcntl.flock(fd, fcntl.LOCK_SH)
+            return self._load_from_fd(fd)
+        finally:
+            try:
+                fcntl.flock(fd, fcntl.LOCK_UN)
+            finally:
+                os.close(fd)
+
     def append(
         self,
         *,
@@ -158,48 +199,71 @@ class EvidenceStore:
         if not safety_invariants_hold():
             raise RuntimeError("SAFETY_INVARIANTS_FAILED")
 
-        records = self._load()
+        fd = self._open_secure()
 
-        sequence = len(records) + 1
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX)
 
-        previous_hash = (
-            records[-1].record_hash
-            if records
-            else GENESIS
-        )
+            records = self._load_from_fd(fd)
 
-        record_hash = _calculate_hash(
-            sequence,
-            evidence_id,
-            event_type,
-            timestamp,
-            payload,
-            previous_hash,
-        )
+            sequence = len(records) + 1
 
-        record = EvidenceRecord(
-            sequence=sequence,
-            evidence_id=evidence_id,
-            event_type=event_type,
-            timestamp=timestamp,
-            payload=dict(payload),
-            previous_hash=previous_hash,
-            record_hash=record_hash,
-        )
+            previous_hash = (
+                records[-1].record_hash
+                if records
+                else GENESIS
+            )
 
-        self.path.parent.mkdir(parents=True, exist_ok=True)
+            record_hash = _calculate_hash(
+                sequence,
+                evidence_id,
+                event_type,
+                timestamp,
+                payload,
+                previous_hash,
+            )
 
-        with self.path.open("a", encoding="utf-8") as handle:
-            handle.write(
+            record = EvidenceRecord(
+                sequence=sequence,
+                evidence_id=evidence_id,
+                event_type=event_type,
+                timestamp=timestamp,
+                payload=dict(payload),
+                previous_hash=previous_hash,
+                record_hash=record_hash,
+            )
+
+            data = (
                 json.dumps(
                     _record_to_dict(record),
                     sort_keys=True,
                     ensure_ascii=False,
                 )
                 + "\n"
-            )
+            ).encode("utf-8")
 
-        return record
+            os.lseek(fd, 0, os.SEEK_END)
+
+            view = memoryview(data)
+
+            while view:
+                written = os.write(fd, view)
+
+                if written <= 0:
+                    raise RuntimeError(
+                        "EVIDENCE_WRITE_FAILED"
+                    )
+
+                view = view[written:]
+
+            os.fsync(fd)
+            return record
+
+        finally:
+            try:
+                fcntl.flock(fd, fcntl.LOCK_UN)
+            finally:
+                os.close(fd)
 
     def records(self) -> tuple[EvidenceRecord, ...]:
         return tuple(self._load())

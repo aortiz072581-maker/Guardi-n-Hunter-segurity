@@ -91,9 +91,11 @@ def test_human_can_approve_exact_proposal():
     approval = approve(
         value,
         decision="APPROVED",
+        approver_id="human-test-reviewer",
+        baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb",
     )
 
-    assert verify_approval(value, approval) is True
+    assert verify_approval(value, approval, baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb") is True
 
 
 def test_modified_patch_invalidates_approval():
@@ -102,6 +104,8 @@ def test_modified_patch_invalidates_approval():
     approval = approve(
         value,
         decision="APPROVED",
+        approver_id="human-test-reviewer",
+        baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb",
     )
 
     changed = replace(
@@ -113,7 +117,7 @@ def test_modified_patch_invalidates_approval():
         PermissionError,
         match="PROPOSAL_HASH_MISMATCH",
     ):
-        verify_approval(changed, approval)
+        verify_approval(changed, approval, baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb")
 
 
 def test_wrong_finding_invalidates_approval():
@@ -122,19 +126,26 @@ def test_wrong_finding_invalidates_approval():
     approval = approve(
         value,
         decision="APPROVED",
+        approver_id="human-test-reviewer",
+        baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb",
     )
 
     bad = HumanApproval(
         finding_id="GH-999",
         proposal_hash=approval.proposal_hash,
-        decision="APPROVED",
+        decision=approval.decision,
+        approver_id=approval.approver_id,
+        nonce=approval.nonce,
+        issued_at=approval.issued_at,
+        expires_at=approval.expires_at,
+        baseline=approval.baseline,
     )
 
     with pytest.raises(
         PermissionError,
         match="FINDING_ID_MISMATCH",
     ):
-        verify_approval(value, bad)
+        verify_approval(value, bad, baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb")
 
 
 @pytest.mark.parametrize(
@@ -187,6 +198,8 @@ def test_rejection_does_not_create_approval():
         approve(
             proposal(),
             decision="REJECTED",
+            approver_id="human-test-reviewer",
+            baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb",
         )
 
 
