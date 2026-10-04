@@ -18,6 +18,7 @@ PROTECTED_PREFIXES = (
     "guardian_hunter/governance/",
     "guardian_hunter/evidence/",
     "guardian_hunter/gate/",
+    "guardian_hunter/auditor/",
 )
 
 HUMAN_REVIEW_REQUIRED = True

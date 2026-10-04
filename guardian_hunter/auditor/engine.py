@@ -270,4 +270,157 @@ def audit() -> tuple[Finding, ...]:
     if not HUMAN_APPROVAL_REQUIRED:
         raise PermissionError("HUMAN_APPROVAL_REQUIRED")
 
-    return audit_security_boundaries()
+    return audit_extended_security()
+
+
+def audit_extended_security() -> tuple[Finding, ...]:
+    """Audit authority, credentials, provider contracts and trust coverage."""
+
+    findings = list(audit_security_boundaries())
+    existing_ids = {item.finding_id for item in findings}
+
+    # The supervised auditor influences security conclusions.
+    # Report if the Gate does not explicitly protect it.
+    gate = _prefixes(GATE_PREFIXES)
+    auditor_boundary = "guardian_hunter/auditor/"
+
+    if auditor_boundary not in gate and "GH-006" not in existing_ids:
+        findings.append(
+            Finding(
+                finding_id="GH-006",
+                severity=Severity.HIGH,
+                confidence=Confidence.CONFIRMED,
+                title="Supervised auditor is outside Gate protected boundary",
+                description=(
+                    "Guardian's supervised security auditor can influence "
+                    "security findings but is not explicitly classified as "
+                    "a protected Gate path."
+                ),
+                risk=(
+                    "A candidate modification to auditor logic could be "
+                    "classified as ordinary code instead of a trust-boundary "
+                    "change."
+                ),
+                evidence=(
+                    f"auditor_boundary={auditor_boundary}",
+                    f"gate_prefixes={sorted(gate)}",
+                ),
+                affected_files=(
+                    "guardian_hunter/gate/core.py",
+                    "guardian_hunter/auditor/engine.py",
+                ),
+                proposed_fix=(
+                    "Consider adding guardian_hunter/auditor/ to the Gate "
+                    "protected boundary after reinforced human review."
+                ),
+                required_tests=(
+                    "test_gate_protects_auditor_boundary",
+                    "test_auditor_cannot_approve_own_changes",
+                ),
+            )
+        )
+
+    # Broker credentials must never be present in its sanitized environment.
+    from guardian_hunter.harness.broker import (
+        CREDENTIAL_NAMES,
+        environment_is_sanitized,
+        sanitized_environment,
+    )
+
+    broker_env = sanitized_environment()
+
+    leaked = sorted(
+        name for name in CREDENTIAL_NAMES
+        if name in broker_env
+    )
+
+    if (
+        leaked
+        or not environment_is_sanitized(broker_env)
+    ) and "GH-007" not in existing_ids:
+        findings.append(
+            Finding(
+                finding_id="GH-007",
+                severity=Severity.CRITICAL,
+                confidence=Confidence.CONFIRMED,
+                title="Broker sanitized environment exposes credentials",
+                description=(
+                    "The environment prepared for an external provider "
+                    "contains credential-bearing variables."
+                ),
+                risk=(
+                    "An external AI provider could receive host credentials."
+                ),
+                evidence=(
+                    f"credential_variables={leaked}",
+                ),
+                affected_files=(
+                    "guardian_hunter/harness/broker.py",
+                ),
+                proposed_fix=(
+                    "Restore strict credential removal before provider "
+                    "execution can ever be enabled."
+                ),
+                required_tests=(
+                    "test_broker_environment_contains_no_credentials",
+                ),
+            )
+        )
+
+    # Every provider must remain incapable of receiving privileged authority.
+    provider_authority: list[str] = []
+
+    for provider, spec in PROVIDERS.items():
+        unsafe = []
+
+        if spec.git_access:
+            unsafe.append("git_access")
+        if spec.master_access:
+            unsafe.append("master_access")
+        if spec.trust_root_access:
+            unsafe.append("trust_root_access")
+        if spec.credential_passthrough:
+            unsafe.append("credential_passthrough")
+        if spec.autonomous_merge:
+            unsafe.append("autonomous_merge")
+        if spec.gate_modification:
+            unsafe.append("gate_modification")
+        if not spec.human_review_required:
+            unsafe.append("human_review_disabled")
+
+        if unsafe:
+            provider_authority.append(
+                f"{provider.value}:{','.join(unsafe)}"
+            )
+
+    if provider_authority and "GH-008" not in existing_ids:
+        findings.append(
+            Finding(
+                finding_id="GH-008",
+                severity=Severity.CRITICAL,
+                confidence=Confidence.CONFIRMED,
+                title="Provider has forbidden authority",
+                description=(
+                    "At least one AI provider has privileged authority "
+                    "that violates Guardian's external-agent model."
+                ),
+                risk=(
+                    "The provider could cross the human-controlled "
+                    "security boundary."
+                ),
+                evidence=tuple(provider_authority),
+                affected_files=(
+                    "guardian_hunter/harness/providers.py",
+                ),
+                proposed_fix=(
+                    "Remove forbidden provider authority before execution."
+                ),
+                required_tests=(
+                    "test_provider_has_no_privileged_authority",
+                ),
+            )
+        )
+
+    result = tuple(findings)
+    validate_findings(result)
+    return result

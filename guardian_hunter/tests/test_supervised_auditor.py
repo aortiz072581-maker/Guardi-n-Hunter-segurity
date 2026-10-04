@@ -129,3 +129,98 @@ def test_auditor_detects_injected_policy_divergence(monkeypatch):
         "injected_test_boundary" in evidence
         for evidence in finding.evidence
     )
+
+
+def test_extended_audit_confirms_auditor_boundary_is_protected():
+    from guardian_hunter.auditor.engine import audit
+
+    findings = audit()
+    ids = {finding.finding_id for finding in findings}
+
+    # GH-006 was human-approved and repaired.
+    # It must not reappear while the Gate protects the auditor.
+    assert "GH-006" not in ids
+
+
+def test_gh006_reappears_if_auditor_protection_is_removed(monkeypatch):
+    import guardian_hunter.auditor.engine as engine
+
+    reduced_gate = tuple(
+        prefix
+        for prefix in engine.GATE_PREFIXES
+        if str(prefix).replace("\\", "/").strip("/") + "/"
+        != "guardian_hunter/auditor/"
+    )
+
+    monkeypatch.setattr(
+        engine,
+        "GATE_PREFIXES",
+        reduced_gate,
+    )
+
+    findings = engine.audit()
+
+    finding = next(
+        item
+        for item in findings
+        if item.finding_id == "GH-006"
+    )
+
+    assert finding.severity is Severity.HIGH
+    assert finding.confidence is Confidence.CONFIRMED
+    assert finding.automatic_repair is False
+    assert finding.automatic_approval is False
+    assert finding.execution_allowed is False
+    assert finding.merge_allowed is False
+    assert finding.human_approval_required is True
+
+
+def test_broker_environment_has_no_known_credentials():
+    from guardian_hunter.harness.broker import (
+        CREDENTIAL_NAMES,
+        sanitized_environment,
+    )
+
+    env = sanitized_environment()
+
+    assert not (set(env) & set(CREDENTIAL_NAMES))
+
+
+def test_registered_providers_have_no_privileged_authority():
+    from guardian_hunter.harness.providers import PROVIDERS
+
+    for spec in PROVIDERS.values():
+        assert spec.git_access is False
+        assert spec.master_access is False
+        assert spec.trust_root_access is False
+        assert spec.credential_passthrough is False
+        assert spec.autonomous_merge is False
+        assert spec.gate_modification is False
+        assert spec.human_review_required is True
+
+
+def test_gate_protects_auditor_boundary():
+    from guardian_hunter.gate.core import protected_change
+
+    assert protected_change(
+        "guardian_hunter/auditor/engine.py"
+    ) is True
+
+    assert protected_change(
+        "guardian_hunter/auditor/findings.py"
+    ) is True
+
+
+def test_auditor_cannot_approve_own_changes():
+    from guardian_hunter.gate.core import evaluate_candidate
+
+    result = evaluate_candidate(
+        ["guardian_hunter/auditor/engine.py"]
+    )
+
+    assert result.passed is False
+    assert result.human_review_required is True
+    assert result.agent_merge_allowed is False
+    assert result.reason.startswith(
+        "PROTECTED_BOUNDARY_CHANGED:"
+    )
