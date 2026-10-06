@@ -415,3 +415,76 @@ def test_req001_trust_denial_does_not_reserve_nonce_same_engine():
     assert second.execution_allowed is False
     assert second.real_execution_blocked is True
     assert second.response_locked is True
+
+
+def test_repair_post_write_hash_mismatch_automatically_rolls_back(
+    tmp_path: Path,
+):
+    """A failed post-write verification must never leave mutation behind."""
+    from unittest.mock import patch
+
+    import guardian_hunter.repair.executor as executor
+    from guardian_hunter.repair.executor import (
+        RepairAction,
+        apply_repair,
+    )
+    from guardian_hunter.repair.proposal import RepairProposal
+
+    target = tmp_path / "ordinary.txt"
+
+    original = b"ORIGINAL\n"
+    requested = b"REPLACEMENT\n"
+    corrupted = b"CORRUPTED-WRITE\n"
+
+    target.write_bytes(original)
+
+    proposal = RepairProposal(
+        finding_id="GH-P0-ROLLBACK",
+        summary="Post-write mismatch rollback regression",
+        affected_files=("ordinary.txt",),
+        patch="controlled regression test",
+        required_tests=("regression",),
+    )
+
+    action = RepairAction(
+        relative_path="ordinary.txt",
+        expected_sha256=executor._digest(original),
+        replacement=requested,
+    )
+
+    real_atomic_replace_at = executor._atomic_replace_at
+    calls = 0
+
+    def corrupted_first_write(parent_fd, leaf, content):
+        nonlocal calls
+        calls += 1
+
+        if calls == 1:
+            return real_atomic_replace_at(
+                parent_fd,
+                leaf,
+                corrupted,
+            )
+
+        return real_atomic_replace_at(
+            parent_fd,
+            leaf,
+            content,
+        )
+
+    with patch.object(
+        executor,
+        "_atomic_replace_at",
+        corrupted_first_write,
+    ):
+        result = apply_repair(
+            root=tmp_path,
+            proposal=proposal,
+            action=action,
+            baseline="a" * 40,
+        )
+
+    assert calls == 2
+    assert result.applied is False
+    assert result.reason == "POST_WRITE_HASH_MISMATCH_ROLLED_BACK"
+    assert target.read_bytes() == original

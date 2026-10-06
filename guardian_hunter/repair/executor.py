@@ -120,6 +120,166 @@ def _resolve_target(root: Path, relative_path: str) -> Path:
     return target
 
 
+def _open_parent_dirfd(
+    root: Path,
+    relative_path: str,
+) -> tuple[int, str]:
+    """Open the target parent anchored to root without following symlinks."""
+
+    relative_path = _normalize_relative(relative_path)
+    parts = relative_path.split("/")
+    leaf = parts[-1]
+
+    flags = (
+        os.O_RDONLY
+        | getattr(os, "O_DIRECTORY", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+        | getattr(os, "O_CLOEXEC", 0)
+    )
+
+    root_fd = os.open(root, flags)
+    current_fd = root_fd
+
+    try:
+        for part in parts[:-1]:
+            next_fd = os.open(
+                part,
+                flags,
+                dir_fd=current_fd,
+            )
+
+            if current_fd != root_fd:
+                os.close(current_fd)
+
+            current_fd = next_fd
+
+        if current_fd == root_fd:
+            root_fd = -1
+
+        return current_fd, leaf
+
+    except Exception:
+        if current_fd != root_fd:
+            os.close(current_fd)
+        raise
+
+    finally:
+        if root_fd >= 0:
+            os.close(root_fd)
+
+
+def _read_regular_at(
+    parent_fd: int,
+    leaf: str,
+) -> bytes:
+    """Read one regular file without following the final symlink."""
+
+    flags = (
+        os.O_RDONLY
+        | getattr(os, "O_NOFOLLOW", 0)
+        | getattr(os, "O_CLOEXEC", 0)
+    )
+
+    fd = os.open(
+        leaf,
+        flags,
+        dir_fd=parent_fd,
+    )
+
+    try:
+        info = os.fstat(fd)
+
+        if not stat.S_ISREG(info.st_mode):
+            raise RuntimeError("REPAIR_TARGET_NOT_REGULAR_FILE")
+
+        chunks = []
+
+        while True:
+            chunk = os.read(fd, 1024 * 1024)
+            if not chunk:
+                break
+            chunks.append(chunk)
+
+        return b"".join(chunks)
+
+    finally:
+        os.close(fd)
+
+
+def _atomic_replace_at(
+    parent_fd: int,
+    leaf: str,
+    content: bytes,
+) -> None:
+    """Atomically replace a leaf anchored to an already verified directory."""
+
+    if (
+        not leaf
+        or "/" in leaf
+        or leaf in (".", "..")
+        or "\x00" in leaf
+    ):
+        raise ValueError("INVALID_REPAIR_LEAF")
+
+    flags = (
+        os.O_WRONLY
+        | os.O_CREAT
+        | os.O_EXCL
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+    )
+
+    temporary = (
+        ".guardian-repair-"
+        + os.urandom(16).hex()
+    )
+
+    fd = None
+
+    try:
+        fd = os.open(
+            temporary,
+            flags,
+            0o600,
+            dir_fd=parent_fd,
+        )
+
+        view = memoryview(content)
+
+        while view:
+            written = os.write(fd, view)
+
+            if written <= 0:
+                raise OSError("REPAIR_SHORT_WRITE")
+
+            view = view[written:]
+
+        os.fsync(fd)
+        os.close(fd)
+        fd = None
+
+        os.rename(
+            temporary,
+            leaf,
+            src_dir_fd=parent_fd,
+            dst_dir_fd=parent_fd,
+        )
+
+        os.fsync(parent_fd)
+
+    finally:
+        if fd is not None:
+            os.close(fd)
+
+        try:
+            os.unlink(
+                temporary,
+                dir_fd=parent_fd,
+            )
+        except FileNotFoundError:
+            pass
+
+
 def _atomic_replace(target: Path, content: bytes) -> None:
     parent = target.parent
 
@@ -170,7 +330,9 @@ def apply_repair(
 ) -> RepairResult:
     """Apply one exact supervised repair.
 
-    This function never commits, merges or changes the trusted baseline.
+    Filesystem access is anchored to an opened root directory. Intermediate
+    and final symlinks are not followed. This function never commits, merges
+    or changes the trusted baseline.
     """
 
     relative_path = _normalize_relative(action.relative_path)
@@ -183,7 +345,6 @@ def apply_repair(
         )
 
     protected = _protected(relative_path)
-
     approval_verified = False
 
     if protected:
@@ -212,12 +373,25 @@ def apply_repair(
                 protected=True,
             )
 
-    target = _resolve_target(root, relative_path)
+    try:
+        parent_fd, leaf = _open_parent_dirfd(root, relative_path)
+    except (OSError, RuntimeError, ValueError):
+        return RepairResult(
+            False,
+            "TARGET_PATH_UNSAFE",
+            relative_path,
+            protected=protected,
+            approval_verified=approval_verified,
+        )
 
-    if target.exists():
-        info = target.stat(follow_symlinks=False)
-
-        if not stat.S_ISREG(info.st_mode):
+    try:
+        try:
+            before = _read_regular_at(parent_fd, leaf)
+            before_hash = _digest(before)
+        except FileNotFoundError:
+            before = None
+            before_hash = None
+        except (OSError, RuntimeError):
             return RepairResult(
                 False,
                 "TARGET_NOT_REGULAR_FILE",
@@ -226,62 +400,117 @@ def apply_repair(
                 approval_verified=approval_verified,
             )
 
-        before = target.read_bytes()
-        before_hash = _digest(before)
-
-    else:
-        before_hash = None
-
-    if before_hash != action.expected_sha256:
-        return RepairResult(
-            False,
-            "PRECONDITION_HASH_MISMATCH",
-            relative_path,
-            before_sha256=before_hash,
-            protected=protected,
-            approval_verified=approval_verified,
-        )
-
-    # Protected repair authorization is single-use.
-    # Consume it only after all non-mutating preconditions have passed,
-    # immediately before the filesystem mutation.
-    if protected:
-        if approval_ledger is None:
+        if before_hash != action.expected_sha256:
             return RepairResult(
                 False,
-                "APPROVAL_LEDGER_REQUIRED",
+                "PRECONDITION_HASH_MISMATCH",
                 relative_path,
                 before_sha256=before_hash,
-                protected=True,
+                protected=protected,
                 approval_verified=approval_verified,
             )
+
+        # Protected authorization is single-use and is consumed only after
+        # every non-mutating filesystem precondition has succeeded.
+        if protected:
+            if approval_ledger is None:
+                return RepairResult(
+                    False,
+                    "APPROVAL_LEDGER_REQUIRED",
+                    relative_path,
+                    before_sha256=before_hash,
+                    protected=True,
+                    approval_verified=approval_verified,
+                )
+
+            try:
+                approval_ledger.consume(
+                    proposal,
+                    approval,
+                    baseline=baseline,
+                )
+            except Exception as exc:
+                reason = str(exc) or type(exc).__name__
+                return RepairResult(
+                    False,
+                    reason,
+                    relative_path,
+                    before_sha256=before_hash,
+                    protected=True,
+                    approval_verified=approval_verified,
+                )
 
         try:
-            approval_ledger.consume(
-                proposal,
-                approval,
-                baseline=baseline,
+            _atomic_replace_at(
+                parent_fd,
+                leaf,
+                action.replacement,
             )
-        except Exception as exc:
-            reason = str(exc) or type(exc).__name__
+            after = _read_regular_at(parent_fd, leaf)
+        except (OSError, RuntimeError):
             return RepairResult(
                 False,
-                reason,
+                "REPAIR_WRITE_FAILED",
                 relative_path,
                 before_sha256=before_hash,
-                protected=True,
+                protected=protected,
                 approval_verified=approval_verified,
             )
 
-    _atomic_replace(target, action.replacement)
+        after_hash = _digest(after)
+        expected_after = _digest(action.replacement)
 
-    after = target.read_bytes()
-    after_hash = _digest(after)
+        if after_hash != expected_after:
+            # The write occurred but verification failed. Restore the exact
+            # pre-write state before returning control.
+            backup = RepairBackup(
+                relative_path=relative_path,
+                existed=before is not None,
+                content=before,
+                sha256=before_hash,
+            )
 
-    if after_hash != _digest(action.replacement):
+            try:
+                rollback = rollback_repair(
+                    root=root,
+                    backup=backup,
+                    expected_current_sha256=after_hash,
+                )
+            except Exception:
+                return RepairResult(
+                    False,
+                    "POST_WRITE_HASH_MISMATCH_ROLLBACK_FAILED",
+                    relative_path,
+                    before_sha256=before_hash,
+                    after_sha256=after_hash,
+                    protected=protected,
+                    approval_verified=approval_verified,
+                )
+
+            if not rollback.applied:
+                return RepairResult(
+                    False,
+                    "POST_WRITE_HASH_MISMATCH_ROLLBACK_FAILED",
+                    relative_path,
+                    before_sha256=before_hash,
+                    after_sha256=rollback.after_sha256,
+                    protected=protected,
+                    approval_verified=approval_verified,
+                )
+
+            return RepairResult(
+                False,
+                "POST_WRITE_HASH_MISMATCH_ROLLED_BACK",
+                relative_path,
+                before_sha256=before_hash,
+                after_sha256=rollback.after_sha256,
+                protected=protected,
+                approval_verified=approval_verified,
+            )
+
         return RepairResult(
-            False,
-            "POST_WRITE_HASH_MISMATCH",
+            True,
+            "REPAIR_APPLIED",
             relative_path,
             before_sha256=before_hash,
             after_sha256=after_hash,
@@ -289,28 +518,8 @@ def apply_repair(
             approval_verified=approval_verified,
         )
 
-    return RepairResult(
-        True,
-        "REPAIR_APPLIED",
-        relative_path,
-        before_sha256=before_hash,
-        after_sha256=after_hash,
-        protected=protected,
-        approval_verified=approval_verified,
-    )
-
-
-__all__ = [
-    "RepairAction",
-    "RepairResult",
-    "RepairBackup",
-    "capture_backup",
-    "apply_repair",
-    "rollback_repair",
-    "AUTOMATIC_COMMIT",
-    "AUTOMATIC_MERGE",
-    "AUTOMATIC_BASELINE_UPDATE",
-]
+    finally:
+        os.close(parent_fd)
 
 
 @dataclass(frozen=True)
@@ -326,32 +535,35 @@ def capture_backup(
     root: Path,
     relative_path: str,
 ) -> RepairBackup:
-    """Capture exact pre-repair bytes for supervised rollback."""
+    """Capture exact pre-repair bytes without following symlinks."""
 
     relative_path = _normalize_relative(relative_path)
-    target = _resolve_target(root, relative_path)
+    parent_fd, leaf = _open_parent_dirfd(root, relative_path)
 
-    if not target.exists():
+    try:
+        try:
+            content = _read_regular_at(parent_fd, leaf)
+        except FileNotFoundError:
+            return RepairBackup(
+                relative_path=relative_path,
+                existed=False,
+                content=None,
+                sha256=None,
+            )
+        except (OSError, RuntimeError) as exc:
+            raise RuntimeError(
+                "BACKUP_TARGET_NOT_REGULAR_FILE"
+            ) from exc
+
         return RepairBackup(
             relative_path=relative_path,
-            existed=False,
-            content=None,
-            sha256=None,
+            existed=True,
+            content=content,
+            sha256=_digest(content),
         )
 
-    info = target.stat(follow_symlinks=False)
-
-    if not stat.S_ISREG(info.st_mode):
-        raise RuntimeError("BACKUP_TARGET_NOT_REGULAR_FILE")
-
-    content = target.read_bytes()
-
-    return RepairBackup(
-        relative_path=relative_path,
-        existed=True,
-        content=content,
-        sha256=_digest(content),
-    )
+    finally:
+        os.close(parent_fd)
 
 
 def rollback_repair(
@@ -363,13 +575,28 @@ def rollback_repair(
     """Restore the exact state captured immediately before a repair."""
 
     relative_path = _normalize_relative(backup.relative_path)
-    target = _resolve_target(root, relative_path)
     protected = _protected(relative_path)
 
-    if target.exists():
-        info = target.stat(follow_symlinks=False)
+    try:
+        parent_fd, leaf = _open_parent_dirfd(root, relative_path)
+    except (OSError, RuntimeError, ValueError):
+        return RepairResult(
+            False,
+            "ROLLBACK_PATH_UNSAFE",
+            relative_path,
+            protected=protected,
+        )
 
-        if not stat.S_ISREG(info.st_mode):
+    try:
+        try:
+            current = _read_regular_at(parent_fd, leaf)
+            current_hash = _digest(current)
+            current_exists = True
+        except FileNotFoundError:
+            current = None
+            current_hash = None
+            current_exists = False
+        except (OSError, RuntimeError):
             return RepairResult(
                 False,
                 "ROLLBACK_TARGET_NOT_REGULAR_FILE",
@@ -377,48 +604,105 @@ def rollback_repair(
                 protected=protected,
             )
 
-        current = target.read_bytes()
-        current_hash = _digest(current)
-    else:
-        current_hash = None
-
-    if current_hash != expected_current_sha256:
-        return RepairResult(
-            False,
-            "ROLLBACK_PRECONDITION_HASH_MISMATCH",
-            relative_path,
-            before_sha256=current_hash,
-            protected=protected,
-        )
-
-    if backup.existed:
-        if backup.content is None:
+        if current_hash != expected_current_sha256:
             return RepairResult(
                 False,
-                "INVALID_BACKUP",
+                "ROLLBACK_PRECONDITION_HASH_MISMATCH",
                 relative_path,
+                before_sha256=current_hash,
                 protected=protected,
             )
 
-        if _digest(backup.content) != backup.sha256:
+        if backup.existed:
+            if backup.content is None:
+                return RepairResult(
+                    False,
+                    "INVALID_BACKUP",
+                    relative_path,
+                    protected=protected,
+                )
+
+            if _digest(backup.content) != backup.sha256:
+                return RepairResult(
+                    False,
+                    "BACKUP_INTEGRITY_MISMATCH",
+                    relative_path,
+                    protected=protected,
+                )
+
+            try:
+                _atomic_replace_at(
+                    parent_fd,
+                    leaf,
+                    backup.content,
+                )
+                restored = _read_regular_at(parent_fd, leaf)
+            except (OSError, RuntimeError):
+                return RepairResult(
+                    False,
+                    "ROLLBACK_WRITE_FAILED",
+                    relative_path,
+                    before_sha256=current_hash,
+                    protected=protected,
+                )
+
+            restored_hash = _digest(restored)
+
+            if restored_hash != backup.sha256:
+                return RepairResult(
+                    False,
+                    "ROLLBACK_VERIFY_FAILED",
+                    relative_path,
+                    before_sha256=current_hash,
+                    after_sha256=restored_hash,
+                    protected=protected,
+                )
+
             return RepairResult(
-                False,
-                "BACKUP_INTEGRITY_MISMATCH",
+                True,
+                "ROLLBACK_APPLIED",
                 relative_path,
-                protected=protected,
-            )
-
-        _atomic_replace(target, backup.content)
-
-        restored = target.read_bytes()
-        restored_hash = _digest(restored)
-
-        if restored_hash != backup.sha256:
-            return RepairResult(
-                False,
-                "ROLLBACK_VERIFY_FAILED",
-                relative_path,
+                before_sha256=current_hash,
                 after_sha256=restored_hash,
+                protected=protected,
+            )
+
+        if current_exists:
+            try:
+                os.unlink(
+                    leaf,
+                    dir_fd=parent_fd,
+                )
+                os.fsync(parent_fd)
+            except OSError:
+                return RepairResult(
+                    False,
+                    "ROLLBACK_DELETE_FAILED",
+                    relative_path,
+                    before_sha256=current_hash,
+                    protected=protected,
+                )
+
+        # Verify through the same anchored descriptor. A replacement symlink
+        # is also considered failure rather than being followed.
+        try:
+            _read_regular_at(parent_fd, leaf)
+        except FileNotFoundError:
+            pass
+        except (OSError, RuntimeError):
+            return RepairResult(
+                False,
+                "ROLLBACK_DELETE_VERIFY_FAILED",
+                relative_path,
+                before_sha256=current_hash,
+                protected=protected,
+            )
+        else:
+            return RepairResult(
+                False,
+                "ROLLBACK_DELETE_FAILED",
+                relative_path,
+                before_sha256=current_hash,
                 protected=protected,
             )
 
@@ -427,35 +711,22 @@ def rollback_repair(
             "ROLLBACK_APPLIED",
             relative_path,
             before_sha256=current_hash,
-            after_sha256=restored_hash,
+            after_sha256=None,
             protected=protected,
         )
 
-    if target.exists():
-        target.unlink()
+    finally:
+        os.close(parent_fd)
 
-        directory_fd = os.open(
-            target.parent,
-            os.O_RDONLY | getattr(os, "O_DIRECTORY", 0),
-        )
-        try:
-            os.fsync(directory_fd)
-        finally:
-            os.close(directory_fd)
 
-    if target.exists():
-        return RepairResult(
-            False,
-            "ROLLBACK_DELETE_FAILED",
-            relative_path,
-            protected=protected,
-        )
-
-    return RepairResult(
-        True,
-        "ROLLBACK_APPLIED",
-        relative_path,
-        before_sha256=current_hash,
-        after_sha256=None,
-        protected=protected,
-    )
+__all__ = [
+    "RepairAction",
+    "RepairResult",
+    "RepairBackup",
+    "capture_backup",
+    "apply_repair",
+    "rollback_repair",
+    "AUTOMATIC_COMMIT",
+    "AUTOMATIC_MERGE",
+    "AUTOMATIC_BASELINE_UPDATE",
+]

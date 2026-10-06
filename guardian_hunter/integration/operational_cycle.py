@@ -13,6 +13,14 @@ from typing import Any
 from guardian_hunter.auditor.engine import audit_extended_security
 from guardian_hunter.integration.health_recovery import run_health_recovery
 from guardian_hunter.integration.problem_advisor import advise_health_result
+from guardian_hunter.harness.provider_runtime import discover_provider_runtimes
+from guardian_hunter.integration.codex_supervised import (
+    prepare_codex_candidate,
+)
+from guardian_hunter.integration.automatic_repair import (
+    AutomaticRepairCandidate,
+    execute_candidate_batch,
+)
 from guardian_hunter.repair.proposal import RepairProposal
 
 
@@ -127,19 +135,18 @@ def run_internal_review() -> dict[str, Any]:
 
 
 def external_ai_status(
-    tools: dict[str, dict[str, Any]] | None = None,
+    tools: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
-    tools = tools or discover_tools()
+    """Report verified external AI readiness without granting execution."""
 
-    providers = {
-        name: tools[name]
-        for name in ("claude", "aider", "codex")
-    }
+    del tools  # Native Android launchers are not trusted for provider readiness.
+
+    providers = discover_provider_runtimes()
 
     available = [
         name
         for name, state in providers.items()
-        if state["available"]
+        if state["operational"]
     ]
 
     return {
@@ -148,9 +155,9 @@ def external_ai_status(
         "providers": providers,
         "executed": False,
         "reason": (
-            "NO_EXTERNAL_AI_PROVIDER_AVAILABLE"
+            "NO_EXTERNAL_AI_PROVIDER_OPERATIONAL"
             if not available
-            else "PROVIDER_AVAILABLE_BUT_SUPERVISED_LAUNCH_REQUIRED"
+            else "PROVIDER_OPERATIONAL_BUT_SUPERVISED_LAUNCH_REQUIRED"
         ),
         "containment_required": True,
         "git_access_allowed": False,
@@ -219,10 +226,95 @@ def build_repair_proposals(
     return proposals
 
 
+def prepare_supervised_codex_candidates(
+    findings: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Prepare exact ordinary candidates without repository mutation."""
+
+    candidates: list[AutomaticRepairCandidate] = []
+    results: list[dict[str, Any]] = []
+
+    for finding in findings:
+        affected = finding.get(
+            "affected_files",
+            (),
+        )
+
+        if isinstance(affected, str):
+            affected_files = (affected,)
+        else:
+            affected_files = tuple(
+                affected or ()
+            )
+
+        authority = classify_repair_authority(
+            list(affected_files)
+        )
+
+        # Any protected member human-gates the entire finding.
+        if authority["protected_files"]:
+            for relative_path in affected_files:
+                results.append(
+                    {
+                        "finding_id": finding.get(
+                            "finding_id",
+                            "UNKNOWN",
+                        ),
+                        "relative_path": relative_path,
+                        "prepared": False,
+                        "provider_invoked": False,
+                        "reason": (
+                            "PROTECTED_REPAIR_REQUIRES_"
+                            "HUMAN_APPROVAL"
+                        ),
+                    }
+                )
+
+            continue
+
+        for relative_path in affected_files:
+            result = prepare_codex_candidate(
+                finding=finding,
+                relative_path=relative_path,
+                root=PROJECT_ROOT,
+            )
+
+            results.append(
+                {
+                    "finding_id": finding.get(
+                        "finding_id",
+                        "UNKNOWN",
+                    ),
+                    "relative_path": relative_path,
+                    "prepared": result.prepared,
+                    "reason": result.reason,
+                    "metadata": result.metadata,
+                }
+            )
+
+            if (
+                result.prepared
+                and result.candidate is not None
+            ):
+                candidates.append(
+                    result.candidate
+                )
+
+    return {
+        "candidates": tuple(candidates),
+        "results": results,
+    }
+
+
 def run_operational_cycle(
     *,
     target: str | None = None,
     target_authorized: bool = False,
+    repair_candidates: tuple[AutomaticRepairCandidate, ...] = (),
+    baseline: str | None = None,
+    repair_reverifier=None,
+    supervised_codex: bool = False,
+    automatic_repair_enabled: bool = False,
 ) -> dict[str, Any]:
     """Run one fail-closed operational review cycle."""
 
@@ -234,16 +326,99 @@ def run_operational_cycle(
     review = run_internal_review()
     proposals = build_repair_proposals(review["findings"])
 
+    codex_preparation: dict[str, Any] = {
+        "enabled": supervised_codex,
+        "candidate_count": 0,
+        "results": [],
+    }
+
+    effective_candidates = tuple(
+        repair_candidates
+    )
+
+    if (
+        supervised_codex
+        and review["findings"]
+    ):
+        prepared = (
+            prepare_supervised_codex_candidates(
+                review["findings"]
+            )
+        )
+
+        generated_candidates = prepared[
+            "candidates"
+        ]
+
+        effective_candidates = (
+            effective_candidates
+            + generated_candidates
+        )
+
+        codex_preparation = {
+            "enabled": True,
+            "candidate_count": len(
+                generated_candidates
+            ),
+            "results": prepared["results"],
+        }
+
     ai = external_ai_status(tools)
+    ai["supervised_codex"] = codex_preparation
     nuclei = nuclei_status(
         target=target,
         authorized=target_authorized,
         tools=tools,
     )
 
+    automatic_repairs: dict[str, Any] = {
+        "candidate_count": len(effective_candidates),
+        "processed_count": 0,
+        "results": [],
+        "filesystem_changed": False,
+        "filesystem_state_uncertain": False,
+        "automatic_commit": False,
+        "automatic_merge": False,
+        "automatic_baseline_update": False,
+    }
+
+    if effective_candidates:
+        if not automatic_repair_enabled:
+            automatic_repairs["results"] = [
+                {
+                    "status": "PREPARED_ONLY",
+                    "reason": (
+                        "AUTOMATIC_REPAIR_NOT_ENABLED"
+                    ),
+                    "applied": False,
+                    "automatic": False,
+                    "human_review_required": True,
+                }
+            ]
+        elif baseline is None:
+            automatic_repairs["results"] = [
+                {
+                    "status": "REFUSED",
+                    "reason": "TRUSTED_BASELINE_REQUIRED",
+                    "applied": False,
+                    "automatic": False,
+                    "human_review_required": True,
+                }
+            ]
+        else:
+            automatic_repairs = execute_candidate_batch(
+                candidates=effective_candidates,
+                baseline=baseline,
+                transaction_runner=run_transactional_repair,
+                authority_classifier=classify_repair_authority,
+                root=PROJECT_ROOT,
+                reverifier=repair_reverifier,
+            )
+
     blocked = (
         health.get("status") != "HEALTHY"
         or review["finding_count"] > 0
+        or automatic_repairs["filesystem_state_uncertain"]
     )
 
     return {
@@ -262,8 +437,12 @@ def run_operational_cycle(
         "repair": {
             "proposal_count": len(proposals),
             "proposals": proposals,
-            "automatic_apply": False,
-            "human_approval_required": True,
+            "automatic_apply": bool(effective_candidates) and automatic_repair_enabled,
+            "automatic_scope": "EXACT_NON_PROTECTED_ACTIONS_ONLY",
+            "provider_authority": "PROPOSAL_ONLY",
+            "automatic_repair_enabled": automatic_repair_enabled,
+            "automatic_results": automatic_repairs,
+            "human_approval_required_for_protected": True,
         },
         "nuclei": nuclei,
         "reverification": {
@@ -375,6 +554,153 @@ def _transaction_reverification() -> dict[str, Any]:
             ),
         },
     }
+
+
+
+def run_supervised_automatic_repair(
+    *,
+    finding: dict[str, Any],
+    relative_path: str,
+    baseline: str,
+    root: Path = PROJECT_ROOT,
+    reverifier=None,
+) -> dict[str, Any]:
+    """Supervised automatic repair for one exact ordinary path.
+
+    Codex has proposal authority only.
+
+    Guardian validates the exact candidate and SHA-256
+    precondition before the transactional repair layer
+    receives it.
+
+    Protected boundaries never receive automatic mutation
+    authority.
+
+    Commit, merge and trusted-baseline mutation remain
+    outside this function's authority.
+    """
+
+    root = root.resolve()
+
+    authority = classify_repair_authority(
+        [relative_path]
+    )
+
+    if authority["protected_files"]:
+        return {
+            "status": "APPROVAL_REQUIRED",
+            "reason": (
+                "PROTECTED_REPAIR_REQUIRES_HUMAN_APPROVAL"
+            ),
+            "authority": authority,
+            "provider_invoked": False,
+            "candidate_prepared": False,
+            "applied": False,
+            "rolled_back": False,
+            "automatic": False,
+            "human_review_required": True,
+            "commit_allowed": False,
+            "merge_allowed": False,
+            "baseline_update_allowed": False,
+        }
+
+    if not authority.get(
+        "low_risk_candidate",
+        False,
+    ):
+        return {
+            "status": "REFUSED",
+            "reason": "AUTOMATIC_AUTHORITY_NOT_GRANTED",
+            "authority": authority,
+            "provider_invoked": False,
+            "candidate_prepared": False,
+            "applied": False,
+            "rolled_back": False,
+            "automatic": False,
+            "human_review_required": True,
+            "commit_allowed": False,
+            "merge_allowed": False,
+            "baseline_update_allowed": False,
+        }
+
+    codex_result = prepare_codex_candidate(
+        finding=finding,
+        relative_path=relative_path,
+        root=root,
+    )
+
+    if not codex_result.prepared:
+        return {
+            "status": "PROPOSAL_NOT_PREPARED",
+            "reason": codex_result.reason,
+            "authority": authority,
+            "provider": dict(
+                codex_result.metadata
+            ),
+            "provider_invoked": bool(
+                codex_result.metadata.get(
+                    "provider_invoked",
+                    False,
+                )
+            ),
+            "candidate_prepared": False,
+            "applied": False,
+            "rolled_back": False,
+            "automatic": False,
+            "human_review_required": True,
+            "commit_allowed": False,
+            "merge_allowed": False,
+            "baseline_update_allowed": False,
+        }
+
+    candidate = codex_result.candidate
+
+    if candidate is None:
+        return {
+            "status": "REFUSED",
+            "reason": "CODEX_CANDIDATE_MISSING",
+            "authority": authority,
+            "provider": dict(
+                codex_result.metadata
+            ),
+            "provider_invoked": True,
+            "candidate_prepared": False,
+            "applied": False,
+            "rolled_back": False,
+            "automatic": False,
+            "human_review_required": True,
+            "commit_allowed": False,
+            "merge_allowed": False,
+            "baseline_update_allowed": False,
+        }
+
+    # Critical boundary:
+    # use the exact validated candidate returned by Codex
+    # integration. Never reconstruct RepairAction here.
+    result = execute_automatic_candidate(
+        candidate=candidate,
+        baseline=baseline,
+        transaction_runner=run_transactional_repair,
+        authority_classifier=classify_repair_authority,
+        root=root,
+        reverifier=reverifier,
+    )
+
+    result = dict(result)
+
+    result["provider"] = dict(
+        codex_result.metadata
+    )
+    result["provider_invoked"] = True
+    result["candidate_prepared"] = True
+
+    # Authority narrowing is unconditional.
+    result["commit_allowed"] = False
+    result["merge_allowed"] = False
+    result["baseline_update_allowed"] = False
+    result["human_review_required"] = True
+
+    return result
 
 
 def run_transactional_repair(
@@ -551,5 +877,6 @@ def run_transactional_repair(
 __all__.extend(
     [
         "run_transactional_repair",
+        "run_supervised_automatic_repair",
     ]
 )
