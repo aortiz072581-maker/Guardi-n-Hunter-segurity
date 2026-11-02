@@ -406,14 +406,7 @@ def run_operational_cycle(
                 }
             ]
         else:
-            automatic_repairs = execute_candidate_batch(
-                candidates=effective_candidates,
-                baseline=baseline,
-                transaction_runner=run_transactional_repair,
-                authority_classifier=classify_repair_authority,
-                root=PROJECT_ROOT,
-                reverifier=repair_reverifier,
-            )
+            automatic_repairs["results"] = [{"status": "REFUSED", "reason": "M5_AUTO_REPAIR_EXTERNAL_AUTHORIZATION_REQUIRED", "applied": False, "automatic": False, "human_review_required": True}]
 
     blocked = (
         health.get("status") != "HEALTHY"
@@ -580,6 +573,8 @@ def run_supervised_automatic_repair(
     outside this function's authority.
     """
 
+    return {"status": "REFUSED", "reason": "M5_AUTO_REPAIR_EXTERNAL_AUTHORIZATION_REQUIRED", "applied": False, "automatic": False, "human_review_required": True, "commit_allowed": False, "merge_allowed": False, "baseline_update_allowed": False}
+
     root = root.resolve()
 
     authority = classify_repair_authority(
@@ -728,6 +723,9 @@ def run_transactional_repair(
     This function has no authority to commit, merge, or update the
     trusted baseline.
     """
+
+    from guardian_hunter.supply_chain.m5_transaction_gate import enforce_transaction
+    enforce_transaction(proposal=proposal, action=action, baseline=baseline, approval=approval, root=root)
 
     root = root.resolve()
 

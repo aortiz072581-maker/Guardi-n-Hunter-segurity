@@ -172,6 +172,7 @@ def validate_script(workspace: Path, script: str) -> Path:
 
 
 def run_candidate(command: list[str]) -> int:
+    raise PermissionError("TRUSTED_EXECUTION_BROKER_NOT_CONFIGURED")
     protected = Path.cwd().resolve()
     workspace = (protected.parent / "guardian-agent").resolve()
 
@@ -338,3 +339,79 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+def secure_read_script(workspace: Path, script: str) -> bytes:
+    """Read the selected script through anchored descriptors."""
+    if not isinstance(script, str) or not script:
+        raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
+
+    if "\x00" in script or "\\" in script:
+        raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
+
+    relative = Path(script)
+
+    if (
+        relative.is_absolute()
+        or relative.suffix != ".py"
+        or any(
+            part in ("", ".", "..")
+            for part in script.split("/")
+        )
+    ):
+        raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
+
+    workspace = Path(workspace).resolve(strict=True)
+
+    directory_flags = (
+        os.O_RDONLY
+        | os.O_CLOEXEC
+        | os.O_NOFOLLOW
+        | getattr(os, "O_DIRECTORY", 0)
+    )
+
+    opened = []
+
+    try:
+        parent = os.open(workspace, directory_flags)
+        opened.append(parent)
+
+        for part in relative.parts[:-1]:
+            parent = os.open(
+                part,
+                directory_flags,
+                dir_fd=parent,
+            )
+            opened.append(parent)
+
+            if not stat.S_ISDIR(os.fstat(parent).st_mode):
+                raise RuntimeError("SCRIPT_PARENT_NOT_DIRECTORY")
+
+        fd = os.open(
+            relative.parts[-1],
+            os.O_RDONLY
+            | os.O_CLOEXEC
+            | os.O_NOFOLLOW
+            | getattr(os, "O_NONBLOCK", 0),
+            dir_fd=parent,
+        )
+        opened.append(fd)
+
+        metadata = os.fstat(fd)
+
+        if not stat.S_ISREG(metadata.st_mode):
+            raise RuntimeError("SCRIPT_NOT_REGULAR_FILE")
+
+        with os.fdopen(os.dup(fd), "rb") as source:
+            content = source.read()
+
+        return content
+
+    except OSError as exc:
+        raise RuntimeError(
+            "SCRIPT_SECURE_READ_FAILED"
+        ) from exc
+
+    finally:
+        for fd in reversed(opened):
+            os.close(fd)

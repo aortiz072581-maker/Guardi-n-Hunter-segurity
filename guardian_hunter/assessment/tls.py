@@ -7,6 +7,8 @@ def assess_tls(hostname, port=443, timeout=8):
     findings = []
 
     context = ssl.create_default_context()
+    context.verify_mode = ssl.CERT_REQUIRED
+    context.check_hostname = True
 
     try:
         with socket.create_connection(

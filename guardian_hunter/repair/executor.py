@@ -327,6 +327,7 @@ def apply_repair(
     baseline: str,
     approval: HumanApproval | None = None,
     approval_ledger: ApprovalLedger | None = None,
+    policy=None,
 ) -> RepairResult:
     """Apply one exact supervised repair.
 
@@ -347,8 +348,8 @@ def apply_repair(
     protected = _protected(relative_path)
     approval_verified = False
 
-    if protected:
-        if approval is None:
+    if True:  # All repair targets require approval, not only protected ones.
+        if approval is None or policy is None:
             return RepairResult(
                 False,
                 "HUMAN_APPROVAL_REQUIRED",
@@ -361,6 +362,7 @@ def apply_repair(
                 proposal,
                 approval,
                 baseline=baseline,
+                policy=policy,
             )
         except Exception:
             approval_verified = False
@@ -412,7 +414,7 @@ def apply_repair(
 
         # Protected authorization is single-use and is consumed only after
         # every non-mutating filesystem precondition has succeeded.
-        if protected:
+        if True:  # Consume authorization for every mutation.
             if approval_ledger is None:
                 return RepairResult(
                     False,
@@ -428,6 +430,7 @@ def apply_repair(
                     proposal,
                     approval,
                     baseline=baseline,
+                    policy=policy,
                 )
             except Exception as exc:
                 reason = str(exc) or type(exc).__name__
@@ -470,41 +473,29 @@ def apply_repair(
                 sha256=before_hash,
             )
 
+            # Internal compensation of this exact write, not a public rollback.
+            # The public rollback API continues to require a distinct approval.
             try:
-                rollback = rollback_repair(
-                    root=root,
-                    backup=backup,
-                    expected_current_sha256=after_hash,
-                )
-            except Exception:
+                if before is None:
+                    os.unlink(leaf, dir_fd=parent_fd)
+                    os.fsync(parent_fd)
+                    restored = None
+                else:
+                    _atomic_replace_at(parent_fd, leaf, before)
+                    restored = _read_regular_at(parent_fd, leaf)
+                if restored != before:
+                    raise RuntimeError("COMPENSATION_VERIFICATION_FAILED")
+            except (OSError, RuntimeError):
                 return RepairResult(
-                    False,
-                    "POST_WRITE_HASH_MISMATCH_ROLLBACK_FAILED",
-                    relative_path,
-                    before_sha256=before_hash,
-                    after_sha256=after_hash,
-                    protected=protected,
+                    False, "POST_WRITE_HASH_MISMATCH_ROLLBACK_FAILED",
+                    relative_path, before_sha256=before_hash,
+                    after_sha256=after_hash, protected=protected,
                     approval_verified=approval_verified,
                 )
-
-            if not rollback.applied:
-                return RepairResult(
-                    False,
-                    "POST_WRITE_HASH_MISMATCH_ROLLBACK_FAILED",
-                    relative_path,
-                    before_sha256=before_hash,
-                    after_sha256=rollback.after_sha256,
-                    protected=protected,
-                    approval_verified=approval_verified,
-                )
-
             return RepairResult(
-                False,
-                "POST_WRITE_HASH_MISMATCH_ROLLED_BACK",
-                relative_path,
-                before_sha256=before_hash,
-                after_sha256=rollback.after_sha256,
-                protected=protected,
+                False, "POST_WRITE_HASH_MISMATCH_ROLLED_BACK",
+                relative_path, before_sha256=before_hash,
+                after_sha256=before_hash, protected=protected,
                 approval_verified=approval_verified,
             )
 
@@ -571,11 +562,25 @@ def rollback_repair(
     root: Path,
     backup: RepairBackup,
     expected_current_sha256: str | None,
+    proposal: RepairProposal | None = None,
+    approval: HumanApproval | None = None,
+    approval_ledger: ApprovalLedger | None = None,
+    baseline: str | None = None,
+    policy=None,
 ) -> RepairResult:
     """Restore the exact state captured immediately before a repair."""
 
     relative_path = _normalize_relative(backup.relative_path)
     protected = _protected(relative_path)
+    # No rollback may reach the filesystem without a distinct, single-use approval.
+    if any(x is None for x in (proposal, approval, approval_ledger, baseline, policy)):
+        return RepairResult(False, "ROLLBACK_AUTHORIZATION_REQUIRED", relative_path, protected=protected)
+    if relative_path not in proposal.affected_files:
+        return RepairResult(False, "ROLLBACK_TARGET_NOT_APPROVED", relative_path, protected=protected)
+    try:
+        approval_ledger.consume(proposal, approval, baseline=baseline, policy=policy)
+    except Exception:
+        return RepairResult(False, "ROLLBACK_APPROVAL_INVALID", relative_path, protected=protected)
 
     try:
         parent_fd, leaf = _open_parent_dirfd(root, relative_path)

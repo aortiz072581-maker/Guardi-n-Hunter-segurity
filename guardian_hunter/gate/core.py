@@ -18,6 +18,7 @@ PROTECTED_PREFIXES = (
     "guardian_hunter/governance/",
     "guardian_hunter/evidence/",
     "guardian_hunter/gate/",
+    "guardian_hunter/harness/",
     "guardian_hunter/auditor/",
     "guardian_hunter/repair/",
     "guardian_hunter/runner/",
@@ -45,7 +46,16 @@ def sha256_file(path: Path) -> str:
 
 
 def protected_change(path: str) -> bool:
-    clean = path.replace("\\", "/").lstrip("./")
+    """Fail closed for ambiguous paths; normalize only safe repo-relative paths."""
+    from pathlib import PurePosixPath
+    if not isinstance(path, str) or not path or "\x00" in path:
+        return True
+    if "\\" in path or path.startswith("/") or ":" in path:
+        return True
+    parts = path.split("/")
+    if any(part in ("", ".", "..") for part in parts):
+        return True
+    clean = str(PurePosixPath(*parts))
     return any(clean.startswith(prefix) for prefix in PROTECTED_PREFIXES)
 
 

@@ -262,3 +262,23 @@ def test_repair_cannot_approve_own_boundary_change():
     assert result.reason.startswith(
         "PROTECTED_BOUNDARY_CHANGED:"
     )
+
+def test_gate_protects_execution_broker():
+    from guardian_hunter.gate.core import (
+        evaluate_candidate,
+        protected_change,
+    )
+
+    path = "guardian_hunter/harness/broker.py"
+
+    assert protected_change(path) is True
+
+    result = evaluate_candidate([path])
+
+    assert result.passed is False
+    assert result.human_review_required is True
+    assert result.agent_merge_allowed is False
+    assert result.reason == (
+        "PROTECTED_BOUNDARY_CHANGED:"
+        "guardian_hunter/harness/broker.py"
+    )

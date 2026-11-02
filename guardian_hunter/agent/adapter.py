@@ -68,3 +68,24 @@ def policy() -> AdapterPolicy:
         raise RuntimeError("PROTECTED_ACCESS_FORBIDDEN")
 
     return result
+
+
+def resolve_in_workspace(workspace: Path, relative: str) -> Path:
+    """Valida lexicamente Y contra el disco: sin symlinks, sin escapar la raiz."""
+    if "\x00" in relative:
+        raise ValueError("NULL_BYTE_FORBIDDEN")
+    candidate = validate_relative_path(relative)
+    root = workspace.resolve(strict=True)
+    current = root
+    for part in candidate.parts:
+        current = current / part
+        if current.is_symlink():
+            raise ValueError("SYMLINK_FORBIDDEN")
+    # Defensa en profundidad: solo alcanzable por carrera (symlink creado
+    # entre el bucle y este resolve). No es probable de forma determinista.
+    target = (root / candidate).resolve(strict=False)
+    try:
+        target.relative_to(root)
+    except ValueError as exc:
+        raise ValueError("PATH_ESCAPE") from exc
+    return target

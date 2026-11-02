@@ -31,3 +31,10 @@ htmlcov/
 .DS_Store
 
 .test-results/
+.hypothesis/
+Guardian_Hunter_FUENTE_COMPLETA.pdf
+TODOS_LOS_CODIGOS.txt
+AUDITORIA_TOTAL_*.txt
+__pycache__/
+*.pyc
+.pytest_cache/

@@ -9,6 +9,8 @@ from typing import Any
 
 
 def _run(command: list[str]) -> str:
+    if not isinstance(command, list) or tuple(command) not in {("ip", "route"), ("ip", "neigh"), ("ip", "-brief", "addr")} :
+        return ""
     try:
         result = subprocess.run(
             command,

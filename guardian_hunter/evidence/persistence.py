@@ -206,6 +206,31 @@ class EvidenceStore:
 
             records = self._load_from_fd(fd)
 
+            previous = GENESIS
+
+            for expected_sequence, existing in enumerate(
+                records, start=1
+            ):
+                expected_hash = _calculate_hash(
+                    existing.sequence,
+                    existing.evidence_id,
+                    existing.event_type,
+                    existing.timestamp,
+                    existing.payload,
+                    existing.previous_hash,
+                )
+
+                if (
+                    existing.sequence != expected_sequence
+                    or existing.previous_hash != previous
+                    or existing.record_hash != expected_hash
+                ):
+                    raise RuntimeError(
+                        "EVIDENCE_CHAIN_COMPROMISED"
+                    )
+
+                previous = existing.record_hash
+
             sequence = len(records) + 1
 
             previous_hash = (
@@ -329,11 +354,11 @@ class EvidenceStore:
 
             previous_hash = record.record_hash
 
-        valid = not (
-            invalid_sequence
-            or invalid_hash
-            or invalid_chain
-        )
+        valid = not any((
+            invalid_sequence,
+            invalid_hash,
+            invalid_chain,
+        ))
 
         return EvidenceVerification(
             state=(

@@ -19,6 +19,7 @@ import secrets
 from time import time
 
 from guardian_hunter.repair.proposal import RepairProposal
+from guardian_hunter.security.authorization_binding import canonical_hash
 
 
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -36,6 +37,7 @@ class HumanApproval:
     issued_at: float
     expires_at: float
     baseline: str
+    policy_hash: str = ""
 
     automatic_apply: bool = False
     execution_allowed: bool = False
@@ -60,6 +62,9 @@ class HumanApproval:
         if not BASELINE_RE.fullmatch(self.baseline):
             raise ValueError("INVALID_BASELINE")
 
+        if not SHA256_RE.fullmatch(self.policy_hash):
+            raise ValueError("POLICY_HASH_REQUIRED")
+
         if self.automatic_apply:
             raise PermissionError("AUTOMATIC_APPLY_FORBIDDEN")
 
@@ -78,8 +83,11 @@ def approve(
     baseline: str,
     now: float | None = None,
     ttl: float = DEFAULT_APPROVAL_TTL,
+    policy=None,
 ) -> HumanApproval:
     proposal.validate()
+    if policy is None:
+        raise PermissionError("POLICY_CONTEXT_REQUIRED")
 
     if decision != "APPROVED":
         raise PermissionError("HUMAN_APPROVAL_REQUIRED")
@@ -98,6 +106,7 @@ def approve(
         issued_at=issued,
         expires_at=issued + ttl,
         baseline=baseline,
+        policy_hash=canonical_hash(policy),
     )
 
     approval.validate()
@@ -110,9 +119,12 @@ def verify_approval(
     *,
     baseline: str,
     now: float | None = None,
+    policy=None,
 ) -> bool:
     proposal.validate()
     approval.validate()
+    if policy is None:
+        raise PermissionError("POLICY_CONTEXT_REQUIRED")
 
     current = time() if now is None else float(now)
 
@@ -137,6 +149,10 @@ def verify_approval(
     ):
         raise PermissionError("BASELINE_MISMATCH")
 
+    current_policy_hash = canonical_hash(policy)
+    if not hmac.compare_digest(approval.policy_hash, current_policy_hash):
+        raise PermissionError("POLICY_HASH_MISMATCH")
+
     return True
 
 
@@ -153,12 +169,14 @@ class ApprovalLedger:
         *,
         baseline: str,
         now: float | None = None,
+        policy=None,
     ) -> bool:
         verify_approval(
             proposal,
             approval,
             baseline=baseline,
             now=now,
+            policy=policy,
         )
 
         self.path.parent.mkdir(

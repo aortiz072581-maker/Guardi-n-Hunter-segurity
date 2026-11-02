@@ -334,12 +334,20 @@ def run_guardian_hunter() -> dict[str, Any]:
 def main() -> int:
     report = run_guardian_hunter()
 
+    public_report = {
+        "guardian_hunter": "UNIFIED_DEFENSIVE_FLOW",
+        "status": report.get("status", "UNKNOWN"),
+        "automatic_commit": False,
+        "automatic_baseline_update": False,
+        "human_approval_required": True,
+        "sensitive_details_redacted": True,
+    }
+
     print(
         json.dumps(
-            report,
+            public_report,
             indent=2,
             sort_keys=True,
-            default=str,
         )
     )
 

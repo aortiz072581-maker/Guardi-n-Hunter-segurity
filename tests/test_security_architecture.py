@@ -429,6 +429,7 @@ def test_repair_post_write_hash_mismatch_automatically_rolls_back(
         apply_repair,
     )
     from guardian_hunter.repair.proposal import RepairProposal
+    from guardian_hunter.repair.approval import ApprovalLedger, approve
 
     target = tmp_path / "ordinary.txt"
 
@@ -439,7 +440,7 @@ def test_repair_post_write_hash_mismatch_automatically_rolls_back(
     target.write_bytes(original)
 
     proposal = RepairProposal(
-        finding_id="GH-P0-ROLLBACK",
+        finding_id="GH-1001",
         summary="Post-write mismatch rollback regression",
         affected_files=("ordinary.txt",),
         patch="controlled regression test",
@@ -451,6 +452,18 @@ def test_repair_post_write_hash_mismatch_automatically_rolls_back(
         expected_sha256=executor._digest(original),
         replacement=requested,
     )
+
+    # Test-scoped approval: never use a production ledger or approval.
+    baseline = "a" * 40
+    policy = {"test_scope": "isolated_rollback_regression", "version": 1}
+    approval = approve(
+        proposal,
+        decision="APPROVED",
+        approver_id="isolated-test-human",
+        baseline=baseline,
+        policy=policy,
+    )
+    ledger = ApprovalLedger(tmp_path / "approval-ledger.txt")
 
     real_atomic_replace_at = executor._atomic_replace_at
     calls = 0
@@ -481,7 +494,10 @@ def test_repair_post_write_hash_mismatch_automatically_rolls_back(
             root=tmp_path,
             proposal=proposal,
             action=action,
-            baseline="a" * 40,
+            baseline=baseline,
+            approval=approval,
+            approval_ledger=ledger,
+            policy=policy,
         )
 
     assert calls == 2
