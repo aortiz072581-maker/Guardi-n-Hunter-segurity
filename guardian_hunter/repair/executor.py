@@ -66,23 +66,14 @@ def _digest(data: bytes) -> str:
     return sha256(data).hexdigest()
 
 
+from guardian_hunter.core.paths import normalize_relative
+
+
 def _normalize_relative(path: str) -> str:
-    raw = path.replace("\\", "/")
-
-    if (
-        not raw
-        or raw.startswith("/")
-        or raw.startswith("./")
-        or "\x00" in raw
-    ):
-        raise ValueError("INVALID_REPAIR_PATH")
-
-    parts = raw.split("/")
-
-    if any(part in ("", ".", "..") for part in parts):
-        raise ValueError("INVALID_REPAIR_PATH")
-
-    return "/".join(parts)
+    try:
+        return normalize_relative(path)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("INVALID_REPAIR_PATH") from exc
 
 
 def _protected(relative_path: str) -> bool:

@@ -71,33 +71,11 @@ def _digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+from guardian_hunter.core.paths import normalize_relative
+
+
 def _normalize_relative_path(value: str) -> str:
-    if not isinstance(value, str):
-        raise TypeError("PATH_MUST_BE_STRING")
-
-    if not value or "\x00" in value:
-        raise ValueError("INVALID_PATH")
-
-    value = value.replace("\\", "/")
-
-    if value.startswith("/"):
-        raise ValueError("ABSOLUTE_PATH_FORBIDDEN")
-
-    pieces = value.split("/")
-
-    if ".." in pieces:
-        raise ValueError("PATH_TRAVERSAL_FORBIDDEN")
-
-    normalized = "/".join(
-        piece
-        for piece in pieces
-        if piece not in ("", ".")
-    )
-
-    if not normalized:
-        raise ValueError("EMPTY_PATH")
-
-    return normalized
+    return normalize_relative(value)
 
 
 def _is_protected(value: str) -> bool:
