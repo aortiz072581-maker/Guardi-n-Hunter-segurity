@@ -38,3 +38,6 @@ AUDITORIA_TOTAL_*.txt
 __pycache__/
 *.pyc
 .pytest_cache/
+extract_all_code.py
+pdf_puro.py
+todo_en_pdf.py

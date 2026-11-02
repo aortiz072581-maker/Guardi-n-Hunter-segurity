@@ -121,6 +121,11 @@ def _safe_source_bytes(
     if _is_protected(normalized):
         raise PermissionError("PROTECTED_PATH")
 
+    _cur = root
+    for _part in normalized.split("/"):
+        _cur = _cur / _part
+        if _cur.is_symlink():
+            raise PermissionError("SOURCE_SYMLINK_FORBIDDEN")
     candidate = root / normalized
 
     try:
