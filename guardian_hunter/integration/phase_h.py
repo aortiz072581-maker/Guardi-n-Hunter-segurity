@@ -1,4 +1,3 @@
-
 """Guardian Hunter Phase H: audited operational entry point."""
 
 from __future__ import annotations
@@ -27,6 +26,8 @@ def run_phase_h(root, evidence_path):
         "automatic_repair": False,
         "merge_allowed": False,
         "human_approval_required": True,
+        "evidence_integrity": "FAIL",
+        "events_recorded": 0,
     }
 
     try:
@@ -40,6 +41,28 @@ def run_phase_h(root, evidence_path):
         if evidence.is_symlink():
             result["reason"] = "UNSAFE_EVIDENCE_PATH"
             return result
+
+        # FIX: detect tampered evidence BEFORE trusting assessment
+        if evidence.exists() and evidence.is_file():
+            try:
+                from guardian_hunter.evidence.persistence import EvidenceStore
+                v = EvidenceStore(evidence).verify()
+                if v.state != "EVIDENCE_INTEGRITY_OK":
+                    result["reason"] = "EVIDENCE_NOT_VERIFIED"
+                    result["evidence_integrity"] = "FAIL"
+                    result["status"] = "BLOCKED"
+                    result["events_recorded"] = 0
+                    result["execution_allowed"] = False
+                    result["automatic_repair"] = False
+                    result["merge_allowed"] = False
+                    result["human_approval_required"] = True
+                    return result
+            except Exception:
+                result["reason"] = "EVIDENCE_NOT_VERIFIED"
+                result["evidence_integrity"] = "FAIL"
+                result["status"] = "BLOCKED"
+                result["events_recorded"] = 0
+                return result
 
         assessment = run_audited_phase_fg(root, evidence)
 
@@ -62,6 +85,7 @@ def run_phase_h(root, evidence_path):
 
         if assessment.get("evidence_integrity") != "PASS":
             result["reason"] = "EVIDENCE_NOT_VERIFIED"
+            result["evidence_integrity"] = "FAIL"
             return result
 
         if assessment.get("events_recorded") != 3:
@@ -83,8 +107,10 @@ def run_phase_h(root, evidence_path):
     except Exception as exc:
         result["reason"] = "OPERATIONAL_ERROR"
         result["error_type"] = type(exc).__name__
+        result["evidence_integrity"] = "FAIL"
+        result["events_recorded"] = 0
+        result["status"] = "BLOCKED"
         return result
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -104,7 +130,6 @@ def main():
         "MONITORING",
         "HUMAN_REVIEW_REQUIRED",
     ) else 1
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

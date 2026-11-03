@@ -596,28 +596,27 @@ def verify_protected_transaction(
         proposal: RepairProposal,
         nonce: str,
     ) -> HumanApproval:
-        # Fixed timestamps keep the verifier deterministic while
-        # remaining valid at construction time. The transactional
-        # approval verifier uses current time, so use a broad but
-        # finite validity interval.
         import time
-
+        from guardian_hunter.repair.approval import approve
+        from dataclasses import replace
+        policy_ctx = {
+            "execution_allowed": False,
+            "merge_allowed": False,
+            "automatic_apply": False,
+            "human_approval_required": True,
+            "baseline": baseline,
+        }
         now = time.time()
-
-        return HumanApproval(
-            finding_id=proposal.finding_id,
-            proposal_hash=proposal.proposal_hash,
+        base = approve(
+            proposal,
             decision="APPROVED",
             approver_id="guardian-security-verifier",
-            nonce=nonce,
-            issued_at=now,
-            expires_at=now + 300.0,
             baseline=baseline,
-            policy_hash=None,
-            automatic_apply=False,
-            execution_allowed=False,
-            merge_allowed=False,
+            now=now,
+            ttl=300.0,
+            policy=policy_ctx,
         )
+        return replace(base, nonce=nonce)
 
     with TemporaryDirectory(
         prefix="gh-protected-verifier-"

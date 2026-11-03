@@ -119,3 +119,14 @@ def run_candidate(command, *, broker=None, workspace=None, env=None):
         return r.returncode if hasattr(r,"returncode") else r
 
 def run_command(c,**kw): return run_candidate(c,**kw)
+
+# --- compat shims for old tests ---
+def validate_command(command):
+    _check_empty_command(command)
+    _check_executable(command[0])
+    _check_forbidden_tokens(command)
+    _check_code_execution_switches(command)
+    if len(command) >= 2 and command[1] not in ("--version",):
+        # valida que no sea traversal, etc
+        _validate_candidate_path(Path(command[1]), Path.cwd())
+    return command

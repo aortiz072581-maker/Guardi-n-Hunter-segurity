@@ -768,6 +768,14 @@ def run_transactional_repair(
         relative_path=relative_path,
     )
 
+    # Policy context for approval verification (same as verifier)
+    policy_ctx = {
+        "execution_allowed": False,
+        "merge_allowed": False,
+        "automatic_apply": False,
+        "human_approval_required": True,
+        "baseline": baseline,
+    }
     apply_result = apply_repair(
         root=root,
         proposal=proposal,
@@ -775,6 +783,7 @@ def run_transactional_repair(
         baseline=baseline,
         approval=approval,
         approval_ledger=approval_ledger,
+        policy=policy_ctx,
     )
 
     if not apply_result.applied:
