@@ -41,3 +41,10 @@ __pycache__/
 extract_all_code.py
 pdf_puro.py
 todo_en_pdf.py
+
+audit/connectivity_audit_v2.json
+audit/connectivity_audit_v5.json
+guardian_hunter_inventory_1_30.txt
+.guardian/local-backups/
+Guardian_Hunter_*.pdf
+Guia_Final_*.pdf
