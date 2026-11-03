@@ -12,6 +12,13 @@ from guardian_hunter.repair.proposal import RepairProposal
 BASELINE = "a" * 40
 
 
+POLICY = {
+    "mode": "DRY_RUN",
+    "execution_allowed": False,
+    "human_review_required": True,
+}
+
+
 def proposal():
     return RepairProposal(
         finding_id="GH-007",
@@ -37,7 +44,7 @@ def approval_for(value):
         value,
         decision="APPROVED",
         approver_id="human-test-reviewer",
-        baseline=BASELINE,
+        baseline=BASELINE, policy=POLICY,
         now=100.0,
         ttl=900.0,
     )
@@ -54,7 +61,7 @@ def test_exact_approval_can_be_consumed_once(tmp_path):
     assert ledger.consume(
         value,
         approval,
-        baseline=BASELINE,
+        baseline=BASELINE, policy=POLICY,
         now=150.0,
     ) is True
 
@@ -70,7 +77,7 @@ def test_exact_approval_cannot_be_consumed_twice(tmp_path):
     assert ledger.consume(
         value,
         approval,
-        baseline=BASELINE,
+        baseline=BASELINE, policy=POLICY,
         now=150.0,
     ) is True
 
@@ -81,7 +88,7 @@ def test_exact_approval_cannot_be_consumed_twice(tmp_path):
         ledger.consume(
             value,
             approval,
-            baseline=BASELINE,
+            baseline=BASELINE, policy=POLICY,
             now=151.0,
         )
 
@@ -99,7 +106,7 @@ def test_replay_stays_blocked_after_new_ledger_instance(
     assert first.consume(
         value,
         approval,
-        baseline=BASELINE,
+        baseline=BASELINE, policy=POLICY,
         now=150.0,
     ) is True
 
@@ -112,7 +119,7 @@ def test_replay_stays_blocked_after_new_ledger_instance(
         second.consume(
             value,
             approval,
-            baseline=BASELINE,
+            baseline=BASELINE, policy=POLICY,
             now=151.0,
         )
 
@@ -152,7 +159,7 @@ def test_expired_approval_not_consumed(tmp_path):
         ledger.consume(
             value,
             approval,
-            baseline=BASELINE,
+            baseline=BASELINE, policy=POLICY,
             now=1001.0,
         )
 
@@ -172,7 +179,7 @@ def test_ledger_parent_created_securely(tmp_path):
     assert ledger.consume(
         value,
         approval,
-        baseline=BASELINE,
+        baseline=BASELINE, policy=POLICY,
         now=150.0,
     ) is True
 
