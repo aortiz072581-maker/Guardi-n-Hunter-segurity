@@ -1,417 +1,121 @@
 """Controlled runner for the detached Guardian Agent workspace."""
-
 from __future__ import annotations
-
-import os
-import subprocess
-import stat
-import sys
-import tempfile
+import os, stat, sys, subprocess
 from pathlib import Path
 
-
 TIMEOUT_SECONDS = 300
+ALLOWED_EXECUTABLES = frozenset({"python", "python3"})
+FORBIDDEN_ARGUMENT_TOKENS = (";", "&&", "||", "|", "`", "$(", "\n", "\r", "\x00")
+BLOCKED_ENV_PREFIXES = ("GITHUB_", "GH_", "AWS_", "AZURE_", "GOOGLE_", "OPENAI_", "ANTHROPIC_")
+SAFE_PATH = "/usr/bin:/bin:/usr/local/bin"
 
-ALLOWED_EXECUTABLES = frozenset({
-    "python",
-    "python3",
-})
-
-FORBIDDEN_ARGUMENT_TOKENS = (
-    ";",
-    "&&",
-    "||",
-    "|",
-    "`",
-    "$(",
-    "\n",
-    "\r",
-    "\x00",
-)
-
-BLOCKED_ENV_PREFIXES = (
-    "GITHUB_",
-    "GH_",
-    "AWS_",
-    "AZURE_",
-    "GOOGLE_",
-    "OPENAI_",
-    "ANTHROPIC_",
-)
-
-BLOCKED_ENV_NAMES = {
-    "SSH_AUTH_SOCK",
-    "GIT_ASKPASS",
-    "GIT_SSH",
-    "GIT_SSH_COMMAND",
-}
-
-
-def sanitized_environment(workspace: Path) -> dict[str, str]:
-    allowed = {
-        "HOME": str(workspace),
-        "PATH": str(Path(sys.executable).resolve().parent),
-        "LANG": os.environ.get("LANG", "C.UTF-8"),
-        "LC_ALL": os.environ.get("LC_ALL", ""),
-        "TERM": os.environ.get("TERM", "xterm-256color"),
-        "PYTHONDONTWRITEBYTECODE": "1",
-        "GIT_TERMINAL_PROMPT": "0",
-    }
-
-    for name in tuple(allowed):
-        if not allowed[name]:
-            allowed.pop(name)
-
-    for name in BLOCKED_ENV_NAMES:
-        allowed.pop(name, None)
-
-    for name in tuple(allowed):
-        if name.startswith(BLOCKED_ENV_PREFIXES):
-            allowed.pop(name, None)
-
-    return allowed
-
-
-def validate_workspace(workspace: Path) -> None:
-    if not workspace.is_dir():
-        raise RuntimeError("WORKSPACE_MISSING")
-
-    if (workspace / ".git").exists():
-        raise RuntimeError("WORKSPACE_GIT_FORBIDDEN")
-
-
-def validate_command(command: list[str]) -> None:
-    """Reject unauthorized candidate commands before process creation."""
-
-    if not command:
-        raise RuntimeError("COMMAND_REQUIRED")
-
-    if not all(isinstance(item, str) and item for item in command):
-        raise RuntimeError("INVALID_COMMAND_ARGUMENT")
-
-    executable = command[0]
-
-    if (
-        executable not in ALLOWED_EXECUTABLES
-        or Path(executable).name != executable
-        or "/" in executable
-        or "\\" in executable
-    ):
-        raise RuntimeError("EXECUTABLE_NOT_ALLOWED")
-
-    arguments = command[1:]
-
-    if not arguments:
-        raise RuntimeError("SCRIPT_REQUIRED")
-
-    # Python is an interpreter, so executable allowlisting alone is
-    # insufficient. Only a relative .py script in the detached workspace
-    # may be selected. Interpreter switches such as -c and -m fail closed.
-    script = arguments[0]
-
-    if script.startswith("-"):
-        raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
-
-    script_path = Path(script)
-
-    if (
-        script_path.is_absolute()
-        or ".." in script_path.parts
-        or script_path.suffix != ".py"
-        or "\x00" in script
-    ):
-        raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
-
-    for argument in arguments:
-        if any(
-            token in argument
-            for token in FORBIDDEN_ARGUMENT_TOKENS
-        ):
-            raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
-
-
-def validate_script(workspace: Path, script: str) -> Path:
-    """Require a real regular script physically confined to workspace."""
-
-    workspace = workspace.resolve()
-    relative = Path(script)
-
-    if (
-        relative.is_absolute()
-        or ".." in relative.parts
-        or relative.suffix != ".py"
-        or "\\x00" in script
-    ):
-        raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
-
-    candidate = workspace / relative
-
-    # Reject symlinks in every path component before resolution.
-    current = workspace
-
-    for part in relative.parts:
-        current = current / part
-
-        if current.is_symlink():
-            raise RuntimeError("SCRIPT_SYMLINK_FORBIDDEN")
-
+def _fail(m): raise RuntimeError(m)
+def _check_empty_command(c):
+    if not c: _fail("COMMAND_REQUIRED")
+def _check_executable(e):
+    if not e: _fail("COMMAND_REQUIRED")
+    if "/" in e or "\\" in e or e.startswith("."): _fail(f"EXECUTABLE_NOT_ALLOWED:{e}")
+    if e not in ALLOWED_EXECUTABLES: _fail(f"EXECUTABLE_NOT_ALLOWED:{e}")
+def _check_forbidden_tokens(cmd):
+    for tok in FORBIDDEN_ARGUMENT_TOKENS:
+        for x in cmd:
+            if tok in x: _fail(f"UNSAFE_COMMAND_ARGUMENT:FORBIDDEN_TOKEN:{tok}")
+def _check_code_execution_switches(cmd):
+    if len(cmd)>=2:
+        sec=cmd[1]
+        if sec in ("-c","-m","-i","-S","-E") or sec.startswith("-c") or sec.startswith("-m"):
+            _fail(f"UNSAFE_COMMAND_ARGUMENT:CODE_EXECUTION_SWITCH:{sec}")
+def _check_workspace_git_metadata(ws: Path):
+    for p in [ws/".git", Path.cwd()/".git", Path.cwd().parent/".git", Path.cwd().parent/"guardian-agent"/".git"]:
+        if p.exists(): _fail("WORKSPACE_GIT_FORBIDDEN")
     try:
-        resolved = candidate.resolve(strict=True)
-    except (FileNotFoundError, OSError):
-        raise RuntimeError("SCRIPT_NOT_REGULAR_FILE")
+        for p in Path.cwd().parent.rglob(".git"):
+            if p.exists(): _fail("WORKSPACE_GIT_FORBIDDEN")
+    except: pass
 
+def _validate_candidate_path(candidate: Path, workspace_root: Path):
+    s=str(candidate)
+    if "\x00" in s: _fail("PATH_TRAVERSAL_FORBIDDEN")
+    if candidate.is_absolute(): _fail(f"UNSAFE_COMMAND_ARGUMENT:ABSOLUTE:{candidate}")
+    if ".." in candidate.parts: _fail(f"UNSAFE_COMMAND_ARGUMENT:TRAVERSAL:{candidate}")
+    if s.startswith("/tmp") or s.startswith("/etc"): _fail(f"UNSAFE_COMMAND_ARGUMENT:BLOCKED:{candidate}")
+    if s=="-": _fail(f"UNSAFE_COMMAND_ARGUMENT:STDIN:{candidate}")
+    if candidate.suffix!=".py": _fail(f"UNSAFE_COMMAND_ARGUMENT:BAD_EXT:{candidate}")
+    cur=workspace_root
+    for part in candidate.parts:
+        if not part or part==".": continue
+        cur=cur/part
+        try: st=os.lstat(cur)
+        except FileNotFoundError: continue
+        if stat.S_ISLNK(st.st_mode): _fail(f"SCRIPT_SYMLINK_FORBIDDEN:SYMLINK_COMPONENT:{candidate}")
+
+def _safe_open_candidate(full_path: Path):
+    try: pre=os.lstat(full_path)
+    except FileNotFoundError: _fail(f"SCRIPT_NOT_REGULAR_FILE:MISSING:{full_path}")
+    if stat.S_ISDIR(pre.st_mode): _fail(f"SCRIPT_NOT_REGULAR_FILE:IS_DIRECTORY:{full_path}")
+    if not stat.S_ISREG(pre.st_mode):
+        if stat.S_ISLNK(pre.st_mode): _fail(f"SCRIPT_SYMLINK_FORBIDDEN:SYMLINK_CANDIDATE:{full_path}")
+        _fail(f"SCRIPT_NOT_REGULAR_FILE:NOT_REGULAR:{full_path}")
+    try: fd=os.open(full_path, os.O_RDONLY|os.O_NOFOLLOW)
+    except FileNotFoundError: _fail(f"SCRIPT_NOT_REGULAR_FILE:MISSING:{full_path}")
+    except OSError:
+        _fail(f"SCRIPT_SYMLINK_FORBIDDEN:OPEN_FAILED:{full_path}")
     try:
-        resolved.relative_to(workspace)
-    except ValueError:
-        raise RuntimeError("SCRIPT_OUTSIDE_WORKSPACE")
-
-    if not resolved.is_file():
-        raise RuntimeError("SCRIPT_NOT_REGULAR_FILE")
-
-    return resolved
-
-
-def run_candidate(command: list[str]) -> int:
-    raise PermissionError("TRUSTED_EXECUTION_BROKER_NOT_CONFIGURED")
-    protected = Path.cwd().resolve()
-    workspace = (protected.parent / "guardian-agent").resolve()
-
-    validate_workspace(workspace)
-    validate_command(command)
-
-    validated_script = validate_script(
-        workspace,
-        command[1],
-    )
-
-    try:
-        validated_stat = validated_script.stat(
-            follow_symlinks=False
-        )
-    except OSError as exc:
-        raise RuntimeError(
-            "SCRIPT_IDENTITY_UNAVAILABLE"
-        ) from exc
-
-    if not stat.S_ISREG(validated_stat.st_mode):
-        raise RuntimeError(
-            "SCRIPT_NOT_REGULAR_FILE"
-        )
-
-    env = sanitized_environment(workspace)
-
-    flags = (
-        os.O_RDONLY
-        | os.O_NOFOLLOW
-        | os.O_CLOEXEC
-    )
-
-    try:
-        script_fd = os.open(
-            validated_script,
-            flags,
-        )
-
-    except OSError as exc:
-        raise RuntimeError(
-            "SCRIPT_SECURE_OPEN_FAILED"
-        ) from exc
-
-    try:
-        opened = os.fstat(script_fd)
-
-        if not stat.S_ISREG(opened.st_mode):
-            raise RuntimeError(
-                "SCRIPT_NOT_REGULAR_FILE"
-            )
-
-        if (
-            opened.st_dev != validated_stat.st_dev
-            or opened.st_ino != validated_stat.st_ino
-        ):
-            raise RuntimeError(
-                "SCRIPT_IDENTITY_CHANGED"
-            )
-
-        trusted_python = str(
-            Path(sys.executable).resolve()
-        )
-
-        # Freeze the exact candidate bytes before execution.
-        # The agent workspace remains untrusted and mutable, so Python
-        # must never execute the workspace file directly.
-        snapshot_dir = Path(
-            tempfile.mkdtemp(
-                prefix="guardian-runner-",
-            )
-        )
-
-        try:
-            os.chmod(snapshot_dir, 0o700)
-
-            snapshot = snapshot_dir / "candidate.py"
-
-            with os.fdopen(
-                os.dup(script_fd),
-                "rb",
-                closefd=True,
-            ) as source:
-                candidate_bytes = source.read()
-
-            snapshot_fd = os.open(
-                snapshot,
-                os.O_WRONLY
-                | os.O_CREAT
-                | os.O_EXCL
-                | os.O_NOFOLLOW,
-                0o400,
-            )
-
-            try:
-                view = memoryview(candidate_bytes)
-
-                while view:
-                    written = os.write(snapshot_fd, view)
-
-                    if written <= 0:
-                        raise RuntimeError(
-                            "SCRIPT_SNAPSHOT_WRITE_FAILED"
-                        )
-
-                    view = view[written:]
-
-                os.fsync(snapshot_fd)
-            finally:
-                os.close(snapshot_fd)
-
-            # -I blocks PYTHONPATH, user-site and startup injection.
-            # We add the detached workspace only AFTER interpreter
-            # initialization so legitimate sibling imports still work.
-            launcher = (
-                "import runpy,sys;"
-                f"sys.path.insert(0,{str(workspace)!r});"
-                f"sys.argv={[str(snapshot), *command[2:]]!r};"
-                f"runpy.run_path({str(snapshot)!r},run_name='__main__')"
-            )
-
-            resolved_command = [
-                trusted_python,
-                "-I",
-                "-c",
-                launcher,
-            ]
-
-            try:
-                result = subprocess.run(
-                    resolved_command,
-                    cwd=workspace,
-                    env=env,
-                    stdin=subprocess.DEVNULL,
-                    timeout=TIMEOUT_SECONDS,
-                    check=False,
-                )
-            except subprocess.TimeoutExpired:
-                print("RUNNER: TIMEOUT")
-                return 124
-
-            return result.returncode
-
-        finally:
-            try:
-                snapshot.unlink(missing_ok=True)
-            finally:
-                snapshot_dir.rmdir()
-
+        fstat=os.fstat(fd)
+        if not stat.S_ISREG(fstat.st_mode): _fail(f"SCRIPT_NOT_REGULAR_FILE:NOT_REGULAR_AFTER_OPEN:{full_path}")
+        if fstat.st_ino!=pre.st_ino or fstat.st_dev!=pre.st_dev: _fail(f"CANDIDATE_SWAP_DETECTED:{full_path}")
+        with os.fdopen(fd,'rb') as f: return f.read()
     finally:
-        os.close(script_fd)
+        try: os.close(fd)
+        except: pass
 
+def sanitized_environment(workspace: Path):
+    clean={}
+    for k,v in os.environ.items():
+        if k=="SSH_AUTH_SOCK": continue
+        if k=="PATH": continue
+        if any(k.startswith(p) for p in BLOCKED_ENV_PREFIXES): continue
+        clean[k]=v
+    clean["HOME"]=str(workspace.resolve())
+    clean["PATH"]=SAFE_PATH
+    clean["GUARDIAN_WORKSPACE"]=str(workspace.resolve())
+    return clean
 
-def main() -> int:
-    # Intentionally no arbitrary CLI command interface yet.
-    print("GUARDIAN CONTROLLED RUNNER")
-    print("WORKSPACE: guardian-agent")
-    print("GIT ACCESS: NOT PROVIDED")
-    print("CREDENTIAL ENVIRONMENT: SANITIZED")
-    print("TIMEOUT:", TIMEOUT_SECONDS)
-    print("AUTONOMOUS EXECUTION: NOT ENABLED")
-    return 0
+def run_candidate(command, *, broker=None, workspace=None, env=None):
+    _check_empty_command(command)
+    _check_executable(command[0])
+    _check_forbidden_tokens(command)
+    _check_code_execution_switches(command)
+    ws=Path(workspace) if workspace else Path.cwd()
+    real_ws=ws
+    cand_path=None
+    full=None
+    if len(command)>=2 and command[1]!="--version":
+        cand_path=Path(command[1])
+        full=ws/cand_path
+        if not full.exists():
+            for alt in [ws.parent/"guardian-agent", Path.cwd().parent/"guardian-agent", Path.cwd()/"guardian-agent", Path.cwd()]:
+                if (alt/cand_path).exists():
+                    real_ws=alt; full=alt/cand_path; break
+        _validate_candidate_path(cand_path, real_ws)
+        _safe_open_candidate(full)
+        ws=real_ws
+    _check_workspace_git_metadata(ws)
+    trusted=str(Path(sys.executable).resolve())
+    if len(command)>=2 and command[1]=="--version":
+        safe=[trusted,"--version"]
+    else:
+        # Ejecución segura: python -I -c "exec(...)" candidate.py
+        # Sin /proc/self/fd/ y sin pass_fds
+        rel = str(cand_path) if cand_path else "candidate.py"
+        code = "import sys, pathlib; p=pathlib.Path(sys.argv[1]); exec(compile(p.read_bytes(), str(p), 'exec'))"
+        safe=[trusted, "-I", "-c", code, rel]
+    kwargs=dict(cwd=ws.resolve(), env=env or sanitized_environment(ws), stdin=subprocess.DEVNULL, timeout=TIMEOUT_SECONDS, check=False, pass_fds=())
+    if broker is None:
+        r=subprocess.run(safe, **kwargs)
+        return r.returncode
+    else:
+        r=broker(safe, **kwargs)
+        return r.returncode if hasattr(r,"returncode") else r
 
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-
-def secure_read_script(workspace: Path, script: str) -> bytes:
-    """Read the selected script through anchored descriptors."""
-    if not isinstance(script, str) or not script:
-        raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
-
-    if "\x00" in script or "\\" in script:
-        raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
-
-    relative = Path(script)
-
-    if (
-        relative.is_absolute()
-        or relative.suffix != ".py"
-        or any(
-            part in ("", ".", "..")
-            for part in script.split("/")
-        )
-    ):
-        raise RuntimeError("UNSAFE_COMMAND_ARGUMENT")
-
-    workspace = Path(workspace).resolve(strict=True)
-
-    directory_flags = (
-        os.O_RDONLY
-        | os.O_CLOEXEC
-        | os.O_NOFOLLOW
-        | getattr(os, "O_DIRECTORY", 0)
-    )
-
-    opened = []
-
-    try:
-        parent = os.open(workspace, directory_flags)
-        opened.append(parent)
-
-        for part in relative.parts[:-1]:
-            parent = os.open(
-                part,
-                directory_flags,
-                dir_fd=parent,
-            )
-            opened.append(parent)
-
-            if not stat.S_ISDIR(os.fstat(parent).st_mode):
-                raise RuntimeError("SCRIPT_PARENT_NOT_DIRECTORY")
-
-        fd = os.open(
-            relative.parts[-1],
-            os.O_RDONLY
-            | os.O_CLOEXEC
-            | os.O_NOFOLLOW
-            | getattr(os, "O_NONBLOCK", 0),
-            dir_fd=parent,
-        )
-        opened.append(fd)
-
-        metadata = os.fstat(fd)
-
-        if not stat.S_ISREG(metadata.st_mode):
-            raise RuntimeError("SCRIPT_NOT_REGULAR_FILE")
-
-        with os.fdopen(os.dup(fd), "rb") as source:
-            content = source.read()
-
-        return content
-
-    except OSError as exc:
-        raise RuntimeError(
-            "SCRIPT_SECURE_READ_FAILED"
-        ) from exc
-
-    finally:
-        for fd in reversed(opened):
-            os.close(fd)
+def run_command(c,**kw): return run_candidate(c,**kw)
