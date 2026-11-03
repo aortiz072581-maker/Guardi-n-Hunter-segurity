@@ -139,7 +139,7 @@ def test_wrong_baseline_not_consumed(tmp_path):
         ledger.consume(
             value,
             approval,
-            baseline="b" * 40,
+            baseline="b" * 40, policy=POLICY,
             now=150.0,
         )
 

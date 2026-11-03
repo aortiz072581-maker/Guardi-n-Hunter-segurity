@@ -146,6 +146,7 @@ def test_wrong_finding_invalidates_approval():
         issued_at=approval.issued_at,
         expires_at=approval.expires_at,
         baseline=approval.baseline,
+        policy_hash=approval.policy_hash,
     )
 
     with pytest.raises(
