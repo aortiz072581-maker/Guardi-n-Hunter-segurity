@@ -76,6 +76,11 @@ def prepare_phase_fg(assessment: dict) -> dict[str, Any]:
         return result
 
     findings = correlation.get("findings")
+    if findings is None:
+        # C6 operational nests findings under correlation.correlation.findings
+        inner = correlation.get("correlation")
+        if isinstance(inner, dict):
+            findings = inner.get("findings")
     if not isinstance(findings, list):
         result["reason"] = "MISSING_FINDINGS"
         return result
