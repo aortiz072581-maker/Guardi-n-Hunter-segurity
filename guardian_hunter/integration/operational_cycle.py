@@ -19,6 +19,7 @@ from guardian_hunter.integration.codex_supervised import (
 )
 from guardian_hunter.integration.automatic_repair import (
     AutomaticRepairCandidate,
+    execute_automatic_candidate,
     execute_candidate_batch,
 )
 from guardian_hunter.repair.proposal import RepairProposal

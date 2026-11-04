@@ -11,7 +11,7 @@ result = subprocess.run(
 output = result.stdout + "\n" + result.stderr
 
 # Buscar fallos
-failed = re.findall(r"FAILED (.+)", output)
+failed = re.findall(r"^FAILED (\S+)", output, re.M)
 passed_m = re.search(r"(\d+) passed", output)
 passed = passed_m.group(1) if passed_m else "0"
 warn_m = re.search(r"(\d+) warnings", output)
