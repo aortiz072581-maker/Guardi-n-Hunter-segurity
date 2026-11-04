@@ -1,42 +1,41 @@
 
-import pytest, json, time, hashlib
+import time, hashlib
 from cryptography.hazmat.primitives.asymmetric import ed25519
 import guardian_hunter.security.ed25519_approval as mod
 
 def test_canon():
-    assert mod._canon({"b":2,"a":1})
+    assert b'"a":1' in mod._canon({"b":2,"a":1})
 
-def test_sign_real():
-    priv = ed25519.Ed25519PrivateKey.generate()
-    res = mod.sign_approval(priv, "a.py", "abc", "def", time.time()+3600)
-    assert res
+def test_gen_keypair():
+    priv, pub = mod.gen_keypair()
+    assert priv and pub
 
-def test_verify_flow():
-    priv = ed25519.Ed25519PrivateKey.generate()
-    pub = priv.public_key()
-    expiry = time.time()+3600
-    signed = mod.sign_approval(priv, "guardian_hunter/harness/broker.py", "d"*64, "p"*64, expiry)
-    # Intenta todas las verifies posibles
-    for name in ["verify_approval","verify","check"]:
-        if hasattr(mod, name):
-            fn = getattr(mod, name)
-            try:
-                fn(pub, signed)
-                fn(pub, signed.get("path") if isinstance(signed, dict) else "a.py", signed)
-            except Exception:
-                pass
+def test_sign_verify_ok():
+    priv, pub = mod.gen_keypair()
+    path = "guardian_hunter/harness/broker.py"
+    diff = hashlib.sha256(b"diff").hexdigest()
+    prev = hashlib.sha256(b"prev").hexdigest()
+    expiry = time.time() + 3600
+    payload, sig_hex = mod.sign_approval(priv, path, diff, prev, expiry)
+    assert payload["path"] == path
+    assert mod.verify_approval(pub, payload, sig_hex) is True
 
-def test_expired():
-    priv = ed25519.Ed25519PrivateKey.generate()
-    try:
-        mod.sign_approval(priv, "p", "d", "pr", time.time()-5)
-    except Exception:
-        pass
+def test_verify_expired():
+    priv, pub = mod.gen_keypair()
+    payload, sig_hex = mod.sign_approval(priv, "a.py", "d1", "p1", time.time() - 10)
+    assert mod.verify_approval(pub, payload, sig_hex) is False
 
-def test_invalid():
-    priv = ed25519.Ed25519PrivateKey.generate()
-    for bad in [None, "", 123]:
-        try:
-            mod.sign_approval(bad, "p", "d", "pr", time.time()+100)
-        except Exception:
-            pass
+def test_verify_tampered_sig():
+    priv, pub = mod.gen_keypair()
+    payload, sig_hex = mod.sign_approval(priv, "a.py", "d1", "p1", time.time()+3600)
+    # firma mala
+    assert mod.verify_approval(pub, payload, "00"*64) is False
+    # payload tamper
+    payload2 = dict(payload)
+    payload2["path"] = "other.py"
+    assert mod.verify_approval(pub, payload2, sig_hex) is False
+
+def test_verify_bad_hex():
+    priv, pub = mod.gen_keypair()
+    payload = {"path":"a.py","diff":"d","prev":"p","exp": time.time()+100}
+    assert mod.verify_approval(pub, payload, "zzzz") is False
