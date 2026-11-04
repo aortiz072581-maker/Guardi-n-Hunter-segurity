@@ -31,7 +31,7 @@ def _check_workspace_git_metadata(ws: Path):
     try:
         for p in Path.cwd().parent.rglob(".git"):
             if p.exists(): _fail("WORKSPACE_GIT_FORBIDDEN")
-    except: pass
+    except OSError: pass
 
 def _validate_candidate_path(candidate: Path, workspace_root: Path):
     s=str(candidate)
@@ -67,7 +67,7 @@ def _safe_open_candidate(full_path: Path):
         with os.fdopen(fd,'rb') as f: return f.read()
     finally:
         try: os.close(fd)
-        except: pass
+        except OSError: pass
 
 def sanitized_environment(workspace: Path):
     clean={}
