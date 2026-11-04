@@ -39,12 +39,9 @@ def main() -> None:
     attacks = (
         ("claude", "git", ".git/config"),
         ("aider", "shell", "../guardian-hunter"),
-        ("codex", "propose_edit",
-         "guardian_hunter/gate/agent_gate.py"),
-        ("claude", "propose_edit",
-         "guardian_hunter/harness/broker.py"),
-        ("aider", "read_workspace",
-         ".guardian/trusted-baseline"),
+        ("codex", "propose_edit", "guardian_hunter/gate/agent_gate.py"),
+        ("claude", "propose_edit", "guardian_hunter/harness/broker.py"),
+        ("aider", "read_workspace", ".guardian/trusted-baseline"),
     )
 
     for provider, capability, path in attacks:
@@ -59,10 +56,7 @@ def main() -> None:
         except PermissionError:
             continue
 
-        raise SystemExit(
-            f"FAIL: broker accepted attack: "
-            f"{provider} {capability} {path}"
-        )
+        raise SystemExit(f"FAIL: broker accepted attack: {provider} {capability} {path}")
 
     try:
         prepare(
@@ -76,9 +70,7 @@ def main() -> None:
     except PermissionError:
         pass
     else:
-        raise SystemExit(
-            "FAIL: real execution unexpectedly enabled"
-        )
+        raise SystemExit("FAIL: real execution unexpectedly enabled")
 
     print("REAL EXECUTION BYPASS: DENIED")
     print("PROTECTED PATH BYPASS: DENIED")

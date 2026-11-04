@@ -11,10 +11,7 @@ TIMEOUT = 300
 
 SAFE_ENV = {
     "HOME": "/root",
-    "PATH": (
-        "/usr/local/sbin:/usr/local/bin:"
-        "/usr/sbin:/usr/bin:/sbin:/bin"
-    ),
+    "PATH": ("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"),
     "LANG": "C.UTF-8",
 }
 

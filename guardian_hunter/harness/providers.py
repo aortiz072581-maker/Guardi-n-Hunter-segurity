@@ -46,9 +46,7 @@ def get_provider(name: str) -> ProviderSpec:
     try:
         provider = Provider(name)
     except ValueError as exc:
-        raise PermissionError(
-            f"Unknown provider denied: {name}"
-        ) from exc
+        raise PermissionError(f"Unknown provider denied: {name}") from exc
 
     return PROVIDERS[provider]
 
@@ -69,7 +67,4 @@ def validate_provider(spec: ProviderSpec) -> None:
         actual = getattr(spec, field)
 
         if actual != expected:
-            raise PermissionError(
-                f"Provider policy violation: "
-                f"{field}={actual!r}"
-            )
+            raise PermissionError(f"Provider policy violation: {field}={actual!r}")

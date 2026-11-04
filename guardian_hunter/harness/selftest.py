@@ -7,53 +7,25 @@ from guardian_hunter.harness.launcher import LaunchRequest
 
 
 SAFE = (
-    ("claude", "read_workspace",
-     "guardian_hunter/analysis/engine.py"),
-
-    ("aider", "propose_edit",
-     "guardian_hunter/analysis/engine.py"),
-
-    ("codex", "run_approved_test",
-     "tests/test_analysis.py"),
+    ("claude", "read_workspace", "guardian_hunter/analysis/engine.py"),
+    ("aider", "propose_edit", "guardian_hunter/analysis/engine.py"),
+    ("codex", "run_approved_test", "tests/test_analysis.py"),
 )
 
 
 ATTACKS = (
-    ("claude", "git",
-     "guardian_hunter/analysis/engine.py"),
-
-    ("aider", "shell",
-     "guardian_hunter/analysis/engine.py"),
-
-    ("codex", "read_workspace",
-     "../guardian-hunter/security/mode.py"),
-
-    ("claude", "read_workspace",
-     ".git/config"),
-
-    ("aider", "read_workspace",
-     ".guardian/trusted-baseline"),
-
-    ("codex", "propose_edit",
-     "guardian_hunter/gate/agent_gate.py"),
-
-    ("claude", "propose_edit",
-     "guardian_hunter/security/mode.py"),
-
-    ("aider", "propose_edit",
-     "guardian_hunter/governance/phase130_master_gate.py"),
-
-    ("codex", "propose_edit",
-     "guardian_hunter/containment/ai_policy.py"),
-
-    ("claude", "propose_edit",
-     "guardian_hunter/harness/launcher.py"),
-
-    ("aider", "read_workspace",
-     "/data/data/com.termux/files/home/guardian-hunter"),
-
-    ("codex", "read_workspace",
-     "../../.ssh/id_ed25519"),
+    ("claude", "git", "guardian_hunter/analysis/engine.py"),
+    ("aider", "shell", "guardian_hunter/analysis/engine.py"),
+    ("codex", "read_workspace", "../guardian-hunter/security/mode.py"),
+    ("claude", "read_workspace", ".git/config"),
+    ("aider", "read_workspace", ".guardian/trusted-baseline"),
+    ("codex", "propose_edit", "guardian_hunter/gate/agent_gate.py"),
+    ("claude", "propose_edit", "guardian_hunter/security/mode.py"),
+    ("aider", "propose_edit", "guardian_hunter/governance/phase130_master_gate.py"),
+    ("codex", "propose_edit", "guardian_hunter/containment/ai_policy.py"),
+    ("claude", "propose_edit", "guardian_hunter/harness/launcher.py"),
+    ("aider", "read_workspace", "/data/data/com.termux/files/home/guardian-hunter"),
+    ("codex", "read_workspace", "../../.ssh/id_ed25519"),
 )
 
 
@@ -84,7 +56,6 @@ def main() -> None:
         )
 
     for provider, capability, path in ATTACKS:
-
         try:
             build_plan(
                 LaunchRequest(
@@ -97,10 +68,7 @@ def main() -> None:
         except PermissionError:
             continue
 
-        raise SystemExit(
-            "FAIL: ATTACK ACCEPTED: "
-            f"{provider} {capability} {path}"
-        )
+        raise SystemExit(f"FAIL: ATTACK ACCEPTED: {provider} {capability} {path}")
 
     print("PATH ESCAPE: DENIED")
     print("GIT ACCESS: DENIED")

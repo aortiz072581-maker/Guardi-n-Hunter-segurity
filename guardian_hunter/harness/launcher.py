@@ -18,10 +18,12 @@ from guardian_hunter.harness.providers import (
 
 WORKSPACE = PurePosixPath("/workspace")
 
-DENIED_PARTS = frozenset({
-    ".git",
-    ".guardian",
-})
+DENIED_PARTS = frozenset(
+    {
+        ".git",
+        ".guardian",
+    }
+)
 
 DENIED_PREFIXES = (
     PurePosixPath("guardian_hunter/gate"),
@@ -68,9 +70,7 @@ def validate_path(relative_path: str) -> PurePosixPath:
             raw.relative_to(prefix)
         except ValueError:
             continue
-        raise PermissionError(
-            f"Protected path denied: {prefix}"
-        )
+        raise PermissionError(f"Protected path denied: {prefix}")
 
     return raw
 
@@ -79,9 +79,7 @@ def evaluate(request: LaunchRequest) -> LaunchDecision:
     spec = get_provider(request.provider)
     validate_provider(spec)
 
-    capability = require_capability(
-        request.capability
-    )
+    capability = require_capability(request.capability)
 
     path = validate_path(request.relative_path)
 

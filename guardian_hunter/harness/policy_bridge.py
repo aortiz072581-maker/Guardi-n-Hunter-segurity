@@ -31,14 +31,10 @@ def evaluate_with_containment(
     harness = evaluate(request)
 
     if not harness.allowed:
-        raise PermissionError(
-            "Harness rejected request"
-        )
+        raise PermissionError("Harness rejected request")
 
     if not path_allowed(request.relative_path):
-        raise PermissionError(
-            "Containment rejected path"
-        )
+        raise PermissionError("Containment rejected path")
 
     return BridgeDecision(
         allowed=True,

@@ -551,6 +551,10 @@ def _transaction_reverification() -> dict[str, Any]:
 
 
 
+# Fail-closed switch: automatic repair stays disabled until externally authorized.
+AUTO_REPAIR_ENABLED = False
+
+
 def run_supervised_automatic_repair(
     *,
     finding: dict[str, Any],
@@ -574,7 +578,8 @@ def run_supervised_automatic_repair(
     outside this function's authority.
     """
 
-    return {"status": "REFUSED", "reason": "M5_AUTO_REPAIR_EXTERNAL_AUTHORIZATION_REQUIRED", "applied": False, "automatic": False, "human_review_required": True, "commit_allowed": False, "merge_allowed": False, "baseline_update_allowed": False}
+    if not AUTO_REPAIR_ENABLED:
+        return {"status": "REFUSED", "reason": "M5_AUTO_REPAIR_EXTERNAL_AUTHORIZATION_REQUIRED", "applied": False, "automatic": False, "human_review_required": True, "commit_allowed": False, "merge_allowed": False, "baseline_update_allowed": False}
 
     root = root.resolve()
 

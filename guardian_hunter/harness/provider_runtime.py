@@ -67,12 +67,7 @@ def probe_provider(name: str) -> ProviderRuntime:
             text=True,
             timeout=20,
             check=False,
-            env={
-                "PATH": (
-                    "/data/data/com.termux/files/usr/bin:"
-                    "/system/bin:/system/xbin"
-                )
-            },
+            env={"PATH": ("/data/data/com.termux/files/usr/bin:/system/bin:/system/xbin")},
         )
     except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
         return ProviderRuntime(
@@ -107,7 +102,4 @@ def probe_provider(name: str) -> ProviderRuntime:
 
 
 def discover_provider_runtimes() -> dict[str, dict[str, object]]:
-    return {
-        name: asdict(probe_provider(name))
-        for name in PROVIDERS
-    }
+    return {name: asdict(probe_provider(name)) for name in PROVIDERS}

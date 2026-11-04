@@ -17,18 +17,20 @@ from guardian_hunter.harness.launcher import LaunchRequest
 WORKSPACE = Path("/workspace")
 TIMEOUT_SECONDS = 300
 
-CREDENTIAL_NAMES = frozenset({
-    "ANTHROPIC_API_KEY",
-    "OPENAI_API_KEY",
-    "OPENAI_ORG_ID",
-    "OPENAI_PROJECT_ID",
-    "AWS_ACCESS_KEY_ID",
-    "AWS_SECRET_ACCESS_KEY",
-    "AWS_SESSION_TOKEN",
-    "GITHUB_TOKEN",
-    "GH_TOKEN",
-    "SSH_AUTH_SOCK",
-})
+CREDENTIAL_NAMES = frozenset(
+    {
+        "ANTHROPIC_API_KEY",
+        "OPENAI_API_KEY",
+        "OPENAI_ORG_ID",
+        "OPENAI_PROJECT_ID",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_SESSION_TOKEN",
+        "GITHUB_TOKEN",
+        "GH_TOKEN",
+        "SSH_AUTH_SOCK",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -50,9 +52,7 @@ def sanitized_environment() -> dict[str, str]:
         "USER": "guardian-agent",
         "LOGNAME": "guardian-agent",
         "PATH": (
-            "/opt/guardian-agents/bin:"
-            "/opt/guardian-agents/node22/bin:"
-            "/usr/local/bin:/usr/bin:/bin"
+            "/opt/guardian-agents/bin:/opt/guardian-agents/node22/bin:/usr/local/bin:/usr/bin:/bin"
         ),
         "LANG": "C.UTF-8",
         "LC_ALL": "C.UTF-8",
@@ -70,10 +70,7 @@ def sanitized_environment() -> dict[str, str]:
 def environment_is_sanitized(
     env: dict[str, str],
 ) -> bool:
-    return not any(
-        name in env
-        for name in CREDENTIAL_NAMES
-    )
+    return not any(name in env for name in CREDENTIAL_NAMES)
 
 
 def prepare(
@@ -83,28 +80,20 @@ def prepare(
 ) -> BrokerResult:
 
     if not dry_run:
-        raise PermissionError(
-            "Real provider execution not enabled"
-        )
+        raise PermissionError("Real provider execution not enabled")
 
     plan = build_plan(request)
 
     if plan.execution_allowed:
-        raise PermissionError(
-            "Unexpected execution authority"
-        )
+        raise PermissionError("Unexpected execution authority")
 
     env = sanitized_environment()
 
     if not environment_is_sanitized(env):
-        raise PermissionError(
-            "Credential environment not sanitized"
-        )
+        raise PermissionError("Credential environment not sanitized")
 
     if plan.workspace != str(WORKSPACE):
-        raise PermissionError(
-            "Unexpected workspace"
-        )
+        raise PermissionError("Unexpected workspace")
 
     return BrokerResult(
         provider=plan.provider,
@@ -120,10 +109,4 @@ def prepare(
 
 
 def host_credentials_visible() -> tuple[str, ...]:
-    return tuple(
-        sorted(
-            name
-            for name in CREDENTIAL_NAMES
-            if os.environ.get(name)
-        )
-    )
+    return tuple(sorted(name for name in CREDENTIAL_NAMES if os.environ.get(name)))
