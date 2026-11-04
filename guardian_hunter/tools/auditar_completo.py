@@ -14,8 +14,8 @@ output = result.stdout + result.stderr
 failed = re.findall(r"^FAILED (\S+)", output, re.M)
 passed_m = re.search(r"(\d+) passed", output)
 passed = passed_m.group(1) if passed_m else "0"
-warn_m = re.search(r"(\d+) warnings", output)
-warnings = warn_m.group(1) if warn_m else "0"
+warn_all = re.findall(r"(\d+) warnings", output)
+warnings = warn_all[-1] if warn_all else "0"
 
 # 2. Git history
 git_log = subprocess.check_output(["git","log","--oneline","--graph","--all","-10"], cwd=str(ROOT)).decode()
@@ -54,7 +54,7 @@ pdf.ln(2)
 if not failed:
     pdf.set_font("Helvetica","B",12)
     pdf.set_text_color(0,128,0)
-    pdf.cell(0,8,"ESTADO: 0 FALLOS - 353 PASSED", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0,8,f"ESTADO: 0 FALLOS - {passed} PASSED", new_x="LMARGIN", new_y="NEXT")
     pdf.set_text_color(0,0,0)
     pdf.set_font("Helvetica","",10)
     pdf.multi_cell(0,5,"Todos los verificadores de seguridad pasan:\n- test_trust_root_matches_baseline: PASS\n- test_central_security_verifier: PASS\n- test_security_verifier_passes_current_security_contract: PASS\n\nWarnings amarillos (65) son cosmeticos:\n- hypothesis: Skipping .hypothesis directory (norecursedirs reemplaza defaults, esperado)\n- pathspec: gitwildmatch deprecated (libreria externa)")
