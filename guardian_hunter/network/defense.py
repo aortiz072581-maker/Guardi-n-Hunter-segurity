@@ -39,7 +39,7 @@ def collect_network_signals() -> dict[str, Any]:
                 index = parts.index("via")
                 gateways.append(parts[index + 1])
             except (ValueError, IndexError):
-                import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 41, _e)
+                pass
 
     neighbor_entries = []
 
@@ -60,7 +60,7 @@ def collect_network_signals() -> dict[str, Any]:
             try:
                 entry["mac"] = parts[parts.index("lladdr") + 1]
             except (ValueError, IndexError):
-                import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 62, _e)
+                pass
 
         neighbor_entries.append(entry)
 

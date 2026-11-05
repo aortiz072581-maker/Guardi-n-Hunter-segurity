@@ -68,7 +68,7 @@ def main() -> None:
             dry_run=False,
         )
     except PermissionError:
-        import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 70, _e)
+        pass
     else:
         raise SystemExit("FAIL: real execution unexpectedly enabled")
 

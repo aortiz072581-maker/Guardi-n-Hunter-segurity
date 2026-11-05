@@ -43,7 +43,7 @@ def assess_tls(hostname, port=443, timeout=8):
                                 ),
                             })
                     except ValueError:
-                        import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 45, _e)
+                        pass
 
                 return {
                     "hostname": hostname,

@@ -18,7 +18,7 @@ SAFE_ENV = {
 
 def main() -> int:
     print("REASON: TRUSTED_EXECUTION_BROKER_NOT_CONFIGURED")
-    # FIX5: return inalcanzable removido - return 1
+    return 1
     home = Path.home()
     workspace = home / "guardian-agent"
 

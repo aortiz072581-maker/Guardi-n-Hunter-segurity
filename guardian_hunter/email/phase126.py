@@ -215,12 +215,12 @@ def inspect_email(raw_email: bytes) -> EmailSecurityResult:
                 try:
                     body_parts.append(part.get_content())
                 except Exception:
-                    import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 217, _e)
+                    pass
     elif message.get_content_type() == "text/plain":
         try:
             body_parts.append(message.get_content())
         except Exception:
-            import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 222, _e)
+            pass
 
     body = "\n".join(body_parts)
 

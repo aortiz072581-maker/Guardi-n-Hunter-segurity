@@ -268,7 +268,7 @@ def _atomic_replace_at(
                 dir_fd=parent_fd,
             )
         except FileNotFoundError:
-            import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 270, _e)
+            pass
 
 
 def _atomic_replace(target: Path, content: bytes) -> None:
@@ -307,7 +307,7 @@ def _atomic_replace(target: Path, content: bytes) -> None:
         try:
             temporary.unlink()
         except FileNotFoundError:
-            import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 309, _e)
+            pass
 
 
 def apply_repair(
@@ -689,7 +689,7 @@ def rollback_repair(
         try:
             _read_regular_at(parent_fd, leaf)
         except FileNotFoundError:
-            import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 691, _e)
+            pass
         except (OSError, RuntimeError):
             return RepairResult(
                 False,
