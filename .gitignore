@@ -54,3 +54,12 @@ audit_artifacts/
 *.bak456
 fix_1d.py
 fix_123.py
+
+# auditorias locales
+AUDITORIA_*.txt
+AUDITORIA_COMPLETA*
+audit_report.json
+auditoria_total.py
+generar_auditoria.py
+test_93_94_*
+test_http_scheme.py
