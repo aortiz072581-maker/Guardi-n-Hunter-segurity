@@ -18,6 +18,7 @@ def _digest(value):
     ).encode()
     return hashlib.sha256(encoded).hexdigest()
 
+# TODO audit 8: complejidad 37 - refactorizar cuando resto esté cerrado, no tocar lógica ahora
 def correlate_sensor_report(report):
     if not isinstance(report, dict):
         raise ValueError("INVALID_REPORT")

@@ -226,6 +226,7 @@ def _failure(
     )
 
 
+# TODO audit 8: complejidad 47 - refactorizar cuando resto esté cerrado, no tocar lógica ahora
 def prepare_codex_candidate(
     *,
     finding: dict[str, Any],

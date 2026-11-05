@@ -6,6 +6,7 @@ from pathlib import Path
 from guardian_hunter.evidence.persistence import EvidenceStore
 
 
+# TODO audit 8: complejidad 33 - refactorizar cuando resto esté cerrado, no tocar lógica ahora
 def verify_codeql_evidence(
     sarif_path=None,
     evidence_path=None,

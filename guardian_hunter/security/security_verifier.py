@@ -526,6 +526,7 @@ def verify_broker() -> list[Verification]:
 
 
 
+# TODO audit 8: complejidad 31 - refactorizar cuando resto esté cerrado, no tocar lógica ahora
 def verify_protected_transaction(
     root: Path,
 ) -> list[Verification]:
