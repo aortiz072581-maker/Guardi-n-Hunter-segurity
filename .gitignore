@@ -48,3 +48,9 @@ guardian_hunter_inventory_1_30.txt
 .guardian/local-backups/
 Guardian_Hunter_*.pdf
 Guia_Final_*.pdf
+# fix 456 - reportes y backups
+audit_full/
+audit_artifacts/
+*.bak456
+fix_1d.py
+fix_123.py

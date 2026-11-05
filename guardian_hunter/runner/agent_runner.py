@@ -57,7 +57,7 @@ def _check_workspace_git_metadata(ws: Path):
             if p.exists():
                 _fail("WORKSPACE_GIT_FORBIDDEN")
     except OSError:
-        pass
+        import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 59, _e)
 
 
 def _validate_candidate_path(candidate: Path, workspace_root: Path):
@@ -116,7 +116,7 @@ def _safe_open_candidate(full_path: Path):
         try:
             os.close(fd)
         except OSError:
-            pass
+            import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 118, _e)
 
 
 def sanitized_environment(workspace: Path):

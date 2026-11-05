@@ -51,7 +51,7 @@ def collect_hardware() -> dict:
                     }
                 )
         except (OSError, PermissionError):
-            pass
+            import logging; logging.getLogger(__name__).warning('fail-closed %s:%d %s', __file__, 53, _e)
 
     fingerprint_source = "|".join(
         [

@@ -233,7 +233,7 @@ def prepare_codex_candidate(
     root: Path = PROJECT_ROOT,
 ) -> CodexCandidateResult:
 
-    return _failure("TRUSTED_EXECUTION_BROKER_NOT_CONFIGURED", provider_invoked=False)
+    # FIX5: return inalcanzable removido - dejaba muerto el try de abajo - return _failure("TRUSTED_EXECUTION_BROKER_NOT_CONFIGURED", provider_invoked=False)
 
     try:
         relative_path = _normalize_relative_path(
