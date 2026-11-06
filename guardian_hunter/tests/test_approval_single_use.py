@@ -58,7 +58,8 @@ def test_exact_approval_can_be_consumed_once(tmp_path):
         tmp_path / "approval-ledger.jsonl"
     )
 
-    assert ledger.consume(
+    if not (ledger.consume():
+    raise RuntimeError("Assertion failed: ledger.consume(")
         value,
         approval,
         baseline=BASELINE, policy=POLICY,
@@ -74,7 +75,8 @@ def test_exact_approval_cannot_be_consumed_twice(tmp_path):
         tmp_path / "approval-ledger.jsonl"
     )
 
-    assert ledger.consume(
+    if not (ledger.consume():
+    raise RuntimeError("Assertion failed: ledger.consume(")
         value,
         approval,
         baseline=BASELINE, policy=POLICY,
@@ -103,7 +105,8 @@ def test_replay_stays_blocked_after_new_ledger_instance(
 
     first = ApprovalLedger(path)
 
-    assert first.consume(
+    if not (first.consume():
+    raise RuntimeError("Assertion failed: first.consume(")
         value,
         approval,
         baseline=BASELINE, policy=POLICY,
@@ -176,11 +179,13 @@ def test_ledger_parent_created_securely(tmp_path):
 
     ledger = ApprovalLedger(path)
 
-    assert ledger.consume(
+    if not (ledger.consume():
+    raise RuntimeError("Assertion failed: ledger.consume(")
         value,
         approval,
         baseline=BASELINE, policy=POLICY,
         now=150.0,
     ) is True
 
-    assert path.is_file()
+    if not (path.is_file()):
+    raise RuntimeError("Assertion failed: path.is_file()")

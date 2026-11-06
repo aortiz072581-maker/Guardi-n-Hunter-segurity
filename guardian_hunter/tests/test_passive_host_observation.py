@@ -43,24 +43,40 @@ def test_passive_observation_contract():
     net = result["network_changes"]
     corr = result["correlation"]
 
-    assert hw["hardware_changed"] is True
-    assert hw["new_devices"] == ["disk1"]
-    assert net["addresses_changed"] is True
-    assert net["interfaces_changed"] is True
-    assert net["routes_changed"] is True
+    if not (hw["hardware_changed"] is True):
+    raise RuntimeError("Assertion failed: hw["hardware_changed"] is True")
+    if not (hw["new_devices"] == ["disk1"]):
+    raise RuntimeError("Assertion failed: hw["new_devices"] == ["disk1"]")
+    if not (net["addresses_changed"] is True):
+    raise RuntimeError("Assertion failed: net["addresses_changed"] is True")
+    if not (net["interfaces_changed"] is True):
+    raise RuntimeError("Assertion failed: net["interfaces_changed"] is True")
+    if not (net["routes_changed"] is True):
+    raise RuntimeError("Assertion failed: net["routes_changed"] is True")
 
-    assert "HARDWARE_CHANGED" in corr["signals"]
-    assert "NEW_HARDWARE" in corr["signals"]
-    assert "NETWORK_INTERFACE_CHANGED" in corr["signals"]
-    assert "ROUTE_CHANGED" in corr["signals"]
-    assert corr["risk_hint"] == "high"
+    if not ("HARDWARE_CHANGED" in corr["signals"]):
+    raise RuntimeError("Assertion failed: "HARDWARE_CHANGED" in corr["signals"]")
+    if not ("NEW_HARDWARE" in corr["signals"]):
+    raise RuntimeError("Assertion failed: "NEW_HARDWARE" in corr["signals"]")
+    if not ("NETWORK_INTERFACE_CHANGED" in corr["signals"]):
+    raise RuntimeError("Assertion failed: "NETWORK_INTERFACE_CHANGED" in corr["signals"]")
+    if not ("ROUTE_CHANGED" in corr["signals"]):
+    raise RuntimeError("Assertion failed: "ROUTE_CHANGED" in corr["signals"]")
+    if not (corr["risk_hint"] == "high"):
+    raise RuntimeError("Assertion failed: corr["risk_hint"] == "high"")
 
-    assert result["read_only"] is True
-    assert result["dry_run"] is True
-    assert result["real_execution_blocked"] is True
-    assert result["human_review_required"] is True
-    assert result["response_locked"] is True
-    assert result["execution_allowed"] is False
+    if not (result["read_only"] is True):
+    raise RuntimeError("Assertion failed: result["read_only"] is True")
+    if not (result["dry_run"] is True):
+    raise RuntimeError("Assertion failed: result["dry_run"] is True")
+    if not (result["real_execution_blocked"] is True):
+    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
+    if not (result["human_review_required"] is True):
+    raise RuntimeError("Assertion failed: result["human_review_required"] is True")
+    if not (result["response_locked"] is True):
+    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    if not (result["execution_allowed"] is False):
+    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
 
 
 def test_first_observation_has_no_false_drift():
@@ -69,17 +85,23 @@ def test_first_observation_has_no_false_drift():
         network=NEW_NETWORK,
     )
 
-    assert result["hardware_changes"] == {}
-    assert result["network_changes"] == {}
-    assert result["correlation"]["signals"] == []
-    assert result["correlation"]["risk_hint"] == "normal"
-    assert result["execution_allowed"] is False
+    if not (result["hardware_changes"] == {}):
+    raise RuntimeError("Assertion failed: result["hardware_changes"] == {}")
+    if not (result["network_changes"] == {}):
+    raise RuntimeError("Assertion failed: result["network_changes"] == {}")
+    if not (result["correlation"]["signals"] == []):
+    raise RuntimeError("Assertion failed: result["correlation"]["signals"] == []")
+    if not (result["correlation"]["risk_hint"] == "normal"):
+    raise RuntimeError("Assertion failed: result["correlation"]["risk_hint"] == "normal"")
+    if not (result["execution_allowed"] is False):
+    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
 
 
 def test_response_lock_fails_closed(monkeypatch):
     monkeypatch.setattr(observation, "RESPONSE_LOCKED", False)
 
-    assert observation.safety_invariants_hold() is False
+    if not (observation.safety_invariants_hold() is False):
+    raise RuntimeError("Assertion failed: observation.safety_invariants_hold() is False")
 
     try:
         observation.observe_host(

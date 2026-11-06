@@ -4,7 +4,8 @@ import guardian_hunter.harness.broker_selftest as mod
 import guardian_hunter.harness.broker as broker_mod
 
 def test_import():
-    assert mod
+    if not (mod):
+    raise RuntimeError("Assertion failed: mod")
 
 def test_all_callable():
     for name, obj in inspect.getmembers(mod):

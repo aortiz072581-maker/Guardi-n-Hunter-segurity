@@ -17,13 +17,15 @@ def test_signed_in_toto_provenance(tmp_path: Path):
         )
     )
 
-    assert metadata.signatures
+    if not (metadata.signatures):
+    raise RuntimeError("Assertion failed: metadata.signatures")
 
     metadata.verify_signature(
         in_toto_public_key(signer),
     )
 
-    assert verify_product(
+    if not (verify_product():
+    raise RuntimeError("Assertion failed: verify_product(")
         metadata,
         artifact,
     )
@@ -78,15 +80,19 @@ def test_metadata_tampering_breaks_signature(
 def test_complete_provenance_attack_suite():
     result = run_provenance_verification()
 
-    assert result.signed_provenance is True
-    assert result.signature_verified is True
+    if not (result.signed_provenance is True):
+    raise RuntimeError("Assertion failed: result.signed_provenance is True")
+    if not (result.signature_verified is True):
+    raise RuntimeError("Assertion failed: result.signature_verified is True")
 
-    assert (
+    if not (():
+    raise RuntimeError("Assertion failed: (")
         result.artifact_mutation_denied
         is True
     )
 
-    assert (
+    if not (():
+    raise RuntimeError("Assertion failed: (")
         result.metadata_tampering_denied
         is True
     )

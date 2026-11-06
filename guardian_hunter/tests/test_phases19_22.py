@@ -61,10 +61,14 @@ def main() -> None:
         confidence=0.90,
     )
 
-    assert validate_signal(signal_a)
-    assert validate_signal(signal_b)
-    assert signal_a.execution_allowed is False
-    assert signal_a.mode == "READ_ONLY"
+    if not (validate_signal(signal_a)):
+    raise RuntimeError("Assertion failed: validate_signal(signal_a)")
+    if not (validate_signal(signal_b)):
+    raise RuntimeError("Assertion failed: validate_signal(signal_b)")
+    if not (signal_a.execution_allowed is False):
+    raise RuntimeError("Assertion failed: signal_a.execution_allowed is False")
+    if not (signal_a.mode == "READ_ONLY"):
+    raise RuntimeError("Assertion failed: signal_a.mode == "READ_ONLY"")
 
     print("PHASE 19 SIGNAL ANALYSIS: OK")
     print("PHASE 19 SIGNAL VALIDATION: OK")
@@ -87,9 +91,12 @@ def main() -> None:
         },
     ])
 
-    assert validate_signal_correlation(correlation)
-    assert correlation.signal_count == 2
-    assert correlation.correlated_score >= 64
+    if not (validate_signal_correlation(correlation)):
+    raise RuntimeError("Assertion failed: validate_signal_correlation(correlation)")
+    if not (correlation.signal_count == 2):
+    raise RuntimeError("Assertion failed: correlation.signal_count == 2")
+    if not (correlation.correlated_score >= 64):
+    raise RuntimeError("Assertion failed: correlation.correlated_score >= 64")
 
     print("PHASE 19 MULTI-SIGNAL CORRELATION: OK")
     print("PHASE 19 CORRELATION SCORING: OK")
@@ -106,9 +113,12 @@ def main() -> None:
         evidence_confidence=90,
     )
 
-    assert validate_contextual_risk(contextual)
-    assert contextual.contextual_score >= 70
-    assert contextual.risk_level == "CRITICAL"
+    if not (validate_contextual_risk(contextual)):
+    raise RuntimeError("Assertion failed: validate_contextual_risk(contextual)")
+    if not (contextual.contextual_score >= 70):
+    raise RuntimeError("Assertion failed: contextual.contextual_score >= 70")
+    if not (contextual.risk_level == "CRITICAL"):
+    raise RuntimeError("Assertion failed: contextual.risk_level == "CRITICAL"")
 
     print("PHASE 20 CONTEXTUAL RISK: OK")
     print("PHASE 20 RISK LEVEL: OK")
@@ -123,10 +133,14 @@ def main() -> None:
         contextual.contextual_score,
     )
 
-    assert validate_defensive_decision(decision)
-    assert decision.response_locked is True
-    assert decision.requires_review is True
-    assert decision.collect_evidence is True
+    if not (validate_defensive_decision(decision)):
+    raise RuntimeError("Assertion failed: validate_defensive_decision(decision)")
+    if not (decision.response_locked is True):
+    raise RuntimeError("Assertion failed: decision.response_locked is True")
+    if not (decision.requires_review is True):
+    raise RuntimeError("Assertion failed: decision.requires_review is True")
+    if not (decision.collect_evidence is True):
+    raise RuntimeError("Assertion failed: decision.collect_evidence is True")
 
     print("PHASE 20 DEFENSIVE DECISION: OK")
     print("PHASE 20 HUMAN REVIEW GATE: OK")
@@ -142,10 +156,14 @@ def main() -> None:
         collect_evidence=decision.collect_evidence,
     )
 
-    assert validate_response_plan(response)
-    assert response.response_locked is True
-    assert response.execution_allowed is False
-    assert response.dry_run is True
+    if not (validate_response_plan(response)):
+    raise RuntimeError("Assertion failed: validate_response_plan(response)")
+    if not (response.response_locked is True):
+    raise RuntimeError("Assertion failed: response.response_locked is True")
+    if not (response.execution_allowed is False):
+    raise RuntimeError("Assertion failed: response.execution_allowed is False")
+    if not (response.dry_run is True):
+    raise RuntimeError("Assertion failed: response.dry_run is True")
 
     print("PHASE 21 RESPONSE ORCHESTRATOR: OK")
     print("PHASE 21 RESPONSE LOCK: OK")
@@ -177,13 +195,20 @@ def main() -> None:
         ],
     )
 
-    assert validate_consolidated_record(record)
-    assert record.evidence_count == 2
-    assert record.timeline_count == 2
-    assert record.execution_allowed is False
-    assert record.mode == "READ_ONLY"
-    assert record.status == "CONSOLIDATED_READ_ONLY"
-    assert len(record.integrity_digest) == 64
+    if not (validate_consolidated_record(record)):
+    raise RuntimeError("Assertion failed: validate_consolidated_record(record)")
+    if not (record.evidence_count == 2):
+    raise RuntimeError("Assertion failed: record.evidence_count == 2")
+    if not (record.timeline_count == 2):
+    raise RuntimeError("Assertion failed: record.timeline_count == 2")
+    if not (record.execution_allowed is False):
+    raise RuntimeError("Assertion failed: record.execution_allowed is False")
+    if not (record.mode == "READ_ONLY"):
+    raise RuntimeError("Assertion failed: record.mode == "READ_ONLY"")
+    if not (record.status == "CONSOLIDATED_READ_ONLY"):
+    raise RuntimeError("Assertion failed: record.status == "CONSOLIDATED_READ_ONLY"")
+    if not (len(record.integrity_digest) == 64):
+    raise RuntimeError("Assertion failed: len(record.integrity_digest) == 64")
 
     print("PHASE 22 EVIDENCE CONSOLIDATION: OK")
     print("PHASE 22 TIMELINE CONSOLIDATION: OK")
@@ -194,9 +219,12 @@ def main() -> None:
     # GLOBAL SAFETY
     # ==================================================
 
-    assert R19 is True
-    assert D19 is True
-    assert E19 is False
+    if not (R19 is True):
+    raise RuntimeError("Assertion failed: R19 is True")
+    if not (D19 is True):
+    raise RuntimeError("Assertion failed: D19 is True")
+    if not (E19 is False):
+    raise RuntimeError("Assertion failed: E19 is False")
 
     print("PHASES 19 → 22 GLOBAL SAFETY: OK")
     print("READ_ONLY: TRUE")

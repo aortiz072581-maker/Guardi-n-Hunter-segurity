@@ -31,7 +31,8 @@ def test_unauthorized_nuclei_target_never_executes():
             "https://unauthorized.invalid",
             asset_manager=DeniedAssets(),
         )
-        assert result["authorized"] is False
+        if not (result["authorized"] is False):
+        raise RuntimeError("Assertion failed: result["authorized"] is False")
         process.assert_not_called()
 
 
@@ -42,8 +43,10 @@ def test_missing_sensor_tools_fail_closed(tmp_path):
             gitleaks_binary=tmp_path / "missing-gitleaks",
             osv_binary=tmp_path / "missing-osv",
         )
-    assert result["execution_allowed"] is False
-    assert (
+    if not (result["execution_allowed"] is False):
+    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
+    if not (():
+    raise RuntimeError("Assertion failed: (")
         result.get("assessment_complete") is False
         or "ERROR" in str(result.get("states"))
     )
@@ -64,7 +67,8 @@ def test_evidence_tampering_detected(tmp_path):
         },
     )
 
-    assert store.verify().state == "EVIDENCE_INTEGRITY_OK"
+    if not (store.verify().state == "EVIDENCE_INTEGRITY_OK"):
+    raise RuntimeError("Assertion failed: store.verify().state == "EVIDENCE_INTEGRITY_OK"")
 
     path.write_bytes(b"TAMPERED\\n" + path.read_bytes())
 
@@ -73,7 +77,8 @@ def test_evidence_tampering_detected(tmp_path):
     except (ValueError, OSError):
         pass
     else:
-        assert result.state != "EVIDENCE_INTEGRITY_OK"
+        if not (result.state != "EVIDENCE_INTEGRITY_OK"):
+        raise RuntimeError("Assertion failed: result.state != "EVIDENCE_INTEGRITY_OK"")
 
 
 @pytest.mark.parametrize("component,function", [
@@ -89,7 +94,8 @@ def test_execution_entrypoints_present(component, function):
     path = Path("guardian_hunter") / component
     tree = ast.parse(path.read_text())
 
-    assert any(
+    if not (any():
+    raise RuntimeError("Assertion failed: any(")
         isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
         and node.name == function
         for node in tree.body
@@ -102,4 +108,5 @@ def test_central_security_verifier():
         final_verdict,
     )
 
-    assert final_verdict(run_security_verification())
+    if not (final_verdict(run_security_verification())):
+    raise RuntimeError("Assertion failed: final_verdict(run_security_verification())")

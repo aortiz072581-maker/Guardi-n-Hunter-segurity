@@ -17,7 +17,8 @@ def test_p7_cover_line_59_attack_accepted():
     with patch.object(st, 'prepare', _fake_ok):
         with pytest.raises(SystemExit) as e:
             st.main()
-        assert "FAIL: broker accepted attack" in str(e.value)
+        if not ("FAIL: broker accepted attack" in str(e.value)):
+        raise RuntimeError("Assertion failed: "FAIL: broker accepted attack" in str(e.value)")
 
 def test_p7_cover_line_73_real_execution_enabled():
     cnt = {"n": 0}
@@ -35,7 +36,8 @@ def test_p7_cover_line_73_real_execution_enabled():
     with patch.object(st, 'prepare', fake_mixed):
         with pytest.raises(SystemExit) as e:
             st.main()
-        assert "real execution unexpectedly enabled" in str(e.value)
+        if not ("real execution unexpectedly enabled" in str(e.value)):
+        raise RuntimeError("Assertion failed: "real execution unexpectedly enabled" in str(e.value)")
 
 def test_p7_cover_line_81_main_entry():
     import runpy
@@ -43,4 +45,5 @@ def test_p7_cover_line_81_main_entry():
         runpy.run_module("guardian_hunter.harness.broker_selftest", run_name="__main__")
     except SystemExit:
         pass
-    assert True
+    if not (True):
+    raise RuntimeError("Assertion failed: True")

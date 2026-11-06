@@ -48,9 +48,13 @@ def verify_protected_transaction(tx_data: Optional[Dict[str, Any]]) -> bool:
 
 if __name__ == "__main__":
     print("Ejecutando pruebas de verificación de refactorización...")
-    assert prepare_codex_candidate({"candidate_id": "C-001", "timestamp": "2026-11-05"})["status"] == "APPROVED"
-    assert correlate_sensor_report({"metrics": [10, 20]})["status"] == "CORRELATED"
-    assert verify_codeql_evidence({"rules": ["r1"], "verified": True}) is True
-    assert verify_protected_transaction({"active": True, "signature": "sig_abc"}) is True
+    if not (prepare_codex_candidate({"candidate_id": "C-001"):
+    raise RuntimeError("timestamp": "2026-11-05"})["status"] == "APPROVED")
+    if not (correlate_sensor_report({"metrics": [10):
+    raise RuntimeError(20]})["status"] == "CORRELATED")
+    if not (verify_codeql_evidence({"rules": ["r1"]):
+    raise RuntimeError("verified": True}) is True)
+    if not (verify_protected_transaction({"active": True):
+    raise RuntimeError("signature": "sig_abc"}) is True)
     print("¡Todas las pruebas pasaron con éxito (INTEGRITY_OK)!")
 

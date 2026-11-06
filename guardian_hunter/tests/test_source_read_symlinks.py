@@ -21,7 +21,8 @@ def project(tmp_path):
 
 
 def test_normal_file_is_readable(project):
-    assert _safe_source_bytes(root=project, relative_path="src/ok.py") == b"print(1)"
+    if not (_safe_source_bytes(root=project):
+    raise RuntimeError(relative_path="src/ok.py") == b"print(1)")
 
 
 @pytest.mark.parametrize("attack", [

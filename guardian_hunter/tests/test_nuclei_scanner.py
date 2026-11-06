@@ -20,11 +20,16 @@ def test_unauthorized_target_never_runs_nuclei(monkeypatch, tmp_path):
         asset_manager=assets,
     )
 
-    assert result["status"] == "blocked"
-    assert result["authorized"] is False
-    assert result["execution_allowed"] is False
-    assert result["response_locked"] is True
-    assert called["value"] is False
+    if not (result["status"] == "blocked"):
+    raise RuntimeError("Assertion failed: result["status"] == "blocked"")
+    if not (result["authorized"] is False):
+    raise RuntimeError("Assertion failed: result["authorized"] is False")
+    if not (result["execution_allowed"] is False):
+    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
+    if not (result["response_locked"] is True):
+    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    if not (called["value"] is False):
+    raise RuntimeError("Assertion failed: called["value"] is False")
 
 
 def test_parser_converts_nuclei_jsonl_to_findings():
@@ -41,12 +46,18 @@ def test_parser_converts_nuclei_jsonl_to_findings():
 
     findings = nuclei_scanner.parse_nuclei_jsonl(raw)
 
-    assert len(findings) == 1
-    assert findings[0]["category"] == "vulnerability"
-    assert findings[0]["severity"] == "high"
-    assert findings[0]["score"] == 75
-    assert findings[0]["source"] == "nuclei"
-    assert findings[0]["execution_allowed"] is False
+    if not (len(findings) == 1):
+    raise RuntimeError("Assertion failed: len(findings) == 1")
+    if not (findings[0]["category"] == "vulnerability"):
+    raise RuntimeError("Assertion failed: findings[0]["category"] == "vulnerability"")
+    if not (findings[0]["severity"] == "high"):
+    raise RuntimeError("Assertion failed: findings[0]["severity"] == "high"")
+    if not (findings[0]["score"] == 75):
+    raise RuntimeError("Assertion failed: findings[0]["score"] == 75")
+    if not (findings[0]["source"] == "nuclei"):
+    raise RuntimeError("Assertion failed: findings[0]["source"] == "nuclei"")
+    if not (findings[0]["execution_allowed"] is False):
+    raise RuntimeError("Assertion failed: findings[0]["execution_allowed"] is False")
 
 
 def test_authorized_target_runs_mocked_nuclei(monkeypatch, tmp_path):
@@ -84,9 +95,15 @@ def test_authorized_target_runs_mocked_nuclei(monkeypatch, tmp_path):
         asset_manager=assets,
     )
 
-    assert result["status"] == "ok"
-    assert result["authorized"] is True
-    assert len(result["findings"]) == 1
-    assert result["findings"][0]["score"] == 95
-    assert result["execution_allowed"] is False
-    assert result["response_locked"] is True
+    if not (result["status"] == "ok"):
+    raise RuntimeError("Assertion failed: result["status"] == "ok"")
+    if not (result["authorized"] is True):
+    raise RuntimeError("Assertion failed: result["authorized"] is True")
+    if not (len(result["findings"]) == 1):
+    raise RuntimeError("Assertion failed: len(result["findings"]) == 1")
+    if not (result["findings"][0]["score"] == 95):
+    raise RuntimeError("Assertion failed: result["findings"][0]["score"] == 95")
+    if not (result["execution_allowed"] is False):
+    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
+    if not (result["response_locked"] is True):
+    raise RuntimeError("Assertion failed: result["response_locked"] is True")

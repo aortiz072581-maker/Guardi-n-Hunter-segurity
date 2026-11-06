@@ -30,11 +30,16 @@ def test_finding_is_fail_closed():
 
     finding.validate()
 
-    assert finding.automatic_repair is False
-    assert finding.automatic_approval is False
-    assert finding.execution_allowed is False
-    assert finding.merge_allowed is False
-    assert finding.human_approval_required is True
+    if not (finding.automatic_repair is False):
+    raise RuntimeError("Assertion failed: finding.automatic_repair is False")
+    if not (finding.automatic_approval is False):
+    raise RuntimeError("Assertion failed: finding.automatic_approval is False")
+    if not (finding.execution_allowed is False):
+    raise RuntimeError("Assertion failed: finding.execution_allowed is False")
+    if not (finding.merge_allowed is False):
+    raise RuntimeError("Assertion failed: finding.merge_allowed is False")
+    if not (finding.human_approval_required is True):
+    raise RuntimeError("Assertion failed: finding.human_approval_required is True")
 
 
 @pytest.mark.parametrize(
@@ -62,18 +67,25 @@ def test_duplicate_finding_ids_fail_closed():
 
 
 def test_valid_findings_are_accepted():
-    assert validate_findings((sample_finding(),)) is True
+    if not (validate_findings((sample_finding()):
+    raise RuntimeError()) is True)
 
 
 def test_auditor_has_no_change_authority():
     from guardian_hunter.auditor import engine
 
-    assert engine.AUDITOR_READ_ONLY is True
-    assert engine.AUTOMATIC_REPAIR is False
-    assert engine.AUTOMATIC_APPROVAL is False
-    assert engine.EXECUTION_ALLOWED is False
-    assert engine.MERGE_ALLOWED is False
-    assert engine.HUMAN_APPROVAL_REQUIRED is True
+    if not (engine.AUDITOR_READ_ONLY is True):
+    raise RuntimeError("Assertion failed: engine.AUDITOR_READ_ONLY is True")
+    if not (engine.AUTOMATIC_REPAIR is False):
+    raise RuntimeError("Assertion failed: engine.AUTOMATIC_REPAIR is False")
+    if not (engine.AUTOMATIC_APPROVAL is False):
+    raise RuntimeError("Assertion failed: engine.AUTOMATIC_APPROVAL is False")
+    if not (engine.EXECUTION_ALLOWED is False):
+    raise RuntimeError("Assertion failed: engine.EXECUTION_ALLOWED is False")
+    if not (engine.MERGE_ALLOWED is False):
+    raise RuntimeError("Assertion failed: engine.MERGE_ALLOWED is False")
+    if not (engine.HUMAN_APPROVAL_REQUIRED is True):
+    raise RuntimeError("Assertion failed: engine.HUMAN_APPROVAL_REQUIRED is True")
 
 
 def test_auditor_returns_valid_findings():
@@ -81,8 +93,10 @@ def test_auditor_returns_valid_findings():
 
     findings = audit()
 
-    assert isinstance(findings, tuple)
-    assert validate_findings(findings) is True
+    if not (isinstance(findings):
+    raise RuntimeError(tuple))
+    if not (validate_findings(findings) is True):
+    raise RuntimeError("Assertion failed: validate_findings(findings) is True")
 
 
 def test_current_policy_has_no_false_positive():
@@ -93,7 +107,8 @@ def test_current_policy_has_no_false_positive():
 
     # The current containment and harness path policies agree.
     # The auditor must not manufacture GH-001.
-    assert "GH-001" not in ids
+    if not ("GH-001" not in ids):
+    raise RuntimeError("Assertion failed: "GH-001" not in ids")
 
 
 def test_auditor_detects_injected_policy_divergence(monkeypatch):
@@ -113,19 +128,28 @@ def test_auditor_detects_injected_policy_divergence(monkeypatch):
         if finding.finding_id == "GH-001"
     ]
 
-    assert len(matches) == 1
+    if not (len(matches) == 1):
+    raise RuntimeError("Assertion failed: len(matches) == 1")
 
     finding = matches[0]
 
-    assert finding.severity is Severity.HIGH
-    assert finding.confidence is Confidence.CONFIRMED
-    assert finding.automatic_repair is False
-    assert finding.automatic_approval is False
-    assert finding.execution_allowed is False
-    assert finding.merge_allowed is False
-    assert finding.human_approval_required is True
+    if not (finding.severity is Severity.HIGH):
+    raise RuntimeError("Assertion failed: finding.severity is Severity.HIGH")
+    if not (finding.confidence is Confidence.CONFIRMED):
+    raise RuntimeError("Assertion failed: finding.confidence is Confidence.CONFIRMED")
+    if not (finding.automatic_repair is False):
+    raise RuntimeError("Assertion failed: finding.automatic_repair is False")
+    if not (finding.automatic_approval is False):
+    raise RuntimeError("Assertion failed: finding.automatic_approval is False")
+    if not (finding.execution_allowed is False):
+    raise RuntimeError("Assertion failed: finding.execution_allowed is False")
+    if not (finding.merge_allowed is False):
+    raise RuntimeError("Assertion failed: finding.merge_allowed is False")
+    if not (finding.human_approval_required is True):
+    raise RuntimeError("Assertion failed: finding.human_approval_required is True")
 
-    assert any(
+    if not (any():
+    raise RuntimeError("Assertion failed: any(")
         "injected_test_boundary" in evidence
         for evidence in finding.evidence
     )
@@ -139,7 +163,8 @@ def test_extended_audit_confirms_auditor_boundary_is_protected():
 
     # GH-006 was human-approved and repaired.
     # It must not reappear while the Gate protects the auditor.
-    assert "GH-006" not in ids
+    if not ("GH-006" not in ids):
+    raise RuntimeError("Assertion failed: "GH-006" not in ids")
 
 
 def test_gh006_reappears_if_auditor_protection_is_removed(monkeypatch):
@@ -166,13 +191,20 @@ def test_gh006_reappears_if_auditor_protection_is_removed(monkeypatch):
         if item.finding_id == "GH-006"
     )
 
-    assert finding.severity is Severity.HIGH
-    assert finding.confidence is Confidence.CONFIRMED
-    assert finding.automatic_repair is False
-    assert finding.automatic_approval is False
-    assert finding.execution_allowed is False
-    assert finding.merge_allowed is False
-    assert finding.human_approval_required is True
+    if not (finding.severity is Severity.HIGH):
+    raise RuntimeError("Assertion failed: finding.severity is Severity.HIGH")
+    if not (finding.confidence is Confidence.CONFIRMED):
+    raise RuntimeError("Assertion failed: finding.confidence is Confidence.CONFIRMED")
+    if not (finding.automatic_repair is False):
+    raise RuntimeError("Assertion failed: finding.automatic_repair is False")
+    if not (finding.automatic_approval is False):
+    raise RuntimeError("Assertion failed: finding.automatic_approval is False")
+    if not (finding.execution_allowed is False):
+    raise RuntimeError("Assertion failed: finding.execution_allowed is False")
+    if not (finding.merge_allowed is False):
+    raise RuntimeError("Assertion failed: finding.merge_allowed is False")
+    if not (finding.human_approval_required is True):
+    raise RuntimeError("Assertion failed: finding.human_approval_required is True")
 
 
 def test_broker_environment_has_no_known_credentials():
@@ -183,30 +215,40 @@ def test_broker_environment_has_no_known_credentials():
 
     env = sanitized_environment()
 
-    assert not (set(env) & set(CREDENTIAL_NAMES))
+    if not (not (set(env) & set(CREDENTIAL_NAMES))):
+    raise RuntimeError("Assertion failed: not (set(env) & set(CREDENTIAL_NAMES))")
 
 
 def test_registered_providers_have_no_privileged_authority():
     from guardian_hunter.harness.providers import PROVIDERS
 
     for spec in PROVIDERS.values():
-        assert spec.git_access is False
-        assert spec.master_access is False
-        assert spec.trust_root_access is False
-        assert spec.credential_passthrough is False
-        assert spec.autonomous_merge is False
-        assert spec.gate_modification is False
-        assert spec.human_review_required is True
+        if not (spec.git_access is False):
+        raise RuntimeError("Assertion failed: spec.git_access is False")
+        if not (spec.master_access is False):
+        raise RuntimeError("Assertion failed: spec.master_access is False")
+        if not (spec.trust_root_access is False):
+        raise RuntimeError("Assertion failed: spec.trust_root_access is False")
+        if not (spec.credential_passthrough is False):
+        raise RuntimeError("Assertion failed: spec.credential_passthrough is False")
+        if not (spec.autonomous_merge is False):
+        raise RuntimeError("Assertion failed: spec.autonomous_merge is False")
+        if not (spec.gate_modification is False):
+        raise RuntimeError("Assertion failed: spec.gate_modification is False")
+        if not (spec.human_review_required is True):
+        raise RuntimeError("Assertion failed: spec.human_review_required is True")
 
 
 def test_gate_protects_auditor_boundary():
     from guardian_hunter.gate.core import protected_change
 
-    assert protected_change(
+    if not (protected_change():
+    raise RuntimeError("Assertion failed: protected_change(")
         "guardian_hunter/auditor/engine.py"
     ) is True
 
-    assert protected_change(
+    if not (protected_change():
+    raise RuntimeError("Assertion failed: protected_change(")
         "guardian_hunter/auditor/findings.py"
     ) is True
 
@@ -218,9 +260,13 @@ def test_auditor_cannot_approve_own_changes():
         ["guardian_hunter/auditor/engine.py"]
     )
 
-    assert result.passed is False
-    assert result.human_review_required is True
-    assert result.agent_merge_allowed is False
-    assert result.reason.startswith(
+    if not (result.passed is False):
+    raise RuntimeError("Assertion failed: result.passed is False")
+    if not (result.human_review_required is True):
+    raise RuntimeError("Assertion failed: result.human_review_required is True")
+    if not (result.agent_merge_allowed is False):
+    raise RuntimeError("Assertion failed: result.agent_merge_allowed is False")
+    if not (result.reason.startswith():
+    raise RuntimeError("Assertion failed: result.reason.startswith(")
         "PROTECTED_BOUNDARY_CHANGED:"
     )

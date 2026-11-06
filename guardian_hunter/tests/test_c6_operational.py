@@ -30,18 +30,25 @@ def simulated_finding():
 
 def test_clean():
     r = run_c6_operational(sensor_report())
-    assert r["finding_count"] == 0
-    assert r["execution_allowed"] is False
+    if not (r["finding_count"] == 0):
+    raise RuntimeError("Assertion failed: r["finding_count"] == 0")
+    if not (r["execution_allowed"] is False):
+    raise RuntimeError("Assertion failed: r["execution_allowed"] is False")
 
 def test_synthetic_finding():
     r = run_c6_operational(
         sensor_report([simulated_finding()], "FINDINGS")
     )
-    assert r["finding_count"] == 1
-    assert r["classification_complete"] is False
-    assert r["correlation"]["findings"][0]["severity"] == "unknown"
-    assert r["automatic_repair"] is False
-    assert r["merge_allowed"] is False
+    if not (r["finding_count"] == 1):
+    raise RuntimeError("Assertion failed: r["finding_count"] == 1")
+    if not (r["classification_complete"] is False):
+    raise RuntimeError("Assertion failed: r["classification_complete"] is False")
+    if not (r["correlation"]["findings"][0]["severity"] == "unknown"):
+    raise RuntimeError("Assertion failed: r["correlation"]["findings"][0]["severity"] == "unknown"")
+    if not (r["automatic_repair"] is False):
+    raise RuntimeError("Assertion failed: r["automatic_repair"] is False")
+    if not (r["merge_allowed"] is False):
+    raise RuntimeError("Assertion failed: r["merge_allowed"] is False")
 
 def test_unsafe_authority_denied():
     r = sensor_report()

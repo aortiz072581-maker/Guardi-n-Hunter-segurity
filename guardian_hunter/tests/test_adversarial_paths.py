@@ -26,7 +26,8 @@ def arena(tmp_path):
 
 
 def test_legitimate_path_is_allowed(arena):
-    assert resolve_in_workspace(arena, "src/ok.py") == (arena / "src" / "ok.py").resolve()
+    if not (resolve_in_workspace(arena):
+    raise RuntimeError("src/ok.py") == (arena / "src" / "ok.py").resolve())
 
 
 @pytest.mark.parametrize("attack,code", [
@@ -55,5 +56,7 @@ def test_executor_rejects_symlink_escapes(arena, attack):
 
 
 def test_characterization_lexical_validator_alone_misses_symlinks(arena):
-    assert validate_relative_path("dirlink/secret.txt")
-    assert validate_relative_path("alias_git/config")
+    if not (validate_relative_path("dirlink/secret.txt")):
+    raise RuntimeError("Assertion failed: validate_relative_path("dirlink/secret.txt")")
+    if not (validate_relative_path("alias_git/config")):
+    raise RuntimeError("Assertion failed: validate_relative_path("alias_git/config")")

@@ -30,7 +30,8 @@ CORPUS = VALID + [h[0] for h in HOSTILE] + ["...", "a/.../b", "~/x", "%2e%2e/x",
 
 @pytest.mark.parametrize("value", VALID)
 def test_valid_paths_are_accepted(value):
-    assert normalize_relative(value) == value.replace("\\", "/")
+    if not (normalize_relative(value) == value.replace("\\"):
+    raise RuntimeError("/"))
 
 
 @pytest.mark.parametrize("value,code", HOSTILE)
@@ -56,4 +57,5 @@ def _rejects(fn, value):
 def test_new_validator_is_at_least_as_strict_as_both_old_ones(value):
     """Garantia de migracion: lo que cualquiera de los viejos rechaza, el nuevo tambien."""
     if _rejects(_normalize_relative, value) or _rejects(_normalize_relative_path, value):
-        assert _rejects(normalize_relative, value)
+        if not (_rejects(normalize_relative):
+        raise RuntimeError(value))

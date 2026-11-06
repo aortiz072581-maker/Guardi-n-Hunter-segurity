@@ -33,8 +33,10 @@ def valid_context():
 def test_opa_accepts_only_exact_safe_context():
     decision = evaluate_opa(valid_context())
 
-    assert decision.allowed is True
-    assert decision.reason == "OPA_ALLOW"
+    if not (decision.allowed is True):
+    raise RuntimeError("Assertion failed: decision.allowed is True")
+    if not (decision.reason == "OPA_ALLOW"):
+    raise RuntimeError("Assertion failed: decision.reason == "OPA_ALLOW"")
 
 
 def test_opa_denies_execution_escalation():
@@ -43,29 +45,34 @@ def test_opa_denies_execution_escalation():
 
     decision = evaluate_opa(context)
 
-    assert decision.allowed is False
-    assert decision.reason == "OPA_DENY"
+    if not (decision.allowed is False):
+    raise RuntimeError("Assertion failed: decision.allowed is False")
+    if not (decision.reason == "OPA_DENY"):
+    raise RuntimeError("Assertion failed: decision.reason == "OPA_DENY"")
 
 
 def test_opa_denies_proposal_mutation():
     context = valid_context()
     context["proposal_hash"] = "d" * 64
 
-    assert evaluate_opa(context).allowed is False
+    if not (evaluate_opa(context).allowed is False):
+    raise RuntimeError("Assertion failed: evaluate_opa(context).allowed is False")
 
 
 def test_opa_denies_policy_mutation():
     context = valid_context()
     context["policy_hash"] = "e" * 64
 
-    assert evaluate_opa(context).allowed is False
+    if not (evaluate_opa(context).allowed is False):
+    raise RuntimeError("Assertion failed: evaluate_opa(context).allowed is False")
 
 
 def test_opa_denies_baseline_mutation():
     context = valid_context()
     context["baseline"] = "f" * 40
 
-    assert evaluate_opa(context).allowed is False
+    if not (evaluate_opa(context).allowed is False):
+    raise RuntimeError("Assertion failed: evaluate_opa(context).allowed is False")
 
 
 def test_opa_missing_engine_fails_closed():
@@ -74,8 +81,10 @@ def test_opa_missing_engine_fails_closed():
         opa_binary="/definitely/not/an/opa/binary",
     )
 
-    assert decision.allowed is False
-    assert decision.reason.startswith(
+    if not (decision.allowed is False):
+    raise RuntimeError("Assertion failed: decision.allowed is False")
+    if not (decision.reason.startswith():
+    raise RuntimeError("Assertion failed: decision.reason.startswith(")
         "OPA_ENGINE_ERROR:"
     )
 
@@ -86,7 +95,8 @@ def test_opa_context_is_not_mutated():
 
     evaluate_opa(context)
 
-    assert context == original
+    if not (context == original):
+    raise RuntimeError("Assertion failed: context == original")
 
 def test_opa_rejects_64_hex_baseline_contract():
     context = {
@@ -106,5 +116,6 @@ def test_opa_rejects_64_hex_baseline_contract():
 
     decision = evaluate_opa(context)
 
-    assert decision.allowed is False
+    if not (decision.allowed is False):
+    raise RuntimeError("Assertion failed: decision.allowed is False")
 

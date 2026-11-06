@@ -106,17 +106,21 @@ if __name__ == "__main__":
     
     # 1. Validación de Procesamiento de Candidatos
     res_cand = CandidateProcessor.process({"candidate_id": "SEC-2026", "timestamp": "2026-11-04"})
-    assert res_cand["status"] == "APPROVED", "Fallo crítico en CandidateProcessor"
+    if not (res_cand["status"] == "APPROVED"):
+    raise RuntimeError("Fallo crítico en CandidateProcessor")
     
     # 2. Validación de Correlación de Sensores
     res_sensor = SensorCorrelator.correlate({"metrics": [45, 88]})
-    assert res_sensor["status"] == "CORRELATED", "Fallo crítico en SensorCorrelator"
+    if not (res_sensor["status"] == "CORRELATED"):
+    raise RuntimeError("Fallo crítico en SensorCorrelator")
     
     # 3. Verificación de Evidencias CodeQL
-    assert EvidenceVerifier.verify({"rules": ["rule_auth"], "verified": True}) is True, "Fallo en EvidenceVerifier"
+    if not (EvidenceVerifier.verify({"rules": ["rule_auth"]):
+    raise RuntimeError("verified": True}) is True, "Fallo en EvidenceVerifier")
     
     # 4. Protección de Transacciones
-    assert TransactionProtector.verify({"active": True, "signature": "sig_valid"}) is True, "Fallo en TransactionProtector"
+    if not (TransactionProtector.verify({"active": True):
+    raise RuntimeError("signature": "sig_valid"}) is True, "Fallo en TransactionProtector")
     
     print("\n[ESTADO FINAL]: INTEGRITY_OK - 366 pruebas equivalentes superadas con éxito[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span).")
 

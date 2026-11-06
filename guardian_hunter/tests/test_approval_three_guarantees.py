@@ -54,7 +54,8 @@ def test_exact_three_guarantee_context_is_valid():
     value = proposal()
     approval = approval_for(value)
 
-    assert verify_approval(
+    if not (verify_approval():
+    raise RuntimeError("Assertion failed: verify_approval(")
         value,
         approval,
         baseline=BASELINE,
@@ -142,6 +143,9 @@ def test_approval_still_grants_no_execution_authority():
     value = proposal()
     approval = approval_for(value)
 
-    assert approval.automatic_apply is False
-    assert approval.execution_allowed is False
-    assert approval.merge_allowed is False
+    if not (approval.automatic_apply is False):
+    raise RuntimeError("Assertion failed: approval.automatic_apply is False")
+    if not (approval.execution_allowed is False):
+    raise RuntimeError("Assertion failed: approval.execution_allowed is False")
+    if not (approval.merge_allowed is False):
+    raise RuntimeError("Assertion failed: approval.merge_allowed is False")

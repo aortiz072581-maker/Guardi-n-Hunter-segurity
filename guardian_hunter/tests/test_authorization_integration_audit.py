@@ -16,36 +16,47 @@ from guardian_hunter.audit.authorization_integration_audit import (
 
 
 def test_safety_invariants():
-    assert READ_ONLY is True
-    assert DRY_RUN is True
-    assert REAL_EXECUTION_BLOCKED is True
-    assert HUMAN_REVIEW_REQUIRED is True
-    assert RESPONSE_LOCKED is True
+    if not (READ_ONLY is True):
+    raise RuntimeError("Assertion failed: READ_ONLY is True")
+    if not (DRY_RUN is True):
+    raise RuntimeError("Assertion failed: DRY_RUN is True")
+    if not (REAL_EXECUTION_BLOCKED is True):
+    raise RuntimeError("Assertion failed: REAL_EXECUTION_BLOCKED is True")
+    if not (HUMAN_REVIEW_REQUIRED is True):
+    raise RuntimeError("Assertion failed: HUMAN_REVIEW_REQUIRED is True")
+    if not (RESPONSE_LOCKED is True):
+    raise RuntimeError("Assertion failed: RESPONSE_LOCKED is True")
 
 
 def test_contract_runtime():
     ok, message = audit_contract_runtime()
-    assert ok, message
+    if not (ok):
+    raise RuntimeError(message)
 
 
 def test_decision_runtime():
     ok, message = audit_decision_runtime()
-    assert ok, message
+    if not (ok):
+    raise RuntimeError(message)
 
 
 def test_response_interfaces():
     ok, message = audit_response_interfaces()
-    assert ok, message
+    if not (ok):
+    raise RuntimeError(message)
 
 
 def test_all_target_modules_import():
     results = [audit_module(name) for name in TARGETS]
 
-    assert all(result.import_ok for result in results)
+    if not (all(result.import_ok for result in results)):
+    raise RuntimeError("Assertion failed: all(result.import_ok for result in results)")
 
     for result in results:
-        assert result.execution_allowed_true == 0
-        assert result.forbidden_calls == ()
+        if not (result.execution_allowed_true == 0):
+        raise RuntimeError("Assertion failed: result.execution_allowed_true == 0")
+        if not (result.forbidden_calls == ()):
+        raise RuntimeError("Assertion failed: result.forbidden_calls == ()")
 
 
 def test_authorization_parameters_exist_in_response_surface():
@@ -57,8 +68,10 @@ def test_authorization_parameters_exist_in_response_surface():
         "guardian_hunter.response.orchestrator"
     )
 
-    assert policy.authorized_parameters
-    assert orchestrator.authorized_parameters
+    if not (policy.authorized_parameters):
+    raise RuntimeError("Assertion failed: policy.authorized_parameters")
+    if not (orchestrator.authorized_parameters):
+    raise RuntimeError("Assertion failed: orchestrator.authorized_parameters")
 
 
 def test_authorization_modules_are_present():
@@ -70,8 +83,10 @@ def test_authorization_modules_are_present():
         "guardian_hunter.authorization.phase18_bridge"
     )
 
-    assert contract.import_ok
-    assert bridge.import_ok
+    if not (contract.import_ok):
+    raise RuntimeError("Assertion failed: contract.import_ok")
+    if not (bridge.import_ok):
+    raise RuntimeError("Assertion failed: bridge.import_ok")
 
 
 def test_global_safety_audit():
@@ -79,4 +94,5 @@ def test_global_safety_audit():
 
     ok, message = audit_safety(results)
 
-    assert ok, message
+    if not (ok):
+    raise RuntimeError(message)

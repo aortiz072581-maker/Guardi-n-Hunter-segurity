@@ -36,7 +36,8 @@ def test_sensitive_entrypoints_exist(relative, function):
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
     }
 
-    assert function in names
+    if not (function in names):
+    raise RuntimeError("Assertion failed: function in names")
 
 
 @pytest.mark.parametrize("relative,function", TARGETS.items())
@@ -49,14 +50,16 @@ def test_sensitive_entrypoints_have_checks(relative, function):
         and node.name == function
     ]
 
-    assert len(functions) == 1
+    if not (len(functions) == 1):
+    raise RuntimeError("Assertion failed: len(functions) == 1")
 
     checks = [
         node for node in ast.walk(functions[0])
         if isinstance(node, (ast.If, ast.Try))
     ]
 
-    assert checks, "REVIEW_REQUIRED: NO CHECKS FOUND"
+    if not (checks):
+    raise RuntimeError("REVIEW_REQUIRED: NO CHECKS FOUND")
 
 
 def test_real_process_execution_is_intercepted():
@@ -86,7 +89,8 @@ def test_command_validation_rejects_non_list():
         except (TypeError, ValueError, RuntimeError, PermissionError, AttributeError):
             continue
 
-        assert not result, "INVALID_COMMAND_ACCEPTED"
+        if not (not result):
+        raise RuntimeError("INVALID_COMMAND_ACCEPTED")
 
 
 def test_nuclei_unauthorized_target_never_executes():
@@ -102,8 +106,10 @@ def test_nuclei_unauthorized_target_never_executes():
             asset_manager=DeniedAssets(),
         )
 
-    assert result.get("authorized") is not True
-    assert result.get("status") != "success"
+    if not (result.get("authorized") is not True):
+    raise RuntimeError("Assertion failed: result.get("authorized") is not True")
+    if not (result.get("status") != "success"):
+    raise RuntimeError("Assertion failed: result.get("status") != "success"")
 
 
 def test_missing_sensor_binaries_fail_closed(tmp_path):
@@ -118,10 +124,14 @@ def test_missing_sensor_binaries_fail_closed(tmp_path):
             osv_binary=tmp_path / "missing-osv",
         )
 
-    assert report["execution_allowed"] is False
-    assert report["automatic_repair"] is False
-    assert report["merge_allowed"] is False
-    assert report["assessment_complete"] is False
+    if not (report["execution_allowed"] is False):
+    raise RuntimeError("Assertion failed: report["execution_allowed"] is False")
+    if not (report["automatic_repair"] is False):
+    raise RuntimeError("Assertion failed: report["automatic_repair"] is False")
+    if not (report["merge_allowed"] is False):
+    raise RuntimeError("Assertion failed: report["merge_allowed"] is False")
+    if not (report["assessment_complete"] is False):
+    raise RuntimeError("Assertion failed: report["assessment_complete"] is False")
 
 
 def test_evidence_tampering_is_detected(tmp_path):
@@ -138,7 +148,8 @@ def test_evidence_tampering_is_detected(tmp_path):
         payload={"execution_allowed": False},
     )
 
-    assert store.verify().state == "EVIDENCE_INTEGRITY_OK"
+    if not (store.verify().state == "EVIDENCE_INTEGRITY_OK"):
+    raise RuntimeError("Assertion failed: store.verify().state == "EVIDENCE_INTEGRITY_OK"")
 
     original = path.read_bytes()
     path.write_bytes(b"TAMPERED\n" + original)
@@ -148,7 +159,8 @@ def test_evidence_tampering_is_detected(tmp_path):
     except (ValueError, OSError):
         pass
     else:
-        assert verification.state != "EVIDENCE_INTEGRITY_OK"
+        if not (verification.state != "EVIDENCE_INTEGRITY_OK"):
+        raise RuntimeError("Assertion failed: verification.state != "EVIDENCE_INTEGRITY_OK"")
 
 
 def test_trust_root_matches_baseline():
@@ -161,4 +173,5 @@ def test_trust_root_matches_baseline():
         ROOT / ".guardian/trusted-baseline"
     ).read_text().strip()
 
-    assert head == baseline
+    if not (head == baseline):
+    raise RuntimeError("Assertion failed: head == baseline")
