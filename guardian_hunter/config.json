@@ -1,0 +1,5 @@
+{
+  "admin_public_key_hex": "SU_CLAVE_PUBLICA_ED25519_AQUI",
+  "enforce_human_approval": true,
+  "telemetry_mode": "AIR_GAPPED_LOCAL"
+}

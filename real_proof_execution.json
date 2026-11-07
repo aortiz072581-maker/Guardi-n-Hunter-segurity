@@ -1,0 +1,39 @@
+{
+    "Bio_Immune": {
+        "z_score": 1961.94,
+        "anomaly_detected": true,
+        "antibody_hash": "c86d03db97a35017"
+    },
+    "TEE_Enclave": {
+        "salt_hex": "66ba720b9e5dc1f1e8084b1d2a8c35bd",
+        "encrypted_hex": "27afa33f3a538f1029232cc4be4843c435cc932c62adebc9b430c6e6216afea745d8",
+        "decryption_verified": true
+    },
+    "FIDO2": {
+        "challenge_hex": "57150f8678349df902fb9202a80658b8",
+        "signature_hex": "aa5d1781c628a4f30691c04a00296ba0384df93fec4fbb8fc85b3fa51b527e4a",
+        "verified": true
+    },
+    "eBPF_AutoPatch": {
+        "patch_id": "e386901e4964c9ce",
+        "bytecode_hex": "b7010000010000009500000000000000",
+        "instructions_count": 2
+    },
+    "Swarm_Orchestrator": {
+        "status": "TASK_ACK",
+        "node": "node_worker_02",
+        "received": "REDISTRIBUTE_WORKLOAD_CLUSTER_A"
+    },
+    "Compliance": {
+        "framework": "SOC2 Type II & ISO 27001",
+        "timestamp": 1794040919.482548,
+        "modules_verified": [
+            "Bio_Immune",
+            "TEE_Enclave",
+            "FIDO2",
+            "eBPF_AutoPatch",
+            "Swarm_Orchestrator"
+        ],
+        "system_integrity_hash": "4b48af84b1b8f92d1ee877d3e937ef4bfa986fd238f0823d2b1f8843147fa82526a1046fdaf0e086bd6a05037cd0ce7a3a0fbeadc4569c62f140a2060a211140"
+    }
+}

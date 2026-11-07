@@ -1,0 +1,8 @@
+{
+    "PROVIDER": "AWS",
+    "SECURITY_MODE": "AIR_GAPPED_SOVEREIGN",
+    "EBPF_ENGINE": "ACTIVE_37_LAYERS",
+    "LOCAL_LLM": "OLLAMA_LLAMA3B_Q4",
+    "TPM_DEVICE": "/dev/tpmrm0",
+    "ENCLAVE_SUPPORT": true
+}

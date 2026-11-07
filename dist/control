@@ -1,0 +1,6 @@
+Package: guardian-hunter-enterprise
+Version: 1.0.0
+Architecture: amd64
+Maintainer: Sovereign Security Team <admin@guardianhunter.io>
+Description: Enterprise Sovereign Security Platform (37-Layer Defense + eBPF + Local AI)
+Capabilities: CAP_BPF, CAP_SYS_ADMIN

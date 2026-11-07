@@ -1,0 +1,30 @@
+---
+- name: Despliegue Automatizado de Guardian Hunter Enterprise
+  hosts: enterprise_nodes
+  become: yes
+  tasks:
+    - name: Verificar soporte de Kernel eBPF
+      shell: uname -r
+      register: kernel_version
+
+    - name: Crear directorio de configuración segura
+      file:
+        path: /etc/guardian-hunter
+        state: directory
+        mode: '0755'
+
+    - name: Copiar archivo de configuración protegido
+      copy:
+        content: |
+          {
+            "enforce_human_approval": true,
+            "telemetry_mode": "AIR_GAPPED_LOCAL"
+          }
+        dest: /etc/guardian-hunter/config.json
+        mode: '0600'
+
+    - name: Habilitar y arrancar el servicio de seguridad
+      systemd:
+        name: guardian-hunter
+        state: restarted
+        enabled: yes

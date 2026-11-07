@@ -1,0 +1,20 @@
+{
+    "MTD": {
+        "shift_id": 50750,
+        "honeypots_active": 3
+    },
+    "Auto_Patch": {
+        "patch_id": "4b1e244711b7c5e6",
+        "latency_ms": 10.1
+    },
+    "PUF": {
+        "fingerprint": "15b43b71433e0373768928c402bd39d2"
+    },
+    "Bio_Immune": {
+        "antibody": "A1CFBE638C"
+    },
+    "TEE": {
+        "enclave_hash": "9448e17f33a6c059",
+        "protected": true
+    }
+}
