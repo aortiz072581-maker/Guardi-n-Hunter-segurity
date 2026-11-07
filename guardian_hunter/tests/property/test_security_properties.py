@@ -46,8 +46,7 @@ def test_all_generated_protected_paths_remain_protected(
     prefix,
     suffix,
 ):
-    if not (protected_change(prefix + suffix)):
-    raise RuntimeError("Assertion failed: protected_change(prefix + suffix)")
+    assert protected_change(prefix + suffix)
 
 
 @given(
@@ -71,8 +70,7 @@ def test_exact_authorization_context_verifies(
         baseline=baseline,
     )
 
-    if not (verify_binding():
-    raise RuntimeError("Assertion failed: verify_binding(")
+    assert verify_binding(
         binding,
         proposal_hash=proposal_hash,
         policy=policy,
@@ -111,8 +109,7 @@ def test_proposal_mutation_never_inherits_authorization(
             baseline="b" * 40,
         )
     except PermissionError as exc:
-        if not (str(exc) == "PROPOSAL_HASH_MISMATCH"):
-        raise RuntimeError("Assertion failed: str(exc) == "PROPOSAL_HASH_MISMATCH"")
+        assert str(exc) == "PROPOSAL_HASH_MISMATCH"
     else:
         raise AssertionError(
             "mutated proposal inherited authorization"
@@ -156,8 +153,7 @@ def test_policy_mutation_never_inherits_authorization(
             baseline="b" * 40,
         )
     except PermissionError as exc:
-        if not (str(exc) == "POLICY_HASH_MISMATCH"):
-        raise RuntimeError("Assertion failed: str(exc) == "POLICY_HASH_MISMATCH"")
+        assert str(exc) == "POLICY_HASH_MISMATCH"
     else:
         raise AssertionError(
             "mutated policy inherited authorization"
@@ -181,8 +177,7 @@ def test_64_hex_baseline_is_rejected_by_current_binding_contract(
             baseline=baseline,
         )
     except PermissionError as exc:
-        if not (str(exc) == "INVALID_BASELINE"):
-        raise RuntimeError("Assertion failed: str(exc) == "INVALID_BASELINE"")
+        assert str(exc) == "INVALID_BASELINE"
     else:
         raise AssertionError(
             "64-hex baseline unexpectedly accepted"

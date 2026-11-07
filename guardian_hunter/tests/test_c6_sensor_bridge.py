@@ -27,22 +27,14 @@ def report():
 
 def test_preserves_id_and_blocks_authority():
     result = correlate_sensor_report(report())
-    if not (result["finding_count"] == 1):
-    raise RuntimeError("Assertion failed: result["finding_count"] == 1")
-    if not (result["findings"][0]["id"] == "GH-GITLEAKS-000001"):
-    raise RuntimeError("Assertion failed: result["findings"][0]["id"] == "GH-GITLEAKS-000001"")
-    if not (result["findings"][0]["severity"] == "unknown"):
-    raise RuntimeError("Assertion failed: result["findings"][0]["severity"] == "unknown"")
-    if not (result["classification_complete"] is False):
-    raise RuntimeError("Assertion failed: result["classification_complete"] is False")
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["automatic_repair"] is False):
-    raise RuntimeError("Assertion failed: result["automatic_repair"] is False")
-    if not (result["merge_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["merge_allowed"] is False")
-    if not (result["sha256"]):
-    raise RuntimeError("Assertion failed: result["sha256"]")
+    assert result["finding_count"] == 1
+    assert result["findings"][0]["id"] == "GH-GITLEAKS-000001"
+    assert result["findings"][0]["severity"] == "unknown"
+    assert result["classification_complete"] is False
+    assert result["execution_allowed"] is False
+    assert result["automatic_repair"] is False
+    assert result["merge_allowed"] is False
+    assert result["sha256"]
 
 def test_clean_report():
     r = report()
@@ -50,10 +42,8 @@ def test_clean_report():
     r["findings"] = []
     r["finding_count"] = 0
     result = correlate_sensor_report(r)
-    if not (result["finding_count"] == 0):
-    raise RuntimeError("Assertion failed: result["finding_count"] == 0")
-    if not (result["classification_complete"] is True):
-    raise RuntimeError("Assertion failed: result["classification_complete"] is True")
+    assert result["finding_count"] == 0
+    assert result["classification_complete"] is True
 
 @pytest.mark.parametrize("mutation", [
     lambda r: r.update(execution_allowed=True),

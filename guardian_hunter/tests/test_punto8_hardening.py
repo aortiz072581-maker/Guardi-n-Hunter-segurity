@@ -9,11 +9,9 @@ def test_p8_tampered_signature_fails():
         if hasattr(ed, 'verify_approval'):
             msg = b"test"
             # firma fake
-            if not (not ed.verify_approval(msg):
-            raise RuntimeError(b"\x00"*64, b"\x00"*32))
+            assert not ed.verify_approval(msg, b"\x00"*64, b"\x00"*32)
     except Exception:
-        if not (True):
-        raise RuntimeError("Assertion failed: True")
+        assert True
 
 def test_p8_replay_and_empty():
     for bad in [b"", b"\x00", b"\xff"*10, os.urandom(128)]:
@@ -22,8 +20,7 @@ def test_p8_replay_and_empty():
                 ed.verify_approval(bad, bad, bad)
         except Exception:
             pass
-    if not (True):
-    raise RuntimeError("Assertion failed: True")
+    assert True
 
 def test_p8_broker_adversarial_inputs():
     import guardian_hunter.harness.broker_selftest as b
@@ -33,5 +30,4 @@ def test_p8_broker_adversarial_inputs():
                 b.run_selftest()
         except Exception:
             pass
-    if not (True):
-    raise RuntimeError("Assertion failed: True")
+    assert True

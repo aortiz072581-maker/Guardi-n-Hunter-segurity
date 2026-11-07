@@ -41,14 +41,10 @@ def test_proposal_is_fail_closed():
     value = proposal()
     value.validate()
 
-    if not (value.automatic_apply is False):
-    raise RuntimeError("Assertion failed: value.automatic_apply is False")
-    if not (value.execution_allowed is False):
-    raise RuntimeError("Assertion failed: value.execution_allowed is False")
-    if not (value.merge_allowed is False):
-    raise RuntimeError("Assertion failed: value.merge_allowed is False")
-    if not (value.human_approval_required is True):
-    raise RuntimeError("Assertion failed: value.human_approval_required is True")
+    assert value.automatic_apply is False
+    assert value.execution_allowed is False
+    assert value.merge_allowed is False
+    assert value.human_approval_required is True
 
 
 def test_proposal_has_stable_sha256():
@@ -57,10 +53,8 @@ def test_proposal_has_stable_sha256():
     first = value.proposal_hash
     second = value.proposal_hash
 
-    if not (first == second):
-    raise RuntimeError("Assertion failed: first == second")
-    if not (len(first) == 64):
-    raise RuntimeError("Assertion failed: len(first) == 64")
+    assert first == second
+    assert len(first) == 64
 
 
 def test_patch_change_changes_hash():
@@ -71,8 +65,7 @@ def test_patch_change_changes_hash():
         patch=value.patch + "\n# changed\n",
     )
 
-    if not (value.proposal_hash != changed.proposal_hash):
-    raise RuntimeError("Assertion failed: value.proposal_hash != changed.proposal_hash")
+    assert value.proposal_hash != changed.proposal_hash
 
 
 def test_file_change_changes_hash():
@@ -85,8 +78,7 @@ def test_file_change_changes_hash():
         ),
     )
 
-    if not (value.proposal_hash != changed.proposal_hash):
-    raise RuntimeError("Assertion failed: value.proposal_hash != changed.proposal_hash")
+    assert value.proposal_hash != changed.proposal_hash
 
 
 def test_tests_change_changes_hash():
@@ -97,8 +89,7 @@ def test_tests_change_changes_hash():
         required_tests=("different_test",),
     )
 
-    if not (value.proposal_hash != changed.proposal_hash):
-    raise RuntimeError("Assertion failed: value.proposal_hash != changed.proposal_hash")
+    assert value.proposal_hash != changed.proposal_hash
 
 
 def test_human_can_approve_exact_proposal():
@@ -111,8 +102,7 @@ def test_human_can_approve_exact_proposal():
         baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb", policy=POLICY,
     )
 
-    if not (verify_approval(value):
-    raise RuntimeError(approval, baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb", policy=POLICY) is True)
+    assert verify_approval(value, approval, baseline="2a44ae3916f629d59dc92fc5099c79f4cf2af4bb", policy=POLICY) is True
 
 
 def test_modified_patch_invalidates_approval():
@@ -229,13 +219,11 @@ def test_protected_boundary_is_identified():
         ),
     )
 
-    if not (value.touches_protected_boundary is True):
-    raise RuntimeError("Assertion failed: value.touches_protected_boundary is True")
+    assert value.touches_protected_boundary is True
 
 
 def test_normal_code_not_marked_protected():
-    if not (proposal().touches_protected_boundary is False):
-    raise RuntimeError("Assertion failed: proposal().touches_protected_boundary is False")
+    assert proposal().touches_protected_boundary is False
 
 
 def test_path_traversal_is_rejected():
@@ -256,8 +244,7 @@ def test_path_traversal_is_rejected():
 def test_gate_protects_repair_proposal():
     from guardian_hunter.gate.core import protected_change
 
-    if not (protected_change():
-    raise RuntimeError("Assertion failed: protected_change(")
+    assert protected_change(
         "guardian_hunter/repair/proposal.py"
     ) is True
 
@@ -265,8 +252,7 @@ def test_gate_protects_repair_proposal():
 def test_gate_protects_repair_approval():
     from guardian_hunter.gate.core import protected_change
 
-    if not (protected_change():
-    raise RuntimeError("Assertion failed: protected_change(")
+    assert protected_change(
         "guardian_hunter/repair/approval.py"
     ) is True
 
@@ -278,14 +264,10 @@ def test_repair_cannot_approve_own_boundary_change():
         ["guardian_hunter/repair/approval.py"]
     )
 
-    if not (result.passed is False):
-    raise RuntimeError("Assertion failed: result.passed is False")
-    if not (result.human_review_required is True):
-    raise RuntimeError("Assertion failed: result.human_review_required is True")
-    if not (result.agent_merge_allowed is False):
-    raise RuntimeError("Assertion failed: result.agent_merge_allowed is False")
-    if not (result.reason.startswith():
-    raise RuntimeError("Assertion failed: result.reason.startswith(")
+    assert result.passed is False
+    assert result.human_review_required is True
+    assert result.agent_merge_allowed is False
+    assert result.reason.startswith(
         "PROTECTED_BOUNDARY_CHANGED:"
     )
 
@@ -297,19 +279,14 @@ def test_gate_protects_execution_broker():
 
     path = "guardian_hunter/harness/broker.py"
 
-    if not (protected_change(path) is True):
-    raise RuntimeError("Assertion failed: protected_change(path) is True")
+    assert protected_change(path) is True
 
     result = evaluate_candidate([path])
 
-    if not (result.passed is False):
-    raise RuntimeError("Assertion failed: result.passed is False")
-    if not (result.human_review_required is True):
-    raise RuntimeError("Assertion failed: result.human_review_required is True")
-    if not (result.agent_merge_allowed is False):
-    raise RuntimeError("Assertion failed: result.agent_merge_allowed is False")
-    if not (result.reason == ():
-    raise RuntimeError("Assertion failed: result.reason == (")
+    assert result.passed is False
+    assert result.human_review_required is True
+    assert result.agent_merge_allowed is False
+    assert result.reason == (
         "PROTECTED_BOUNDARY_CHANGED:"
         "guardian_hunter/harness/broker.py"
     )

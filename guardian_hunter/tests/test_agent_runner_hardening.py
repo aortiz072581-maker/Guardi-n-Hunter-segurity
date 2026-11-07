@@ -48,8 +48,7 @@ def test_arbitrary_executable_is_rejected_before_subprocess(
             ["sh", "-c", "echo unauthorized"]
         )
 
-    if not (called is False):
-    raise RuntimeError("Assertion failed: called is False")
+    assert called is False
 
 
 def test_git_is_rejected_before_subprocess(monkeypatch, tmp_path):
@@ -124,28 +123,19 @@ def test_sanitized_environment_does_not_pass_credentials(
 
     env = agent_runner.sanitized_environment(workspace)
 
-    if not ("OPENAI_API_KEY" not in env):
-    raise RuntimeError("Assertion failed: "OPENAI_API_KEY" not in env")
-    if not ("ANTHROPIC_API_KEY" not in env):
-    raise RuntimeError("Assertion failed: "ANTHROPIC_API_KEY" not in env")
-    if not ("GITHUB_TOKEN" not in env):
-    raise RuntimeError("Assertion failed: "GITHUB_TOKEN" not in env")
-    if not ("AWS_SECRET_ACCESS_KEY" not in env):
-    raise RuntimeError("Assertion failed: "AWS_SECRET_ACCESS_KEY" not in env")
-    if not ("SSH_AUTH_SOCK" not in env):
-    raise RuntimeError("Assertion failed: "SSH_AUTH_SOCK" not in env")
+    assert "OPENAI_API_KEY" not in env
+    assert "ANTHROPIC_API_KEY" not in env
+    assert "GITHUB_TOKEN" not in env
+    assert "AWS_SECRET_ACCESS_KEY" not in env
+    assert "SSH_AUTH_SOCK" not in env
 
-    if not (env["HOME"] == str(workspace)):
-    raise RuntimeError("Assertion failed: env["HOME"] == str(workspace)")
-    if not ("PYTHONPATH" not in env):
-    raise RuntimeError("Assertion failed: "PYTHONPATH" not in env")
+    assert env["HOME"] == str(workspace)
+    assert "PYTHONPATH" not in env
 
 
 def test_runner_has_finite_timeout():
-    if not (isinstance(agent_runner.TIMEOUT_SECONDS):
-    raise RuntimeError(int))
-    if not (1 <= agent_runner.TIMEOUT_SECONDS <= 300):
-    raise RuntimeError("Assertion failed: 1 <= agent_runner.TIMEOUT_SECONDS <= 300")
+    assert isinstance(agent_runner.TIMEOUT_SECONDS, int)
+    assert 1 <= agent_runner.TIMEOUT_SECONDS <= 300
 
 
 @pytest.mark.parametrize(
@@ -191,8 +181,7 @@ def test_python_code_execution_switches_are_rejected_before_subprocess(
     ):
         agent_runner.run_candidate(command)
 
-    if not (called is False):
-    raise RuntimeError("Assertion failed: called is False")
+    assert called is False
 
 
 @pytest.mark.parametrize(
@@ -277,32 +266,21 @@ def test_relative_python_script_reaches_only_mocked_subprocess(
         ["python", "candidate.py"]
     )
 
-    if not (rc == 0):
-    raise RuntimeError("Assertion failed: rc == 0")
+    assert rc == 0
     trusted_python = str(
         Path(agent_runner.sys.executable).resolve()
     )
 
-    if not (observed["command"][0] == trusted_python):
-    raise RuntimeError("Assertion failed: observed["command"][0] == trusted_python")
-    if not (observed["command"][1] == "-I"):
-    raise RuntimeError("Assertion failed: observed["command"][1] == "-I"")
-    if not (observed["command"][2] == "-c"):
-    raise RuntimeError("Assertion failed: observed["command"][2] == "-c"")
-    if not ("/proc/self/fd/" not in " ".join(observed["command"])):
-    raise RuntimeError("Assertion failed: "/proc/self/fd/" not in " ".join(observed["command"])")
-    if not (observed["command"][1] != "candidate.py"):
-    raise RuntimeError("Assertion failed: observed["command"][1] != "candidate.py"")
-    if not (observed["pass_fds"] == ()):
-    raise RuntimeError("Assertion failed: observed["pass_fds"] == ()")
-    if not (observed["cwd"] == workspace.resolve()):
-    raise RuntimeError("Assertion failed: observed["cwd"] == workspace.resolve()")
-    if not (observed["timeout"] == agent_runner.TIMEOUT_SECONDS):
-    raise RuntimeError("Assertion failed: observed["timeout"] == agent_runner.TIMEOUT_SECONDS")
-    if not (observed["check"] is False):
-    raise RuntimeError("Assertion failed: observed["check"] is False")
-    if not (observed["env"]["HOME"] == str():
-    raise RuntimeError("Assertion failed: observed["env"]["HOME"] == str(")
+    assert observed["command"][0] == trusted_python
+    assert observed["command"][1] == "-I"
+    assert observed["command"][2] == "-c"
+    assert "/proc/self/fd/" not in " ".join(observed["command"])
+    assert observed["command"][1] != "candidate.py"
+    assert observed["pass_fds"] == ()
+    assert observed["cwd"] == workspace.resolve()
+    assert observed["timeout"] == agent_runner.TIMEOUT_SECONDS
+    assert observed["check"] is False
+    assert observed["env"]["HOME"] == str(
         workspace.resolve()
     )
 
@@ -321,15 +299,12 @@ def test_sanitized_environment_does_not_trust_parent_path(
 
     env = agent_runner.sanitized_environment(workspace)
 
-    if not (env["PATH"] != ():
-    raise RuntimeError("Assertion failed: env["PATH"] != (")
+    assert env["PATH"] != (
         "/untrusted/fake-bin:/another/untrusted-bin"
     )
 
-    if not ("/untrusted/fake-bin" not in env["PATH"]):
-    raise RuntimeError("Assertion failed: "/untrusted/fake-bin" not in env["PATH"]")
-    if not ("/another/untrusted-bin" not in env["PATH"]):
-    raise RuntimeError("Assertion failed: "/another/untrusted-bin" not in env["PATH"]")
+    assert "/untrusted/fake-bin" not in env["PATH"]
+    assert "/another/untrusted-bin" not in env["PATH"]
 
 
 def test_missing_candidate_script_is_rejected_before_subprocess(
@@ -554,10 +529,8 @@ def test_candidate_swap_between_validation_and_open_fails_closed(
             ["python", "candidate.py"]
         )
 
-    if not (swapped["done"] is True):
-    raise RuntimeError("Assertion failed: swapped["done"] is True")
-    if not (subprocess_reached["value"] is False):
-    raise RuntimeError("Assertion failed: subprocess_reached["value"] is False")
+    assert swapped["done"] is True
+    assert subprocess_reached["value"] is False
 
 
 def test_regular_file_swap_between_validation_and_open_fails_closed(
@@ -632,7 +605,5 @@ def test_regular_file_swap_between_validation_and_open_fails_closed(
             ["python", "candidate.py"]
         )
 
-    if not (swapped["done"] is True):
-    raise RuntimeError("Assertion failed: swapped["done"] is True")
-    if not (subprocess_reached["value"] is False):
-    raise RuntimeError("Assertion failed: subprocess_reached["value"] is False")
+    assert swapped["done"] is True
+    assert subprocess_reached["value"] is False

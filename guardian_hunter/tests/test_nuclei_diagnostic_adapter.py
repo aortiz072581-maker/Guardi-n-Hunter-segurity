@@ -8,14 +8,10 @@ from guardian_hunter.integration.nuclei_diagnostic_adapter import (
 
 
 def test_safety_invariants():
-    if not (READ_ONLY is True):
-    raise RuntimeError("Assertion failed: READ_ONLY is True")
-    if not (DRY_RUN is True):
-    raise RuntimeError("Assertion failed: DRY_RUN is True")
-    if not (REAL_EXECUTION_BLOCKED is True):
-    raise RuntimeError("Assertion failed: REAL_EXECUTION_BLOCKED is True")
-    if not (RESPONSE_LOCKED is True):
-    raise RuntimeError("Assertion failed: RESPONSE_LOCKED is True")
+    assert READ_ONLY is True
+    assert DRY_RUN is True
+    assert REAL_EXECUTION_BLOCKED is True
+    assert RESPONSE_LOCKED is True
 
 
 def test_critical_nuclei_finding_reaches_diagnosis():
@@ -41,25 +37,16 @@ def test_critical_nuclei_finding_reaches_diagnosis():
         }
     )
 
-    if not (result["risk"]["max_score"] == 95):
-    raise RuntimeError("Assertion failed: result["risk"]["max_score"] == 95")
-    if not (result["diagnosis"]["risk_level"] == "CRITICAL"):
-    raise RuntimeError("Assertion failed: result["diagnosis"]["risk_level"] == "CRITICAL"")
-    if not (result["diagnosis"]["problem_detected"] is True):
-    raise RuntimeError("Assertion failed: result["diagnosis"]["problem_detected"] is True")
-    if not (result["containment_recommended"] is True):
-    raise RuntimeError("Assertion failed: result["containment_recommended"] is True")
+    assert result["risk"]["max_score"] == 95
+    assert result["diagnosis"]["risk_level"] == "CRITICAL"
+    assert result["diagnosis"]["problem_detected"] is True
+    assert result["containment_recommended"] is True
 
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["read_only"] is True):
-    raise RuntimeError("Assertion failed: result["read_only"] is True")
-    if not (result["dry_run"] is True):
-    raise RuntimeError("Assertion failed: result["dry_run"] is True")
-    if not (result["real_execution_blocked"] is True):
-    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    assert result["execution_allowed"] is False
+    assert result["read_only"] is True
+    assert result["dry_run"] is True
+    assert result["real_execution_blocked"] is True
+    assert result["response_locked"] is True
 
 
 def test_unauthorized_result_fails_closed():
@@ -75,18 +62,12 @@ def test_unauthorized_result_fails_closed():
         }
     )
 
-    if not (result["status"] == "blocked"):
-    raise RuntimeError("Assertion failed: result["status"] == "blocked"")
-    if not (result["findings"] == []):
-    raise RuntimeError("Assertion failed: result["findings"] == []")
-    if not (result["diagnosis"] is None):
-    raise RuntimeError("Assertion failed: result["diagnosis"] is None")
-    if not (result["containment_recommended"] is False):
-    raise RuntimeError("Assertion failed: result["containment_recommended"] is False")
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    assert result["status"] == "blocked"
+    assert result["findings"] == []
+    assert result["diagnosis"] is None
+    assert result["containment_recommended"] is False
+    assert result["execution_allowed"] is False
+    assert result["response_locked"] is True
 
 
 def test_nuclei_decision_and_response_plan_remain_locked():
@@ -115,40 +96,24 @@ def test_nuclei_decision_and_response_plan_remain_locked():
     decision = result["decision"]
     plan = result["response_plan"]
 
-    if not (decision is not None):
-    raise RuntimeError("Assertion failed: decision is not None")
-    if not (decision["risk_level"] == "CRITICAL"):
-    raise RuntimeError("Assertion failed: decision["risk_level"] == "CRITICAL"")
-    if not (decision["decision"] == "ESCALATE_FOR_HUMAN_REVIEW"):
-    raise RuntimeError("Assertion failed: decision["decision"] == "ESCALATE_FOR_HUMAN_REVIEW"")
-    if not (decision["requires_review"] is True):
-    raise RuntimeError("Assertion failed: decision["requires_review"] is True")
-    if not (decision["response_locked"] is True):
-    raise RuntimeError("Assertion failed: decision["response_locked"] is True")
-    if not (decision["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: decision["execution_allowed"] is False")
+    assert decision is not None
+    assert decision["risk_level"] == "CRITICAL"
+    assert decision["decision"] == "ESCALATE_FOR_HUMAN_REVIEW"
+    assert decision["requires_review"] is True
+    assert decision["response_locked"] is True
+    assert decision["execution_allowed"] is False
 
-    if not (plan is not None):
-    raise RuntimeError("Assertion failed: plan is not None")
-    if not (plan["risk_level"] == "CRITICAL"):
-    raise RuntimeError("Assertion failed: plan["risk_level"] == "CRITICAL"")
-    if not (plan["response_locked"] is True):
-    raise RuntimeError("Assertion failed: plan["response_locked"] is True")
-    if not (plan["dry_run"] is True):
-    raise RuntimeError("Assertion failed: plan["dry_run"] is True")
-    if not (plan["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: plan["execution_allowed"] is False")
-    if not ("ESCALATE_FOR_HUMAN_REVIEW" in plan["steps"]):
-    raise RuntimeError("Assertion failed: "ESCALATE_FOR_HUMAN_REVIEW" in plan["steps"]")
-    if not ("KEEP_RESPONSE_LOCKED" in plan["steps"]):
-    raise RuntimeError("Assertion failed: "KEEP_RESPONSE_LOCKED" in plan["steps"]")
+    assert plan is not None
+    assert plan["risk_level"] == "CRITICAL"
+    assert plan["response_locked"] is True
+    assert plan["dry_run"] is True
+    assert plan["execution_allowed"] is False
+    assert "ESCALATE_FOR_HUMAN_REVIEW" in plan["steps"]
+    assert "KEEP_RESPONSE_LOCKED" in plan["steps"]
 
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["real_execution_blocked"] is True):
-    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    assert result["execution_allowed"] is False
+    assert result["real_execution_blocked"] is True
+    assert result["response_locked"] is True
 
 
 def test_unauthorized_nuclei_never_creates_decision_or_plan():
@@ -164,19 +129,11 @@ def test_unauthorized_nuclei_never_creates_decision_or_plan():
         }
     )
 
-    if not (result["status"] == "blocked"):
-    raise RuntimeError("Assertion failed: result["status"] == "blocked"")
-    if not (result["diagnosis"] is None):
-    raise RuntimeError("Assertion failed: result["diagnosis"] is None")
-    if not (result["decision"] is None):
-    raise RuntimeError("Assertion failed: result["decision"] is None")
-    if not (result["response_plan"] is None):
-    raise RuntimeError("Assertion failed: result["response_plan"] is None")
-    if not (result["containment_recommended"] is False):
-    raise RuntimeError("Assertion failed: result["containment_recommended"] is False")
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["real_execution_blocked"] is True):
-    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    assert result["status"] == "blocked"
+    assert result["diagnosis"] is None
+    assert result["decision"] is None
+    assert result["response_plan"] is None
+    assert result["containment_recommended"] is False
+    assert result["execution_allowed"] is False
+    assert result["real_execution_blocked"] is True
+    assert result["response_locked"] is True

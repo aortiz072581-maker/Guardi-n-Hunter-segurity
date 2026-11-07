@@ -11,18 +11,12 @@ def test_real_audited_entry():
         evidence = Path(directory) / "audit.jsonl"
         result = run_phase_h(Path.cwd(), evidence)
 
-        if not (result["evidence_integrity"] == "PASS"):
-        raise RuntimeError("Assertion failed: result["evidence_integrity"] == "PASS"")
-        if not (result["events_recorded"] == 3):
-        raise RuntimeError("Assertion failed: result["events_recorded"] == 3")
-        if not (result["execution_allowed"] is False):
-        raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-        if not (result["automatic_repair"] is False):
-        raise RuntimeError("Assertion failed: result["automatic_repair"] is False")
-        if not (result["merge_allowed"] is False):
-        raise RuntimeError("Assertion failed: result["merge_allowed"] is False")
-        if not (result["human_approval_required"] is True):
-        raise RuntimeError("Assertion failed: result["human_approval_required"] is True")
+        assert result["evidence_integrity"] == "PASS"
+        assert result["events_recorded"] == 3
+        assert result["execution_allowed"] is False
+        assert result["automatic_repair"] is False
+        assert result["merge_allowed"] is False
+        assert result["human_approval_required"] is True
 
 
 def test_audit_failure_blocks():
@@ -43,8 +37,7 @@ def test_audit_failure_blocks():
         ):
             result = run_phase_h(Path.cwd(), evidence)
 
-        if not (result["status"] == "BLOCKED"):
-        raise RuntimeError("Assertion failed: result["status"] == "BLOCKED"")
+        assert result["status"] == "BLOCKED"
 
 
 def test_unsafe_authority_blocks():
@@ -65,8 +58,7 @@ def test_unsafe_authority_blocks():
         ):
             result = run_phase_h(Path.cwd(), evidence)
 
-        if not (result["status"] == "BLOCKED"):
-        raise RuntimeError("Assertion failed: result["status"] == "BLOCKED"")
+        assert result["status"] == "BLOCKED"
 
 
 def test_tampered_evidence_blocks():
@@ -74,8 +66,7 @@ def test_tampered_evidence_blocks():
         evidence = Path(directory) / "audit.jsonl"
 
         first = run_phase_h(Path.cwd(), evidence)
-        if not (first["evidence_integrity"] == "PASS"):
-        raise RuntimeError("Assertion failed: first["evidence_integrity"] == "PASS"")
+        assert first["evidence_integrity"] == "PASS"
 
         evidence.write_text(
             "TAMPERED\\n" + evidence.read_text()
@@ -83,9 +74,6 @@ def test_tampered_evidence_blocks():
 
         result = run_phase_h(Path.cwd(), evidence)
 
-        if not (result["status"] == "BLOCKED"):
-        raise RuntimeError("Assertion failed: result["status"] == "BLOCKED"")
-        if not (result["execution_allowed"] is False):
-        raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-        if not (result["automatic_repair"] is False):
-        raise RuntimeError("Assertion failed: result["automatic_repair"] is False")
+        assert result["status"] == "BLOCKED"
+        assert result["execution_allowed"] is False
+        assert result["automatic_repair"] is False

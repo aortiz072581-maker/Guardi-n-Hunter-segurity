@@ -39,12 +39,9 @@ def test_clean_supervised_flow(monkeypatch, tmp_path):
         sensor_report=_sensor(),
     )
 
-    if not (result["c6_operational"]["finding_count"] == 0):
-    raise RuntimeError("Assertion failed: result["c6_operational"]["finding_count"] == 0")
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    assert result["c6_operational"]["finding_count"] == 0
+    assert result["execution_allowed"] is False
+    assert result["response_locked"] is True
 
 
 def test_synthetic_finding(monkeypatch, tmp_path):
@@ -70,12 +67,9 @@ def test_synthetic_finding(monkeypatch, tmp_path):
         sensor_report=_sensor("FINDINGS", [finding]),
     )
 
-    if not (result["c6_operational"]["finding_count"] == 1):
-    raise RuntimeError("Assertion failed: result["c6_operational"]["finding_count"] == 1")
-    if not (result["c6_operational"]["classification_complete"] is False):
-    raise RuntimeError("Assertion failed: result["c6_operational"]["classification_complete"] is False")
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
+    assert result["c6_operational"]["finding_count"] == 1
+    assert result["c6_operational"]["classification_complete"] is False
+    assert result["execution_allowed"] is False
 
 
 def test_incomplete_sensor_denied(monkeypatch, tmp_path):

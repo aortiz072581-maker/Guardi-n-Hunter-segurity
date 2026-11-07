@@ -16,43 +16,26 @@ def test_consolidated_flow_stays_fail_closed():
         network={},
     )
 
-    if not (result["read_only"] is True):
-    raise RuntimeError("Assertion failed: result["read_only"] is True")
-    if not (result["dry_run"] is True):
-    raise RuntimeError("Assertion failed: result["dry_run"] is True")
-    if not (result["real_execution_blocked"] is True):
-    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
-    if not (result["human_review_required"] is True):
-    raise RuntimeError("Assertion failed: result["human_review_required"] is True")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
+    assert result["read_only"] is True
+    assert result["dry_run"] is True
+    assert result["real_execution_blocked"] is True
+    assert result["human_review_required"] is True
+    assert result["response_locked"] is True
+    assert result["execution_allowed"] is False
 
-    if not ("hardware" in result):
-    raise RuntimeError("Assertion failed: "hardware" in result")
-    if not ("network" in result):
-    raise RuntimeError("Assertion failed: "network" in result")
-    if not ("correlation" in result):
-    raise RuntimeError("Assertion failed: "correlation" in result")
-    if not ("diagnosis" in result):
-    raise RuntimeError("Assertion failed: "diagnosis" in result")
-    if not ("integrity_tamper" in result):
-    raise RuntimeError("Assertion failed: "integrity_tamper" in result")
-    if not ("evidence" in result):
-    raise RuntimeError("Assertion failed: "evidence" in result")
+    assert "hardware" in result
+    assert "network" in result
+    assert "correlation" in result
+    assert "diagnosis" in result
+    assert "integrity_tamper" in result
+    assert "evidence" in result
 
     protection = result["integrity_tamper"]
-    if not (protection["integrity_state"] == "INTEGRITY_OK"):
-    raise RuntimeError("Assertion failed: protection["integrity_state"] == "INTEGRITY_OK"")
-    if not (protection["integrity_fail_closed"] is True):
-    raise RuntimeError("Assertion failed: protection["integrity_fail_closed"] is True")
-    if not (protection["tamper_fail_closed"] is True):
-    raise RuntimeError("Assertion failed: protection["tamper_fail_closed"] is True")
-    if not (protection["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: protection["execution_allowed"] is False")
-    if not (protection["response_locked"] is True):
-    raise RuntimeError("Assertion failed: protection["response_locked"] is True")
+    assert protection["integrity_state"] == "INTEGRITY_OK"
+    assert protection["integrity_fail_closed"] is True
+    assert protection["tamper_fail_closed"] is True
+    assert protection["execution_allowed"] is False
+    assert protection["response_locked"] is True
 
 def test_consolidated_flow_blocks_integrity_change(tmp_path):
     import json
@@ -84,27 +67,17 @@ def test_consolidated_flow_blocks_integrity_change(tmp_path):
         network={},
     )
 
-    if not (result["status"] == "blocked"):
-    raise RuntimeError("Assertion failed: result["status"] == "blocked"")
-    if not (result["integrity_tamper"]["integrity_state"] == "TAMPER_DETECTED"):
-    raise RuntimeError("Assertion failed: result["integrity_tamper"]["integrity_state"] == "TAMPER_DETECTED"")
-    if not (result["integrity_tamper"]["modified"]):
-    raise RuntimeError("Assertion failed: result["integrity_tamper"]["modified"]")
-    if not ("integrity" in result["diagnosis"]["categories"]):
-    raise RuntimeError("Assertion failed: "integrity" in result["diagnosis"]["categories"]")
-    if not (result["diagnosis"]["risk_level"] == "CRITICAL"):
-    raise RuntimeError("Assertion failed: result["diagnosis"]["risk_level"] == "CRITICAL"")
-    if not ("PROTECTED_FILE_INTEGRITY_CHANGE" in result["diagnosis"]["probable_causes"]):
-    raise RuntimeError("Assertion failed: "PROTECTED_FILE_INTEGRITY_CHANGE" in result["diagnosis"]["probable_causes"]")
+    assert result["status"] == "blocked"
+    assert result["integrity_tamper"]["integrity_state"] == "TAMPER_DETECTED"
+    assert result["integrity_tamper"]["modified"]
+    assert "integrity" in result["diagnosis"]["categories"]
+    assert result["diagnosis"]["risk_level"] == "CRITICAL"
+    assert "PROTECTED_FILE_INTEGRITY_CHANGE" in result["diagnosis"]["probable_causes"]
 
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
-    if not (result["real_execution_blocked"] is True):
-    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
-    if not (result["human_review_required"] is True):
-    raise RuntimeError("Assertion failed: result["human_review_required"] is True")
+    assert result["execution_allowed"] is False
+    assert result["response_locked"] is True
+    assert result["real_execution_blocked"] is True
+    assert result["human_review_required"] is True
 
 def test_consolidated_flow_correlates_multiple_defenses(tmp_path):
     import json
@@ -161,40 +134,26 @@ def test_consolidated_flow_correlates_multiple_defenses(tmp_path):
         network=network,
     )
 
-    if not (result["status"] == "blocked"):
-    raise RuntimeError("Assertion failed: result["status"] == "blocked"")
+    assert result["status"] == "blocked"
 
     signals = result["correlation"]["signals"]
-    if not ("HARDWARE_CHANGED" in signals):
-    raise RuntimeError("Assertion failed: "HARDWARE_CHANGED" in signals")
-    if not ("NEW_HARDWARE" in signals):
-    raise RuntimeError("Assertion failed: "NEW_HARDWARE" in signals")
-    if not ("NETWORK_INTERFACE_CHANGED" in signals):
-    raise RuntimeError("Assertion failed: "NETWORK_INTERFACE_CHANGED" in signals")
-    if not ("ROUTE_CHANGED" in signals):
-    raise RuntimeError("Assertion failed: "ROUTE_CHANGED" in signals")
+    assert "HARDWARE_CHANGED" in signals
+    assert "NEW_HARDWARE" in signals
+    assert "NETWORK_INTERFACE_CHANGED" in signals
+    assert "ROUTE_CHANGED" in signals
 
     categories = result["diagnosis"]["categories"]
-    if not ("hardware" in categories):
-    raise RuntimeError("Assertion failed: "hardware" in categories")
-    if not ("network" in categories):
-    raise RuntimeError("Assertion failed: "network" in categories")
-    if not ("integrity" in categories):
-    raise RuntimeError("Assertion failed: "integrity" in categories")
+    assert "hardware" in categories
+    assert "network" in categories
+    assert "integrity" in categories
 
-    if not (result["diagnosis"]["risk_level"] == "CRITICAL"):
-    raise RuntimeError("Assertion failed: result["diagnosis"]["risk_level"] == "CRITICAL"")
-    if not (result["integrity_tamper"]["integrity_state"] == "TAMPER_DETECTED"):
-    raise RuntimeError("Assertion failed: result["integrity_tamper"]["integrity_state"] == "TAMPER_DETECTED"")
+    assert result["diagnosis"]["risk_level"] == "CRITICAL"
+    assert result["integrity_tamper"]["integrity_state"] == "TAMPER_DETECTED"
 
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
-    if not (result["real_execution_blocked"] is True):
-    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
-    if not (result["human_review_required"] is True):
-    raise RuntimeError("Assertion failed: result["human_review_required"] is True")
+    assert result["execution_allowed"] is False
+    assert result["response_locked"] is True
+    assert result["real_execution_blocked"] is True
+    assert result["human_review_required"] is True
 
 
 def test_consolidated_recovery_stays_planning_only():
@@ -208,44 +167,30 @@ def test_consolidated_recovery_stays_planning_only():
         network={},
     )
 
-    if not ("recovery" in result):
-    raise RuntimeError("Assertion failed: "recovery" in result")
+    assert "recovery" in result
 
     recovery = result["recovery"]
 
-    if not ("incident" in recovery):
-    raise RuntimeError("Assertion failed: "incident" in recovery")
-    if not ("plan" in recovery):
-    raise RuntimeError("Assertion failed: "plan" in recovery")
-    if not ("review" in recovery):
-    raise RuntimeError("Assertion failed: "review" in recovery")
+    assert "incident" in recovery
+    assert "plan" in recovery
+    assert "review" in recovery
 
     # Recovery 6.3/6.4 may plan and review,
     # but must never execute automatically.
-    if not (recovery["automatic_recovery"] is False):
-    raise RuntimeError("Assertion failed: recovery["automatic_recovery"] is False")
-    if not (recovery["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: recovery["execution_allowed"] is False")
-    if not (recovery["response_locked"] is True):
-    raise RuntimeError("Assertion failed: recovery["response_locked"] is True")
+    assert recovery["automatic_recovery"] is False
+    assert recovery["execution_allowed"] is False
+    assert recovery["response_locked"] is True
 
     # Global fail-closed guarantees must remain intact.
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
-    if not (result["real_execution_blocked"] is True):
-    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
-    if not (result["human_review_required"] is True):
-    raise RuntimeError("Assertion failed: result["human_review_required"] is True")
+    assert result["execution_allowed"] is False
+    assert result["response_locked"] is True
+    assert result["real_execution_blocked"] is True
+    assert result["human_review_required"] is True
 
     recovery = result["recovery"]
-    if not (recovery["automatic_recovery"] is False):
-    raise RuntimeError("Assertion failed: recovery["automatic_recovery"] is False")
-    if not (recovery["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: recovery["execution_allowed"] is False")
-    if not (recovery["response_locked"] is True):
-    raise RuntimeError("Assertion failed: recovery["response_locked"] is True")
+    assert recovery["automatic_recovery"] is False
+    assert recovery["execution_allowed"] is False
+    assert recovery["response_locked"] is True
 
 
 
@@ -307,45 +252,28 @@ def test_consolidated_sensor_pipeline_is_fail_closed(tmp_path):
     )
 
     # Sensor observations reach the consolidated flow.
-    if not (result["hardware"] == current_hardware):
-    raise RuntimeError("Assertion failed: result["hardware"] == current_hardware")
-    if not (result["network"] == current_network):
-    raise RuntimeError("Assertion failed: result["network"] == current_network")
+    assert result["hardware"] == current_hardware
+    assert result["network"] == current_network
 
     # Changes are detected and correlated.
-    if not (result["hardware_changes"]["hardware_changed"] is True):
-    raise RuntimeError("Assertion failed: result["hardware_changes"]["hardware_changed"] is True")
-    if not (result["network_changes"]["interfaces_changed"] is True):
-    raise RuntimeError("Assertion failed: result["network_changes"]["interfaces_changed"] is True")
-    if not (result["network_changes"]["routes_changed"] is True):
-    raise RuntimeError("Assertion failed: result["network_changes"]["routes_changed"] is True")
+    assert result["hardware_changes"]["hardware_changed"] is True
+    assert result["network_changes"]["interfaces_changed"] is True
+    assert result["network_changes"]["routes_changed"] is True
 
     signals = result["correlation"]["signals"]
-    if not ("HARDWARE_CHANGED" in signals):
-    raise RuntimeError("Assertion failed: "HARDWARE_CHANGED" in signals")
-    if not ("NETWORK_INTERFACE_CHANGED" in signals):
-    raise RuntimeError("Assertion failed: "NETWORK_INTERFACE_CHANGED" in signals")
-    if not ("ROUTE_CHANGED" in signals):
-    raise RuntimeError("Assertion failed: "ROUTE_CHANGED" in signals")
+    assert "HARDWARE_CHANGED" in signals
+    assert "NETWORK_INTERFACE_CHANGED" in signals
+    assert "ROUTE_CHANGED" in signals
 
     # The complete pipeline remains fail-closed.
-    if not (result["read_only"] is True):
-    raise RuntimeError("Assertion failed: result["read_only"] is True")
-    if not (result["dry_run"] is True):
-    raise RuntimeError("Assertion failed: result["dry_run"] is True")
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["real_execution_blocked"] is True):
-    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
-    if not (result["human_review_required"] is True):
-    raise RuntimeError("Assertion failed: result["human_review_required"] is True")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    assert result["read_only"] is True
+    assert result["dry_run"] is True
+    assert result["execution_allowed"] is False
+    assert result["real_execution_blocked"] is True
+    assert result["human_review_required"] is True
+    assert result["response_locked"] is True
 
     recovery = result["recovery"]
-    if not (recovery["automatic_recovery"] is False):
-    raise RuntimeError("Assertion failed: recovery["automatic_recovery"] is False")
-    if not (recovery["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: recovery["execution_allowed"] is False")
-    if not (recovery["response_locked"] is True):
-    raise RuntimeError("Assertion failed: recovery["response_locked"] is True")
+    assert recovery["automatic_recovery"] is False
+    assert recovery["execution_allowed"] is False
+    assert recovery["response_locked"] is True

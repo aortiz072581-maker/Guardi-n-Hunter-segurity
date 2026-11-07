@@ -63,22 +63,14 @@ def test_valid_authorization_is_approved_but_execution_stays_blocked():
         now=150.0,
     )
 
-    if not (decision.authorized is True):
-    raise RuntimeError("Assertion failed: decision.authorized is True")
-    if not (decision.state == AuthorizationState.APPROVED):
-    raise RuntimeError("Assertion failed: decision.state == AuthorizationState.APPROVED")
-    if not (decision.execution_allowed is False):
-    raise RuntimeError("Assertion failed: decision.execution_allowed is False")
-    if not (decision.real_execution_blocked is True):
-    raise RuntimeError("Assertion failed: decision.real_execution_blocked is True")
-    if not (decision.read_only is True):
-    raise RuntimeError("Assertion failed: decision.read_only is True")
-    if not (decision.dry_run is True):
-    raise RuntimeError("Assertion failed: decision.dry_run is True")
-    if not (decision.human_review_required is True):
-    raise RuntimeError("Assertion failed: decision.human_review_required is True")
-    if not (decision.response_locked is True):
-    raise RuntimeError("Assertion failed: decision.response_locked is True")
+    assert decision.authorized is True
+    assert decision.state == AuthorizationState.APPROVED
+    assert decision.execution_allowed is False
+    assert decision.real_execution_blocked is True
+    assert decision.read_only is True
+    assert decision.dry_run is True
+    assert decision.human_review_required is True
+    assert decision.response_locked is True
 
 
 def test_missing_identity_fails_closed():
@@ -90,12 +82,9 @@ def test_missing_identity_fails_closed():
         now=150.0,
     )
 
-    if not (decision.authorized is False):
-    raise RuntimeError("Assertion failed: decision.authorized is False")
-    if not (decision.state == AuthorizationState.INVALID):
-    raise RuntimeError("Assertion failed: decision.state == AuthorizationState.INVALID")
-    if not (decision.execution_allowed is False):
-    raise RuntimeError("Assertion failed: decision.execution_allowed is False")
+    assert decision.authorized is False
+    assert decision.state == AuthorizationState.INVALID
+    assert decision.execution_allowed is False
 
 
 def test_identity_mismatch_is_denied():
@@ -116,12 +105,9 @@ def test_identity_mismatch_is_denied():
         now=150.0,
     )
 
-    if not (decision.authorized is False):
-    raise RuntimeError("Assertion failed: decision.authorized is False")
-    if not (decision.state == AuthorizationState.DENIED):
-    raise RuntimeError("Assertion failed: decision.state == AuthorizationState.DENIED")
-    if not (decision.execution_allowed is False):
-    raise RuntimeError("Assertion failed: decision.execution_allowed is False")
+    assert decision.authorized is False
+    assert decision.state == AuthorizationState.DENIED
+    assert decision.execution_allowed is False
 
 
 def test_observer_cannot_request_response():
@@ -144,12 +130,9 @@ def test_observer_cannot_request_response():
         now=150.0,
     )
 
-    if not (decision.authorized is False):
-    raise RuntimeError("Assertion failed: decision.authorized is False")
-    if not (decision.state == AuthorizationState.DENIED):
-    raise RuntimeError("Assertion failed: decision.state == AuthorizationState.DENIED")
-    if not (decision.execution_allowed is False):
-    raise RuntimeError("Assertion failed: decision.execution_allowed is False")
+    assert decision.authorized is False
+    assert decision.state == AuthorizationState.DENIED
+    assert decision.execution_allowed is False
 
 
 def test_human_review_is_mandatory():
@@ -171,12 +154,9 @@ def test_human_review_is_mandatory():
         now=150.0,
     )
 
-    if not (decision.authorized is False):
-    raise RuntimeError("Assertion failed: decision.authorized is False")
-    if not (decision.state == AuthorizationState.DENIED):
-    raise RuntimeError("Assertion failed: decision.state == AuthorizationState.DENIED")
-    if not (decision.execution_allowed is False):
-    raise RuntimeError("Assertion failed: decision.execution_allowed is False")
+    assert decision.authorized is False
+    assert decision.state == AuthorizationState.DENIED
+    assert decision.execution_allowed is False
 
 
 def test_expired_authorization_is_denied():
@@ -199,12 +179,9 @@ def test_expired_authorization_is_denied():
         now=150.0,
     )
 
-    if not (decision.authorized is False):
-    raise RuntimeError("Assertion failed: decision.authorized is False")
-    if not (decision.state == AuthorizationState.EXPIRED):
-    raise RuntimeError("Assertion failed: decision.state == AuthorizationState.EXPIRED")
-    if not (decision.execution_allowed is False):
-    raise RuntimeError("Assertion failed: decision.execution_allowed is False")
+    assert decision.authorized is False
+    assert decision.state == AuthorizationState.EXPIRED
+    assert decision.execution_allowed is False
 
 
 def test_replay_is_denied():
@@ -235,14 +212,10 @@ def test_replay_is_denied():
         now=150.0,
     )
 
-    if not (first.authorized is True):
-    raise RuntimeError("Assertion failed: first.authorized is True")
-    if not (second.authorized is False):
-    raise RuntimeError("Assertion failed: second.authorized is False")
-    if not (second.state == AuthorizationState.REPLAYED):
-    raise RuntimeError("Assertion failed: second.state == AuthorizationState.REPLAYED")
-    if not (second.execution_allowed is False):
-    raise RuntimeError("Assertion failed: second.execution_allowed is False")
+    assert first.authorized is True
+    assert second.authorized is False
+    assert second.state == AuthorizationState.REPLAYED
+    assert second.execution_allowed is False
 
 
 def test_same_nonce_with_new_request_is_still_replayed():
@@ -273,12 +246,9 @@ def test_same_nonce_with_new_request_is_still_replayed():
         now=150.0,
     )
 
-    if not (first.authorized is True):
-    raise RuntimeError("Assertion failed: first.authorized is True")
-    if not (second.authorized is False):
-    raise RuntimeError("Assertion failed: second.authorized is False")
-    if not (second.state == AuthorizationState.REPLAYED):
-    raise RuntimeError("Assertion failed: second.state == AuthorizationState.REPLAYED")
+    assert first.authorized is True
+    assert second.authorized is False
+    assert second.state == AuthorizationState.REPLAYED
 
 
 def test_audit_chain_is_valid():
@@ -309,10 +279,8 @@ def test_audit_chain_is_valid():
         now=150.0,
     )
 
-    if not (len(engine.audit.events) == 2):
-    raise RuntimeError("Assertion failed: len(engine.audit.events) == 2")
-    if not (engine.audit.verify() is True):
-    raise RuntimeError("Assertion failed: engine.audit.verify() is True")
+    assert len(engine.audit.events) == 2
+    assert engine.audit.verify() is True
 
 
 def test_audit_tampering_is_detected():
@@ -329,8 +297,7 @@ def test_audit_tampering_is_detected():
         now=150.0,
     )
 
-    if not (engine.audit.verify() is True):
-    raise RuntimeError("Assertion failed: engine.audit.verify() is True")
+    assert engine.audit.verify() is True
 
     event = engine.audit.events[0]
 
@@ -339,8 +306,7 @@ def test_audit_tampering_is_detected():
         actor_id="tampered",
     )
 
-    if not (engine.audit.verify() is False):
-    raise RuntimeError("Assertion failed: engine.audit.verify() is False")
+    assert engine.audit.verify() is False
 
 
 def test_all_roles_can_never_enable_real_execution():
@@ -373,18 +339,12 @@ def test_all_roles_can_never_enable_real_execution():
             now=150.0,
         )
 
-        if not (decision.execution_allowed is False):
-        raise RuntimeError("Assertion failed: decision.execution_allowed is False")
-        if not (decision.real_execution_blocked is True):
-        raise RuntimeError("Assertion failed: decision.real_execution_blocked is True")
-        if not (decision.read_only is True):
-        raise RuntimeError("Assertion failed: decision.read_only is True")
-        if not (decision.dry_run is True):
-        raise RuntimeError("Assertion failed: decision.dry_run is True")
-        if not (decision.human_review_required is True):
-        raise RuntimeError("Assertion failed: decision.human_review_required is True")
-        if not (decision.response_locked is True):
-        raise RuntimeError("Assertion failed: decision.response_locked is True")
+        assert decision.execution_allowed is False
+        assert decision.real_execution_blocked is True
+        assert decision.read_only is True
+        assert decision.dry_run is True
+        assert decision.human_review_required is True
+        assert decision.response_locked is True
 
 
 def test_safety_invariants_are_always_present():
@@ -401,15 +361,9 @@ def test_safety_invariants_are_always_present():
         now=150.0,
     )
 
-    if not (decision.execution_allowed is False):
-    raise RuntimeError("Assertion failed: decision.execution_allowed is False")
-    if not (decision.real_execution_blocked is True):
-    raise RuntimeError("Assertion failed: decision.real_execution_blocked is True")
-    if not (decision.read_only is True):
-    raise RuntimeError("Assertion failed: decision.read_only is True")
-    if not (decision.dry_run is True):
-    raise RuntimeError("Assertion failed: decision.dry_run is True")
-    if not (decision.human_review_required is True):
-    raise RuntimeError("Assertion failed: decision.human_review_required is True")
-    if not (decision.response_locked is True):
-    raise RuntimeError("Assertion failed: decision.response_locked is True")
+    assert decision.execution_allowed is False
+    assert decision.real_execution_blocked is True
+    assert decision.read_only is True
+    assert decision.dry_run is True
+    assert decision.human_review_required is True
+    assert decision.response_locked is True

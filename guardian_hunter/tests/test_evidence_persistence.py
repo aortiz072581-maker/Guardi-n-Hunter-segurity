@@ -8,8 +8,7 @@ from guardian_hunter.evidence.persistence import (
 
 
 def test_safety_invariants():
-    if not (safety_invariants_hold()):
-    raise RuntimeError("Assertion failed: safety_invariants_hold()")
+    assert safety_invariants_hold()
 
 
 def test_append_and_verify(tmp_path: Path):
@@ -31,18 +30,12 @@ def test_append_and_verify(tmp_path: Path):
 
     result = store.verify()
 
-    if not (result.state == "EVIDENCE_INTEGRITY_OK"):
-    raise RuntimeError("Assertion failed: result.state == "EVIDENCE_INTEGRITY_OK"")
-    if not (result.records == 2):
-    raise RuntimeError("Assertion failed: result.records == 2")
-    if not (not result.invalid_hash):
-    raise RuntimeError("Assertion failed: not result.invalid_hash")
-    if not (not result.invalid_chain):
-    raise RuntimeError("Assertion failed: not result.invalid_chain")
-    if not (not result.invalid_sequence):
-    raise RuntimeError("Assertion failed: not result.invalid_sequence")
-    if not (fail_closed(result)):
-    raise RuntimeError("Assertion failed: fail_closed(result)")
+    assert result.state == "EVIDENCE_INTEGRITY_OK"
+    assert result.records == 2
+    assert not result.invalid_hash
+    assert not result.invalid_chain
+    assert not result.invalid_sequence
+    assert fail_closed(result)
 
 
 def test_persistence_survives_reload(tmp_path: Path):
@@ -61,12 +54,9 @@ def test_persistence_survives_reload(tmp_path: Path):
 
     result = second.verify()
 
-    if not (result.state == "EVIDENCE_INTEGRITY_OK"):
-    raise RuntimeError("Assertion failed: result.state == "EVIDENCE_INTEGRITY_OK"")
-    if not (result.records == 1):
-    raise RuntimeError("Assertion failed: result.records == 1")
-    if not (fail_closed(result)):
-    raise RuntimeError("Assertion failed: fail_closed(result)")
+    assert result.state == "EVIDENCE_INTEGRITY_OK"
+    assert result.records == 1
+    assert fail_closed(result)
 
 
 def test_modified_record_is_detected(tmp_path: Path):
@@ -90,12 +80,9 @@ def test_modified_record_is_detected(tmp_path: Path):
 
     result = store.verify()
 
-    if not (result.state == "EVIDENCE_TAMPER_DETECTED"):
-    raise RuntimeError("Assertion failed: result.state == "EVIDENCE_TAMPER_DETECTED"")
-    if not (result.invalid_hash):
-    raise RuntimeError("Assertion failed: result.invalid_hash")
-    if not (fail_closed(result)):
-    raise RuntimeError("Assertion failed: fail_closed(result)")
+    assert result.state == "EVIDENCE_TAMPER_DETECTED"
+    assert result.invalid_hash
+    assert fail_closed(result)
 
 
 def test_chain_break_is_detected(tmp_path: Path):
@@ -139,9 +126,6 @@ def test_chain_break_is_detected(tmp_path: Path):
 
     result = store.verify()
 
-    if not (result.state == "EVIDENCE_TAMPER_DETECTED"):
-    raise RuntimeError("Assertion failed: result.state == "EVIDENCE_TAMPER_DETECTED"")
-    if not (result.invalid_chain or result.invalid_hash):
-    raise RuntimeError("Assertion failed: result.invalid_chain or result.invalid_hash")
-    if not (fail_closed(result)):
-    raise RuntimeError("Assertion failed: fail_closed(result)")
+    assert result.state == "EVIDENCE_TAMPER_DETECTED"
+    assert result.invalid_chain or result.invalid_hash
+    assert fail_closed(result)

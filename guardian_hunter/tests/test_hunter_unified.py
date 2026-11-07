@@ -22,23 +22,17 @@ def test_hunter_has_fail_closed_authority(monkeypatch):
 
     report = hunter.run_guardian_hunter()
 
-    if not (report["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: report["execution_allowed"] is False")
-    if not (report["automatic_commit"] is False):
-    raise RuntimeError("Assertion failed: report["automatic_commit"] is False")
-    if not (report["automatic_baseline_update"] is False):
-    raise RuntimeError("Assertion failed: report["automatic_baseline_update"] is False")
-    if not (report["human_approval_required"] is True):
-    raise RuntimeError("Assertion failed: report["human_approval_required"] is True")
+    assert report["execution_allowed"] is False
+    assert report["automatic_commit"] is False
+    assert report["automatic_baseline_update"] is False
+    assert report["human_approval_required"] is True
 
 
 def test_hunter_uses_integrity_baseline_not_git_trust_baseline():
     source = Path(hunter.__file__).read_text(encoding="utf-8")
 
-    if not ('"data" / "integrity_baseline.json"' in source):
-    raise RuntimeError("Assertion failed: '"data" / "integrity_baseline.json"' in source")
-    if not (():
-    raise RuntimeError("Assertion failed: (")
+    assert '"data" / "integrity_baseline.json"' in source
+    assert (
         'baseline_file=PROJECT_ROOT / ".guardian" / "trusted-baseline"'
         not in source
     )
@@ -56,8 +50,7 @@ def test_hunter_entry_point_executes(monkeypatch):
         lambda: expected,
     )
 
-    if not (hunter.main() == 0):
-    raise RuntimeError("Assertion failed: hunter.main() == 0")
+    assert hunter.main() == 0
 
 
 def test_hunter_nonhealthy_result_fails_closed(monkeypatch):
@@ -72,5 +65,4 @@ def test_hunter_nonhealthy_result_fails_closed(monkeypatch):
         lambda: expected,
     )
 
-    if not (hunter.main() == 1):
-    raise RuntimeError("Assertion failed: hunter.main() == 1")
+    assert hunter.main() == 1

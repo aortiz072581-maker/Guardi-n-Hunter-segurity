@@ -16,8 +16,7 @@ class FakePipeline:
         self.called = False
 
     def assess(self, target):
-        if not (self.assets.is_authorized(target)):
-        raise RuntimeError("Assertion failed: self.assets.is_authorized(target)")
+        assert self.assets.is_authorized(target)
         self.called = True
 
         return {
@@ -67,8 +66,7 @@ def test_complete_defensive_flow_is_locked(
     ]
 
     def fake_hunter(domain, asset_manager=None):
-        if not (domain == "example.test"):
-        raise RuntimeError("Assertion failed: domain == "example.test"")
+        assert domain == "example.test"
 
         asset_manager.import_discovered(
             discovered,
@@ -131,39 +129,25 @@ def test_complete_defensive_flow_is_locked(
         approval_reason="controlled defensive E2E approval",
     )
 
-    if not (pipeline.called):
-    raise RuntimeError("Assertion failed: pipeline.called")
-    if not (result["status"] == "review_required"):
-    raise RuntimeError("Assertion failed: result["status"] == "review_required"")
-    if not (result["authorized"] is True):
-    raise RuntimeError("Assertion failed: result["authorized"] is True")
-    if not (result["evidence_state"] == "EVIDENCE_INTEGRITY_OK"):
-    raise RuntimeError("Assertion failed: result["evidence_state"] == "EVIDENCE_INTEGRITY_OK"")
+    assert pipeline.called
+    assert result["status"] == "review_required"
+    assert result["authorized"] is True
+    assert result["evidence_state"] == "EVIDENCE_INTEGRITY_OK"
 
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["read_only"] is True):
-    raise RuntimeError("Assertion failed: result["read_only"] is True")
-    if not (result["dry_run"] is True):
-    raise RuntimeError("Assertion failed: result["dry_run"] is True")
-    if not (result["real_execution_blocked"] is True):
-    raise RuntimeError("Assertion failed: result["real_execution_blocked"] is True")
-    if not (result["human_review_required"] is True):
-    raise RuntimeError("Assertion failed: result["human_review_required"] is True")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    assert result["execution_allowed"] is False
+    assert result["read_only"] is True
+    assert result["dry_run"] is True
+    assert result["real_execution_blocked"] is True
+    assert result["human_review_required"] is True
+    assert result["response_locked"] is True
 
-    if not (result["response"].execution_allowed is False):
-    raise RuntimeError("Assertion failed: result["response"].execution_allowed is False")
-    if not (result["response"].response_locked is True):
-    raise RuntimeError("Assertion failed: result["response"].response_locked is True")
-    if not (result["response"].human_review_required is True):
-    raise RuntimeError("Assertion failed: result["response"].human_review_required is True")
+    assert result["response"].execution_allowed is False
+    assert result["response"].response_locked is True
+    assert result["response"].human_review_required is True
 
     # Hunter discoveries are review/discovered only.
     for item in discovered:
-        if not (assets.is_authorized(item) is False):
-        raise RuntimeError("Assertion failed: assets.is_authorized(item) is False")
+        assert assets.is_authorized(item) is False
 
 
 def test_unauthorized_target_never_reaches_hunter_or_pipeline(
@@ -204,18 +188,12 @@ def test_unauthorized_target_never_reaches_hunter_or_pipeline(
         pipeline=pipeline,
     )
 
-    if not (result["status"] == "blocked"):
-    raise RuntimeError("Assertion failed: result["status"] == "blocked"")
-    if not (result["stage"] == "asset_authorization"):
-    raise RuntimeError("Assertion failed: result["stage"] == "asset_authorization"")
-    if not (called["hunter"] is False):
-    raise RuntimeError("Assertion failed: called["hunter"] is False")
-    if not (pipeline.called is False):
-    raise RuntimeError("Assertion failed: pipeline.called is False")
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
+    assert result["status"] == "blocked"
+    assert result["stage"] == "asset_authorization"
+    assert called["hunter"] is False
+    assert pipeline.called is False
+    assert result["execution_allowed"] is False
+    assert result["response_locked"] is True
 
 
 def test_safety_invariant_failure_blocks_before_flow(
@@ -246,8 +224,7 @@ def test_safety_invariant_failure_blocks_before_flow(
             pipeline=FakePipeline(assets),
         )
     except RuntimeError as exc:
-        if not (str(exc) == "SAFETY_INVARIANTS_FAILED"):
-        raise RuntimeError("Assertion failed: str(exc) == "SAFETY_INVARIANTS_FAILED"")
+        assert str(exc) == "SAFETY_INVARIANTS_FAILED"
     else:
         raise AssertionError(
             "Safety drift must fail closed"

@@ -38,13 +38,8 @@ def test_diagnostic_cli_blocks_unauthorized_target(
 
     result = execute_diagnostic("example.invalid")
 
-    if not (result["status"] == "blocked"):
-    raise RuntimeError("Assertion failed: result["status"] == "blocked"")
-    if not (result["execution_allowed"] is False):
-    raise RuntimeError("Assertion failed: result["execution_allowed"] is False")
-    if not (result["response_locked"] is True):
-    raise RuntimeError("Assertion failed: result["response_locked"] is True")
-    if not (result["reason"] == "TARGET_NOT_AUTHORIZED"):
-    raise RuntimeError("Assertion failed: result["reason"] == "TARGET_NOT_AUTHORIZED"")
-    if not (result["diagnosis"] is None):
-    raise RuntimeError("Assertion failed: result["diagnosis"] is None")
+    assert result["status"] == "blocked"
+    assert result["execution_allowed"] is False
+    assert result["response_locked"] is True
+    assert result["reason"] == "TARGET_NOT_AUTHORIZED"
+    assert result["diagnosis"] is None

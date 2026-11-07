@@ -29,18 +29,15 @@ def binding():
 def test_exact_authorized_context_verifies_without_execution_authority():
     value = binding()
 
-    if not (verify_binding():
-    raise RuntimeError("Assertion failed: verify_binding(")
+    assert verify_binding(
         value,
         proposal_hash=PROPOSAL,
         policy=POLICY,
         baseline=BASELINE,
     ) is True
 
-    if not (value.execution_allowed is False):
-    raise RuntimeError("Assertion failed: value.execution_allowed is False")
-    if not (value.human_review_required is True):
-    raise RuntimeError("Assertion failed: value.human_review_required is True")
+    assert value.execution_allowed is False
+    assert value.human_review_required is True
 
 
 def test_post_approval_proposal_mutation_denied():

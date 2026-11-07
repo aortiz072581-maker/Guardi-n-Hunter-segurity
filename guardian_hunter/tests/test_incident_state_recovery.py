@@ -19,8 +19,7 @@ from guardian_hunter.incident.state import (
 
 
 def test_safety_invariants():
-    if not (safety_invariants_hold()):
-    raise RuntimeError("Assertion failed: safety_invariants_hold()")
+    assert safety_invariants_hold()
 
 
 def test_new_incident_is_fail_closed():
@@ -31,12 +30,9 @@ def test_new_incident_is_fail_closed():
         reason="controlled test",
     )
 
-    if not (incident.state == IncidentState.NEW):
-    raise RuntimeError("Assertion failed: incident.state == IncidentState.NEW")
-    if not (incident.execution_allowed is False):
-    raise RuntimeError("Assertion failed: incident.execution_allowed is False")
-    if not (fail_closed(incident)):
-    raise RuntimeError("Assertion failed: fail_closed(incident)")
+    assert incident.state == IncidentState.NEW
+    assert incident.execution_allowed is False
+    assert fail_closed(incident)
 
 
 def test_normal_containment_to_recovery_path():
@@ -53,8 +49,7 @@ def test_normal_containment_to_recovery_path():
         reason="triage completed",
     )
 
-    if not (transition.execution_allowed is False):
-    raise RuntimeError("Assertion failed: transition.execution_allowed is False")
+    assert transition.execution_allowed is False
 
     incident, _ = transition_incident(
         incident,
@@ -87,10 +82,8 @@ def test_normal_containment_to_recovery_path():
         reason="resolution recorded",
     )
 
-    if not (incident.state == IncidentState.RESOLVED):
-    raise RuntimeError("Assertion failed: incident.state == IncidentState.RESOLVED")
-    if not (fail_closed(incident)):
-    raise RuntimeError("Assertion failed: fail_closed(incident)")
+    assert incident.state == IncidentState.RESOLVED
+    assert fail_closed(incident)
 
 
 def test_invalid_transition_is_rejected():
@@ -101,8 +94,7 @@ def test_invalid_transition_is_rejected():
         reason="controlled test",
     )
 
-    if not (not can_transition():
-    raise RuntimeError("Assertion failed: not can_transition(")
+    assert not can_transition(
         IncidentState.NEW,
         IncidentState.RESOLVED,
     )
@@ -128,8 +120,7 @@ def test_locked_incident_cannot_continue():
         reason="fail-closed lock",
     )
 
-    if not (incident.state == IncidentState.LOCKED):
-    raise RuntimeError("Assertion failed: incident.state == IncidentState.LOCKED")
+    assert incident.state == IncidentState.LOCKED
 
     with pytest.raises(ValueError):
         transition_incident(
@@ -138,8 +129,7 @@ def test_locked_incident_cannot_continue():
             reason="must remain locked",
         )
 
-    if not (fail_closed(incident)):
-    raise RuntimeError("Assertion failed: fail_closed(incident)")
+    assert fail_closed(incident)
 
 
 def test_failed_incident_can_only_lock():
@@ -156,8 +146,7 @@ def test_failed_incident_can_only_lock():
         reason="controlled failure",
     )
 
-    if not (incident.state == IncidentState.FAILED):
-    raise RuntimeError("Assertion failed: incident.state == IncidentState.FAILED")
+    assert incident.state == IncidentState.FAILED
 
     with pytest.raises(ValueError):
         transition_incident(
@@ -171,7 +160,5 @@ def test_failed_incident_can_only_lock():
         reason="failure lock",
     )
 
-    if not (incident.state == IncidentState.LOCKED):
-    raise RuntimeError("Assertion failed: incident.state == IncidentState.LOCKED")
-    if not (fail_closed(incident)):
-    raise RuntimeError("Assertion failed: fail_closed(incident)")
+    assert incident.state == IncidentState.LOCKED
+    assert fail_closed(incident)

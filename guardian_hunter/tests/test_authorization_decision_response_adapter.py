@@ -79,18 +79,12 @@ def valid_kwargs():
 def test_safety_invariants():
     adapter = make_adapter()
 
-    if not (READ_ONLY is True):
-    raise RuntimeError("Assertion failed: READ_ONLY is True")
-    if not (DRY_RUN is True):
-    raise RuntimeError("Assertion failed: DRY_RUN is True")
-    if not (REAL_EXECUTION_BLOCKED is True):
-    raise RuntimeError("Assertion failed: REAL_EXECUTION_BLOCKED is True")
-    if not (HUMAN_REVIEW_REQUIRED is True):
-    raise RuntimeError("Assertion failed: HUMAN_REVIEW_REQUIRED is True")
-    if not (RESPONSE_LOCKED is True):
-    raise RuntimeError("Assertion failed: RESPONSE_LOCKED is True")
-    if not (adapter.safety_invariants_hold() is True):
-    raise RuntimeError("Assertion failed: adapter.safety_invariants_hold() is True")
+    assert READ_ONLY is True
+    assert DRY_RUN is True
+    assert REAL_EXECUTION_BLOCKED is True
+    assert HUMAN_REVIEW_REQUIRED is True
+    assert RESPONSE_LOCKED is True
+    assert adapter.safety_invariants_hold() is True
 
 
 def test_authorized_request_prepares_response_only(tmp_path):
@@ -103,22 +97,14 @@ def test_authorized_request_prepares_response_only(tmp_path):
         approval_reason="controlled test approval",
     )
 
-    if not (result.authorized is True):
-    raise RuntimeError("Assertion failed: result.authorized is True")
-    if not (result.execution_allowed is False):
-    raise RuntimeError("Assertion failed: result.execution_allowed is False")
-    if not (result.real_execution_blocked is True):
-    raise RuntimeError("Assertion failed: result.real_execution_blocked is True")
-    if not (result.human_review_required is True):
-    raise RuntimeError("Assertion failed: result.human_review_required is True")
-    if not (result.response_locked is True):
-    raise RuntimeError("Assertion failed: result.response_locked is True")
-    if not (result.response_class is not None):
-    raise RuntimeError("Assertion failed: result.response_class is not None")
-    if not (result.policy_decision is not None):
-    raise RuntimeError("Assertion failed: result.policy_decision is not None")
-    if not (result.incident is not None):
-    raise RuntimeError("Assertion failed: result.incident is not None")
+    assert result.authorized is True
+    assert result.execution_allowed is False
+    assert result.real_execution_blocked is True
+    assert result.human_review_required is True
+    assert result.response_locked is True
+    assert result.response_class is not None
+    assert result.policy_decision is not None
+    assert result.incident is not None
 
 
 def test_unknown_action_fails_closed():
@@ -130,18 +116,12 @@ def test_unknown_action_fails_closed():
 
     result = adapter.authorize_and_prepare_response(**data)
 
-    if not (result.authorized is False):
-    raise RuntimeError("Assertion failed: result.authorized is False")
-    if not (result.execution_allowed is False):
-    raise RuntimeError("Assertion failed: result.execution_allowed is False")
-    if not (result.response_class is None):
-    raise RuntimeError("Assertion failed: result.response_class is None")
-    if not (result.policy_decision is None):
-    raise RuntimeError("Assertion failed: result.policy_decision is None")
-    if not (result.incident is None):
-    raise RuntimeError("Assertion failed: result.incident is None")
-    if not ("UNKNOWN_ACTION_FAIL_CLOSED" in result.reason):
-    raise RuntimeError("Assertion failed: "UNKNOWN_ACTION_FAIL_CLOSED" in result.reason")
+    assert result.authorized is False
+    assert result.execution_allowed is False
+    assert result.response_class is None
+    assert result.policy_decision is None
+    assert result.incident is None
+    assert "UNKNOWN_ACTION_FAIL_CLOSED" in result.reason
 
 
 def test_observer_cannot_request_response():
@@ -153,10 +133,8 @@ def test_observer_cannot_request_response():
 
     result = adapter.authorize_and_prepare_response(**data)
 
-    if not (result.authorized is False):
-    raise RuntimeError("Assertion failed: result.authorized is False")
-    if not (result.execution_allowed is False):
-    raise RuntimeError("Assertion failed: result.execution_allowed is False")
+    assert result.authorized is False
+    assert result.execution_allowed is False
 
 
 def test_analyst_cannot_request_response():
@@ -168,10 +146,8 @@ def test_analyst_cannot_request_response():
 
     result = adapter.authorize_and_prepare_response(**data)
 
-    if not (result.authorized is False):
-    raise RuntimeError("Assertion failed: result.authorized is False")
-    if not (result.execution_allowed is False):
-    raise RuntimeError("Assertion failed: result.execution_allowed is False")
+    assert result.authorized is False
+    assert result.execution_allowed is False
 
 
 def test_operator_can_request_response(tmp_path):
@@ -188,10 +164,8 @@ def test_operator_can_request_response(tmp_path):
         approval_reason="controlled operator test approval",
     )
 
-    if not (result.authorized is True):
-    raise RuntimeError("Assertion failed: result.authorized is True")
-    if not (result.execution_allowed is False):
-    raise RuntimeError("Assertion failed: result.execution_allowed is False")
+    assert result.authorized is True
+    assert result.execution_allowed is False
 
 
 def test_expired_request_fails_closed():
@@ -206,10 +180,8 @@ def test_expired_request_fails_closed():
 
     result = adapter.authorize_and_prepare_response(**data)
 
-    if not (result.authorized is False):
-    raise RuntimeError("Assertion failed: result.authorized is False")
-    if not (result.execution_allowed is False):
-    raise RuntimeError("Assertion failed: result.execution_allowed is False")
+    assert result.authorized is False
+    assert result.execution_allowed is False
 
 
 def test_replay_fails_closed(tmp_path):
@@ -233,15 +205,11 @@ def test_replay_fails_closed(tmp_path):
         **candidate_kwargs,
     )
 
-    if not (first.authorized is True):
-    raise RuntimeError("Assertion failed: first.authorized is True")
-    if not (first.execution_allowed is False):
-    raise RuntimeError("Assertion failed: first.execution_allowed is False")
+    assert first.authorized is True
+    assert first.execution_allowed is False
 
-    if not (second.authorized is False):
-    raise RuntimeError("Assertion failed: second.authorized is False")
-    if not (second.execution_allowed is False):
-    raise RuntimeError("Assertion failed: second.execution_allowed is False")
+    assert second.authorized is False
+    assert second.execution_allowed is False
 
 
 def test_human_review_is_mandatory():
@@ -251,10 +219,8 @@ def test_human_review_is_mandatory():
         **valid_kwargs()
     )
 
-    if not (result.human_review_required is True):
-    raise RuntimeError("Assertion failed: result.human_review_required is True")
-    if not (result.response_locked is True):
-    raise RuntimeError("Assertion failed: result.response_locked is True")
+    assert result.human_review_required is True
+    assert result.response_locked is True
 
 
 def test_authorization_never_grants_execution():
@@ -264,10 +230,8 @@ def test_authorization_never_grants_execution():
         **valid_kwargs()
     )
 
-    if not (result.execution_allowed is False):
-    raise RuntimeError("Assertion failed: result.execution_allowed is False")
-    if not (result.real_execution_blocked is True):
-    raise RuntimeError("Assertion failed: result.real_execution_blocked is True")
+    assert result.execution_allowed is False
+    assert result.real_execution_blocked is True
 
 
 def test_adapter_result_is_immutable():
@@ -285,10 +249,8 @@ def test_adapter_result_is_immutable():
     except Exception:
         mutated = False
 
-    if not (mutated is False):
-    raise RuntimeError("Assertion failed: mutated is False")
-    if not (result.execution_allowed is False):
-    raise RuntimeError("Assertion failed: result.execution_allowed is False")
+    assert mutated is False
+    assert result.execution_allowed is False
 
 
 def test_response_planning_requires_authorization():
@@ -300,14 +262,10 @@ def test_response_planning_requires_authorization():
 
     result = adapter.authorize_and_prepare_response(**data)
 
-    if not (result.authorized is False):
-    raise RuntimeError("Assertion failed: result.authorized is False")
-    if not (result.response_class is None):
-    raise RuntimeError("Assertion failed: result.response_class is None")
-    if not (result.policy_decision is None):
-    raise RuntimeError("Assertion failed: result.policy_decision is None")
-    if not (result.incident is None):
-    raise RuntimeError("Assertion failed: result.incident is None")
+    assert result.authorized is False
+    assert result.response_class is None
+    assert result.policy_decision is None
+    assert result.incident is None
 
 
 def test_final_safety_state():
@@ -317,15 +275,9 @@ def test_final_safety_state():
         **valid_kwargs()
     )
 
-    if not (result.read_only is True):
-    raise RuntimeError("Assertion failed: result.read_only is True")
-    if not (result.dry_run is True):
-    raise RuntimeError("Assertion failed: result.dry_run is True")
-    if not (result.real_execution_blocked is True):
-    raise RuntimeError("Assertion failed: result.real_execution_blocked is True")
-    if not (result.human_review_required is True):
-    raise RuntimeError("Assertion failed: result.human_review_required is True")
-    if not (result.response_locked is True):
-    raise RuntimeError("Assertion failed: result.response_locked is True")
-    if not (result.execution_allowed is False):
-    raise RuntimeError("Assertion failed: result.execution_allowed is False")
+    assert result.read_only is True
+    assert result.dry_run is True
+    assert result.real_execution_blocked is True
+    assert result.human_review_required is True
+    assert result.response_locked is True
+    assert result.execution_allowed is False
