@@ -1,0 +1,56 @@
+{
+    "timestamp": "2026-11-08 23:20:55 UTC",
+    "target": "SovereignCorp",
+    "attack_surface_assets": [
+        {
+            "type": "domain",
+            "value": "api.sovereigncorp.com",
+            "exposure": "Public",
+            "status": "Active"
+        },
+        {
+            "type": "cloud_bucket",
+            "value": "s3://sovereigncorp-backup-prod",
+            "exposure": "Public (Misconfigured)",
+            "status": "Critical"
+        },
+        {
+            "type": "service",
+            "value": "Kubernetes API Server (Port 6443)",
+            "exposure": "Internet-Facing",
+            "status": "High Risk"
+        },
+        {
+            "type": "internal_app",
+            "value": "auth.sovereigncorp.internal",
+            "exposure": "Internal Only",
+            "status": "Secure"
+        }
+    ],
+    "risk_intelligence_matrix": [
+        {
+            "asset": "api.sovereigncorp.com",
+            "risk_score": 8.2,
+            "business_impact": "Exposici\u00f3n de datos sensibles / Posible takeover de infraestructura",
+            "priority": "P1 - CR\u00cdTICO (Acci\u00f3n Inmediata Requerida)"
+        },
+        {
+            "asset": "s3://sovereigncorp-backup-prod",
+            "risk_score": 9.5,
+            "business_impact": "Exposici\u00f3n de datos sensibles / Posible takeover de infraestructura",
+            "priority": "P1 - CR\u00cdTICO (Acci\u00f3n Inmediata Requerida)"
+        },
+        {
+            "asset": "Kubernetes API Server (Port 6443)",
+            "risk_score": 8.2,
+            "business_impact": "Exposici\u00f3n de datos sensibles / Posible takeover de infraestructura",
+            "priority": "P1 - CR\u00cdTICO (Acci\u00f3n Inmediata Requerida)"
+        },
+        {
+            "asset": "auth.sovereigncorp.internal",
+            "risk_score": 3.1,
+            "business_impact": "Exposici\u00f3n de datos sensibles / Posible takeover de infraestructura",
+            "priority": "P3 - BAJO (Monitoreo Interno)"
+        }
+    ]
+}
