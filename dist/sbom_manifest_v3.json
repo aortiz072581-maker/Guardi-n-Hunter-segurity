@@ -1,0 +1,14 @@
+{
+    "guardian_hardened_production.py": {
+        "size_bytes": 5000,
+        "sha3_512": "619aab1d98df8ca464f3086c003c2ea2bd9b25441c816cc16fc912a3f3fd28e9a8cd7df9cd0b414c4812912b9e76b6e5633c56e197c9d73b8e2c4efc60d6006b"
+    },
+    "guardian_cli.py": {
+        "size_bytes": 1301,
+        "sha3_512": "d3d489b5cf0b5b0fb4afcb723b203cec0aed9eda2d665658d0842a55a36e3e6f615691db508c223161710c7a9d2bcfd0518c9883846aa57ea993ae0962eace72"
+    },
+    "fix_env.py": {
+        "size_bytes": 535,
+        "sha3_512": "c4712284cb289fd03f5979a79994d5d9ab6dcf5e6e30ea6574e10998001012bc9d4e7796bf9f459e652fbe273482133920393b59a6de454deef0eff94298b915"
+    }
+}
