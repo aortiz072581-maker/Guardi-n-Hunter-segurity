@@ -1,0 +1,14 @@
+{
+    "timestamp": "2026-11-08 23:44:43 UTC",
+    "indicators": {
+        "confirmed_findings_percentage": 98.5,
+        "false_positive_percentage": 1.5,
+        "mean_time_to_detect_mttd": "1.2 minutos",
+        "mean_time_to_resolve_mttr": "14.5 minutos",
+        "critical_vulnerabilities_fixed": 24,
+        "verified_fixes_percentage": 100.0,
+        "incidents_handled": 12,
+        "authorized_changes_percentage": 100.0,
+        "residual_risk_score": "1.2 / 10 (Bajo)"
+    }
+}
