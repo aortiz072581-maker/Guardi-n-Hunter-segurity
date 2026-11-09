@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:10:35 UTC",
+    "timestamp": "2026-11-09 01:11:25 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -70,8 +70,8 @@
             "functions": [
                 {
                     "name": "visit_Assert",
-                    "lineno": 62,
-                    "complexity": 2
+                    "lineno": 3,
+                    "complexity": 1
                 }
             ],
             "raw_assert_detected": false,
@@ -106,12 +106,7 @@
             "functions": [
                 {
                     "name": "txt_a_pdf",
-                    "lineno": 4,
-                    "complexity": 9
-                },
-                {
-                    "name": "add_obj",
-                    "lineno": 23,
+                    "lineno": 3,
                     "complexity": 1
                 }
             ],
@@ -123,12 +118,7 @@
             "functions": [
                 {
                     "name": "make_pdf",
-                    "lineno": 2,
-                    "complexity": 10
-                },
-                {
-                    "name": "obj",
-                    "lineno": 5,
+                    "lineno": 3,
                     "complexity": 1
                 }
             ],
@@ -140,12 +130,7 @@
             "functions": [
                 {
                     "name": "make_pdf",
-                    "lineno": 2,
-                    "complexity": 14
-                },
-                {
-                    "name": "add_obj",
-                    "lineno": 4,
+                    "lineno": 3,
                     "complexity": 1
                 }
             ],
@@ -169,13 +154,8 @@
             "functions": [
                 {
                     "name": "check_no_asserts_in_prod",
-                    "lineno": 5,
-                    "complexity": 10
-                },
-                {
-                    "name": "verify_integrity_gates",
-                    "lineno": 30,
-                    "complexity": 2
+                    "lineno": 3,
+                    "complexity": 1
                 }
             ],
             "raw_assert_detected": false,
