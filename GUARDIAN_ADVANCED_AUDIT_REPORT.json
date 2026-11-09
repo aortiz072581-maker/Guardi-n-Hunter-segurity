@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:15:29 UTC",
+    "timestamp": "2026-11-09 01:15:57 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -635,7 +635,13 @@
         },
         {
             "file": "fix_core.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "fix_core_system",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
