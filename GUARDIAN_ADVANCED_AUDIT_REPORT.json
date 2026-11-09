@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:14:27 UTC",
+    "timestamp": "2026-11-09 01:15:00 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -510,19 +510,37 @@
         },
         {
             "file": "add_final_levels.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "register_final_levels",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
         {
             "file": "add_transcendent_level.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "register_transcendent_level",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
         {
             "file": "ai_auditor_agent.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "run_ai_auditor",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
@@ -540,7 +558,13 @@
         },
         {
             "file": "guardian_live_prover.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "verify_live_prover",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
