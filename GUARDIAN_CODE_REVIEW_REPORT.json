@@ -1,0 +1,928 @@
+{
+    "timestamp": "2026-11-09 00:30:13 UTC",
+    "files_analyzed": [
+        {
+            "file": "run.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_attack_and_risk_engine.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 10,
+                    "complexity": 1
+                },
+                {
+                    "name": "scan_surface",
+                    "lineno": 19,
+                    "complexity": 2
+                },
+                {
+                    "name": "__init__",
+                    "lineno": 27,
+                    "complexity": 1
+                },
+                {
+                    "name": "calculate_enterprise_risk",
+                    "lineno": 30,
+                    "complexity": 4
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "audit_total.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "fix_789_unificado.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "fix_789_final.py",
+            "functions": [
+                {
+                    "name": "visit_Assert",
+                    "lineno": 62,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "extract_all_code.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "todo_en_pdf.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "pdf_puro.py",
+            "functions": [
+                {
+                    "name": "txt_a_pdf",
+                    "lineno": 4,
+                    "complexity": 9
+                },
+                {
+                    "name": "add_obj",
+                    "lineno": 23,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "gen_pdf_total.py",
+            "functions": [
+                {
+                    "name": "make_pdf",
+                    "lineno": 2,
+                    "complexity": 10
+                },
+                {
+                    "name": "obj",
+                    "lineno": 5,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "gen_pdf_total_fixed.py",
+            "functions": [
+                {
+                    "name": "make_pdf",
+                    "lineno": 2,
+                    "complexity": 14
+                },
+                {
+                    "name": "add_obj",
+                    "lineno": 4,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "ci_audit_check.py",
+            "functions": [
+                {
+                    "name": "check_no_asserts_in_prod",
+                    "lineno": 5,
+                    "complexity": 10
+                },
+                {
+                    "name": "verify_integrity_gates",
+                    "lineno": 30,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "enterprise_guard_setup.py",
+            "functions": [
+                {
+                    "name": "verify_trusted_baseline",
+                    "lineno": 13,
+                    "complexity": 3
+                },
+                {
+                    "name": "install_git_hooks",
+                    "lineno": 29,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_advanced_ai_suite.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 17,
+                    "complexity": 1
+                },
+                {
+                    "name": "visit_FunctionDef",
+                    "lineno": 20,
+                    "complexity": 4
+                },
+                {
+                    "name": "audit_codebase_ast",
+                    "lineno": 36,
+                    "complexity": 6
+                },
+                {
+                    "name": "git_diff_ai_auditor",
+                    "lineno": 62,
+                    "complexity": 3
+                },
+                {
+                    "name": "run_fuzzing_simulation",
+                    "lineno": 78,
+                    "complexity": 3
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "integration_hook_updater.py",
+            "functions": [
+                {
+                    "name": "update_git_pre_commit_hook",
+                    "lineno": 11,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_enterprise_hardening_suite.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 23,
+                    "complexity": 2
+                },
+                {
+                    "name": "_initialize_log",
+                    "lineno": 28,
+                    "complexity": 1
+                },
+                {
+                    "name": "log_secure_event",
+                    "lineno": 46,
+                    "complexity": 3
+                },
+                {
+                    "name": "verify_chain_integrity",
+                    "lineno": 72,
+                    "complexity": 6
+                },
+                {
+                    "name": "run_mypy_strict_validation",
+                    "lineno": 101,
+                    "complexity": 4
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_official_release_suite.py",
+            "functions": [
+                {
+                    "name": "generate_executive_report",
+                    "lineno": 17,
+                    "complexity": 2
+                },
+                {
+                    "name": "create_cryptographic_git_tag",
+                    "lineno": 50,
+                    "complexity": 4
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_governance_and_tamper_test.py",
+            "functions": [
+                {
+                    "name": "generate_security_governance_doc",
+                    "lineno": 15,
+                    "complexity": 1
+                },
+                {
+                    "name": "run_live_tamper_simulation",
+                    "lineno": 37,
+                    "complexity": 7
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_inventory_check.py",
+            "functions": [
+                {
+                    "name": "audit_inventory",
+                    "lineno": 32,
+                    "complexity": 5
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "auditoria_pdf_total.py",
+            "functions": [
+                {
+                    "name": "add",
+                    "lineno": 18,
+                    "complexity": 1
+                },
+                {
+                    "name": "sh",
+                    "lineno": 23,
+                    "complexity": 3
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "simulate_attack_live.py",
+            "functions": [
+                {
+                    "name": "run_live_simulation",
+                    "lineno": 5,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "fix_env.py",
+            "functions": [
+                {
+                    "name": "validate_environment",
+                    "lineno": 4,
+                    "complexity": 3
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "test_guardian_suite.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "deploy_guardian_universal.py",
+            "functions": [
+                {
+                    "name": "deploy_guardian",
+                    "lineno": 5,
+                    "complexity": 5
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "check_env.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "check_env_safe.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "add_advanced_modules.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "add_hyper_advanced.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "add_commercial_layer.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "add_next_level_two.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "add_final_levels.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "add_transcendent_level.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "ai_auditor_agent.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_enterprise_suite.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "add_three_horizons.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_live_prover.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_real_engine.py",
+            "functions": [
+                {
+                    "name": "mock_agent_node",
+                    "lineno": 108,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "swarm_benchmark.py",
+            "functions": [
+                {
+                    "name": "worker_node",
+                    "lineno": 13,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "update_cli.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "fix_core.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "aegis_guardian_integration.py",
+            "functions": [
+                {
+                    "name": "inspect_prompt_and_payload",
+                    "lineno": 18,
+                    "complexity": 3
+                },
+                {
+                    "name": "__init__",
+                    "lineno": 29,
+                    "complexity": 1
+                },
+                {
+                    "name": "check_scope",
+                    "lineno": 36,
+                    "complexity": 2
+                },
+                {
+                    "name": "prevent_privilege_escalation",
+                    "lineno": 41,
+                    "complexity": 3
+                },
+                {
+                    "name": "require_human_approval",
+                    "lineno": 46,
+                    "complexity": 2
+                },
+                {
+                    "name": "require_evidence",
+                    "lineno": 51,
+                    "complexity": 3
+                },
+                {
+                    "name": "execute_governed_pipeline",
+                    "lineno": 57,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_ultimate_ecosystem.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 22,
+                    "complexity": 1
+                },
+                {
+                    "name": "verify_enclave",
+                    "lineno": 29,
+                    "complexity": 2
+                },
+                {
+                    "name": "inspect_and_detect_drift",
+                    "lineno": 34,
+                    "complexity": 3
+                },
+                {
+                    "name": "verify_swarm_consensus",
+                    "lineno": 45,
+                    "complexity": 2
+                },
+                {
+                    "name": "__init__",
+                    "lineno": 54,
+                    "complexity": 1
+                },
+                {
+                    "name": "enforce_scope",
+                    "lineno": 59,
+                    "complexity": 2
+                },
+                {
+                    "name": "enforce_human_approval",
+                    "lineno": 64,
+                    "complexity": 2
+                },
+                {
+                    "name": "execute_sovereign_workflow",
+                    "lineno": 69,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_maximum_level.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 16,
+                    "complexity": 1
+                },
+                {
+                    "name": "add_record",
+                    "lineno": 19,
+                    "complexity": 1
+                },
+                {
+                    "name": "get_root_hash",
+                    "lineno": 24,
+                    "complexity": 2
+                },
+                {
+                    "name": "__init__",
+                    "lineno": 31,
+                    "complexity": 1
+                },
+                {
+                    "name": "verify_kernel_ebpf_hook",
+                    "lineno": 38,
+                    "complexity": 1
+                },
+                {
+                    "name": "verify_pqc_swarm_consensus",
+                    "lineno": 44,
+                    "complexity": 1
+                },
+                {
+                    "name": "execute_maximum_pipeline",
+                    "lineno": 50,
+                    "complexity": 3
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "audit_ultimate_harmony.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 14,
+                    "complexity": 1
+                },
+                {
+                    "name": "test_tee_enclave",
+                    "lineno": 17,
+                    "complexity": 2
+                },
+                {
+                    "name": "test_ebpf_kernel_pinning",
+                    "lineno": 27,
+                    "complexity": 2
+                },
+                {
+                    "name": "test_pqc_swarm_consensus",
+                    "lineno": 36,
+                    "complexity": 2
+                },
+                {
+                    "name": "test_aegis_drift_defense",
+                    "lineno": 45,
+                    "complexity": 3
+                },
+                {
+                    "name": "test_merkle_tree_audit",
+                    "lineno": 54,
+                    "complexity": 2
+                },
+                {
+                    "name": "run_full_audit",
+                    "lineno": 66,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_enterprise_grade.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 20,
+                    "complexity": 2
+                },
+                {
+                    "name": "verify_hardware_tpm_attestation",
+                    "lineno": 41,
+                    "complexity": 1
+                },
+                {
+                    "name": "deploy_kernel_defense",
+                    "lineno": 56,
+                    "complexity": 2
+                },
+                {
+                    "name": "evaluate_threat_vector",
+                    "lineno": 70,
+                    "complexity": 1
+                },
+                {
+                    "name": "process_offline_bundle",
+                    "lineno": 82,
+                    "complexity": 1
+                },
+                {
+                    "name": "persist_merkle_ledger",
+                    "lineno": 87,
+                    "complexity": 2
+                },
+                {
+                    "name": "generate_compliance_docs",
+                    "lineno": 102,
+                    "complexity": 1
+                },
+                {
+                    "name": "calculate_enterprise_roi",
+                    "lineno": 110,
+                    "complexity": 1
+                },
+                {
+                    "name": "export_prometheus_metrics",
+                    "lineno": 117,
+                    "complexity": 1
+                },
+                {
+                    "name": "run_full_enterprise_pipeline",
+                    "lineno": 131,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_hardened_production.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 19,
+                    "complexity": 1
+                },
+                {
+                    "name": "verify_hardware_tpm_attestation",
+                    "lineno": 29,
+                    "complexity": 3
+                },
+                {
+                    "name": "deploy_kernel_defense",
+                    "lineno": 49,
+                    "complexity": 2
+                },
+                {
+                    "name": "persist_merkle_ledger_distributed",
+                    "lineno": 64,
+                    "complexity": 3
+                },
+                {
+                    "name": "run_hardened_pipeline",
+                    "lineno": 84,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_chaos_suite.py",
+            "functions": [
+                {
+                    "name": "simulate_quorum_split_brain",
+                    "lineno": 12,
+                    "complexity": 4
+                },
+                {
+                    "name": "simulate_high_load_stress",
+                    "lineno": 26,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "generate_sbom_manifest.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "generate_guardian_pdf.py",
+            "functions": [
+                {
+                    "name": "generate_pdf",
+                    "lineno": 7,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_ai_hitl_engine.py",
+            "functions": [
+                {
+                    "name": "inspect_prompt",
+                    "lineno": 17,
+                    "complexity": 3
+                },
+                {
+                    "name": "__init__",
+                    "lineno": 37,
+                    "complexity": 1
+                },
+                {
+                    "name": "request_authorization",
+                    "lineno": 40,
+                    "complexity": 1
+                },
+                {
+                    "name": "__init__",
+                    "lineno": 57,
+                    "complexity": 1
+                },
+                {
+                    "name": "process_remediation",
+                    "lineno": 60,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_live_validation.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_production_hardening.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "operate.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 7,
+                    "complexity": 1
+                },
+                {
+                    "name": "execute",
+                    "lineno": 10,
+                    "complexity": 2
+                },
+                {
+                    "name": "require",
+                    "lineno": 19,
+                    "complexity": 2
+                },
+                {
+                    "name": "decorator",
+                    "lineno": 20,
+                    "complexity": 2
+                },
+                {
+                    "name": "wrapper",
+                    "lineno": 21,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_metrics_kpi_engine.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 10,
+                    "complexity": 1
+                },
+                {
+                    "name": "generate_kpi_report",
+                    "lineno": 26,
+                    "complexity": 3
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_deep_intelligence_engine.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 12,
+                    "complexity": 1
+                },
+                {
+                    "name": "deep_discovery",
+                    "lineno": 16,
+                    "complexity": 2
+                },
+                {
+                    "name": "intelligent_analysis",
+                    "lineno": 26,
+                    "complexity": 1
+                },
+                {
+                    "name": "findings_validation",
+                    "lineno": 31,
+                    "complexity": 1
+                },
+                {
+                    "name": "threat_intelligence",
+                    "lineno": 36,
+                    "complexity": 1
+                },
+                {
+                    "name": "ai_defense",
+                    "lineno": 41,
+                    "complexity": 1
+                },
+                {
+                    "name": "assisted_remediation",
+                    "lineno": 46,
+                    "complexity": 1
+                },
+                {
+                    "name": "verifiable_evidence",
+                    "lineno": 57,
+                    "complexity": 1
+                },
+                {
+                    "name": "executive_reports",
+                    "lineno": 67,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_master_ecosystem.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 12,
+                    "complexity": 1
+                },
+                {
+                    "name": "phase_1_2_inventory_and_risk",
+                    "lineno": 16,
+                    "complexity": 1
+                },
+                {
+                    "name": "phase_3_empirical_validation",
+                    "lineno": 23,
+                    "complexity": 1
+                },
+                {
+                    "name": "phase_4_ai_defense",
+                    "lineno": 30,
+                    "complexity": 1
+                },
+                {
+                    "name": "phase_5_remediation_and_hitl",
+                    "lineno": 37,
+                    "complexity": 1
+                },
+                {
+                    "name": "phase_6_enterprise_product",
+                    "lineno": 50,
+                    "complexity": 2
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_master_demo_7_pillars.py",
+            "functions": [],
+            "status": "INTEGRITY_OK"
+        },
+        {
+            "file": "guardian_empirical_validation_engine.py",
+            "functions": [
+                {
+                    "name": "__init__",
+                    "lineno": 12,
+                    "complexity": 1
+                },
+                {
+                    "name": "explain_location",
+                    "lineno": 16,
+                    "complexity": 1
+                },
+                {
+                    "name": "explain_suspicion",
+                    "lineno": 22,
+                    "complexity": 1
+                },
+                {
+                    "name": "safe_exploit_validation",
+                    "lineno": 27,
+                    "complexity": 1
+                },
+                {
+                    "name": "record_evidence",
+                    "lineno": 33,
+                    "complexity": 1
+                },
+                {
+                    "name": "explain_impact",
+                    "lineno": 44,
+                    "complexity": 1
+                },
+                {
+                    "name": "propose_solution",
+                    "lineno": 50,
+                    "complexity": 1
+                },
+                {
+                    "name": "human_in_the_loop_gate",
+                    "lineno": 55,
+                    "complexity": 1
+                },
+                {
+                    "name": "post_verification",
+                    "lineno": 66,
+                    "complexity": 1
+                }
+            ],
+            "status": "INTEGRITY_OK"
+        }
+    ]
+}
