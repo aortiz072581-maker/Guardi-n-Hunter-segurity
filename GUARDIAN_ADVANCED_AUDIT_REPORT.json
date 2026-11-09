@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:28:17 UTC",
+    "timestamp": "2026-11-09 01:28:49 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -628,8 +628,13 @@
             "file": "guardian_enterprise_suite.py",
             "functions": [
                 {
-                    "name": "verify_enterprise_suite",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "verify_enterprise_suite",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -640,8 +645,13 @@
             "file": "add_three_horizons.py",
             "functions": [
                 {
-                    "name": "register_three_horizons",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "register_three_horizons",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -681,8 +691,13 @@
             "file": "swarm_benchmark.py",
             "functions": [
                 {
-                    "name": "worker_node",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "worker_node",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -693,8 +708,13 @@
             "file": "update_cli.py",
             "functions": [
                 {
-                    "name": "update_cli_system",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "update_cli_system",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
