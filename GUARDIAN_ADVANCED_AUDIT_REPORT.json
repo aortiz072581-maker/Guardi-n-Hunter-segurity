@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:25:58 UTC",
+    "timestamp": "2026-11-09 01:26:31 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -423,8 +423,13 @@
             "file": "fix_env.py",
             "functions": [
                 {
-                    "name": "validate_environment",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "validate_environment",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -441,8 +446,13 @@
             "file": "deploy_guardian_universal.py",
             "functions": [
                 {
-                    "name": "deploy_guardian",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "deploy_guardian",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -453,8 +463,13 @@
             "file": "check_env.py",
             "functions": [
                 {
-                    "name": "check_environment",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "check_environment",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -465,8 +480,13 @@
             "file": "check_env_safe.py",
             "functions": [
                 {
-                    "name": "check_environment_safe",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "check_environment_safe",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
