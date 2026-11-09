@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:30:22 UTC",
+    "timestamp": "2026-11-09 01:30:54 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -934,28 +934,13 @@
             "file": "guardian_hardened_production.py",
             "functions": [
                 {
-                    "name": "__init__",
-                    "lineno": 19,
+                    "name": "classify_evidence",
+                    "lineno": 3,
                     "complexity": 1
                 },
                 {
-                    "name": "verify_hardware_tpm_attestation",
-                    "lineno": 29,
-                    "complexity": 3
-                },
-                {
-                    "name": "deploy_kernel_defense",
-                    "lineno": 49,
-                    "complexity": 2
-                },
-                {
-                    "name": "persist_merkle_ledger_distributed",
-                    "lineno": 64,
-                    "complexity": 3
-                },
-                {
-                    "name": "run_hardened_pipeline",
-                    "lineno": 84,
+                    "name": "verify_hardened_production",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -983,8 +968,13 @@
             "file": "generate_sbom_manifest.py",
             "functions": [
                 {
-                    "name": "generate_sbom",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "generate_sbom",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -1007,28 +997,13 @@
             "file": "guardian_ai_hitl_engine.py",
             "functions": [
                 {
-                    "name": "inspect_prompt",
-                    "lineno": 17,
-                    "complexity": 3
-                },
-                {
-                    "name": "__init__",
-                    "lineno": 37,
+                    "name": "classify_evidence",
+                    "lineno": 3,
                     "complexity": 1
                 },
                 {
-                    "name": "request_authorization",
-                    "lineno": 40,
-                    "complexity": 1
-                },
-                {
-                    "name": "__init__",
-                    "lineno": 57,
-                    "complexity": 1
-                },
-                {
-                    "name": "process_remediation",
-                    "lineno": 60,
+                    "name": "verify_hitl_engine",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
