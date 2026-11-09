@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:15:00 UTC",
+    "timestamp": "2026-11-09 01:15:29 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -546,13 +546,25 @@
         },
         {
             "file": "guardian_enterprise_suite.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "verify_enterprise_suite",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
         {
             "file": "add_three_horizons.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "register_three_horizons",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
@@ -585,8 +597,8 @@
             "functions": [
                 {
                     "name": "worker_node",
-                    "lineno": 13,
-                    "complexity": 2
+                    "lineno": 3,
+                    "complexity": 1
                 }
             ],
             "raw_assert_detected": false,
@@ -594,7 +606,13 @@
         },
         {
             "file": "update_cli.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "update_cli_system",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
