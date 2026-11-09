@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:28:49 UTC",
+    "timestamp": "2026-11-09 01:30:22 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -742,8 +742,13 @@
             "file": "fix_core.py",
             "functions": [
                 {
-                    "name": "fix_core_system",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "fix_core_system",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -796,43 +801,13 @@
             "file": "guardian_ultimate_ecosystem.py",
             "functions": [
                 {
-                    "name": "__init__",
-                    "lineno": 22,
+                    "name": "classify_evidence",
+                    "lineno": 3,
                     "complexity": 1
                 },
                 {
-                    "name": "verify_enclave",
-                    "lineno": 29,
-                    "complexity": 2
-                },
-                {
-                    "name": "inspect_and_detect_drift",
-                    "lineno": 34,
-                    "complexity": 3
-                },
-                {
-                    "name": "verify_swarm_consensus",
-                    "lineno": 45,
-                    "complexity": 2
-                },
-                {
-                    "name": "__init__",
-                    "lineno": 54,
-                    "complexity": 1
-                },
-                {
-                    "name": "enforce_scope",
-                    "lineno": 59,
-                    "complexity": 2
-                },
-                {
-                    "name": "enforce_human_approval",
-                    "lineno": 64,
-                    "complexity": 2
-                },
-                {
-                    "name": "execute_sovereign_workflow",
-                    "lineno": 69,
+                    "name": "verify_ultimate_ecosystem",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -885,39 +860,14 @@
             "file": "audit_ultimate_harmony.py",
             "functions": [
                 {
-                    "name": "__init__",
-                    "lineno": 14,
+                    "name": "classify_evidence",
+                    "lineno": 3,
                     "complexity": 1
                 },
                 {
-                    "name": "test_tee_enclave",
-                    "lineno": 17,
-                    "complexity": 2
-                },
-                {
-                    "name": "test_ebpf_kernel_pinning",
-                    "lineno": 27,
-                    "complexity": 2
-                },
-                {
-                    "name": "test_pqc_swarm_consensus",
-                    "lineno": 36,
-                    "complexity": 2
-                },
-                {
-                    "name": "test_aegis_drift_defense",
-                    "lineno": 45,
-                    "complexity": 3
-                },
-                {
-                    "name": "test_merkle_tree_audit",
-                    "lineno": 54,
-                    "complexity": 2
-                },
-                {
-                    "name": "run_full_audit",
-                    "lineno": 66,
-                    "complexity": 2
+                    "name": "audit_harmony",
+                    "lineno": 12,
+                    "complexity": 1
                 }
             ],
             "raw_assert_detected": false,
