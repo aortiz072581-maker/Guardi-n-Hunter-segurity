@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:11:25 UTC",
+    "timestamp": "2026-11-09 01:13:25 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -280,7 +280,7 @@
             "functions": [
                 {
                     "name": "update_git_pre_commit_hook",
-                    "lineno": 11,
+                    "lineno": 3,
                     "complexity": 1
                 }
             ],
@@ -358,8 +358,8 @@
             "functions": [
                 {
                     "name": "audit_inventory",
-                    "lineno": 32,
-                    "complexity": 5
+                    "lineno": 3,
+                    "complexity": 1
                 }
             ],
             "raw_assert_detected": false,
@@ -387,7 +387,7 @@
             "functions": [
                 {
                     "name": "run_live_simulation",
-                    "lineno": 5,
+                    "lineno": 3,
                     "complexity": 1
                 }
             ],
