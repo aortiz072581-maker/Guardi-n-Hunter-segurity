@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:24:53 UTC",
+    "timestamp": "2026-11-09 01:25:26 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -74,8 +74,13 @@
             "file": "fix_789_final.py",
             "functions": [
                 {
-                    "name": "visit_Assert",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "visit_Assert",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
