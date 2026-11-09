@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:13:25 UTC",
+    "timestamp": "2026-11-09 01:13:57 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -399,8 +399,8 @@
             "functions": [
                 {
                     "name": "validate_environment",
-                    "lineno": 4,
-                    "complexity": 3
+                    "lineno": 3,
+                    "complexity": 1
                 }
             ],
             "raw_assert_detected": false,
@@ -417,8 +417,8 @@
             "functions": [
                 {
                     "name": "deploy_guardian",
-                    "lineno": 5,
-                    "complexity": 5
+                    "lineno": 3,
+                    "complexity": 1
                 }
             ],
             "raw_assert_detected": false,
@@ -426,13 +426,25 @@
         },
         {
             "file": "check_env.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "check_environment",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
         {
             "file": "check_env_safe.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "check_environment_safe",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
