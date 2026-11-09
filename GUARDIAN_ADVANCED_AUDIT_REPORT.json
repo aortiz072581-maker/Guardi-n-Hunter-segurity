@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:25:26 UTC",
+    "timestamp": "2026-11-09 01:25:58 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -289,8 +289,13 @@
             "file": "integration_hook_updater.py",
             "functions": [
                 {
-                    "name": "update_git_pre_commit_hook",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "update_git_pre_commit_hook",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -367,8 +372,13 @@
             "file": "guardian_inventory_check.py",
             "functions": [
                 {
-                    "name": "audit_inventory",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "audit_inventory",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -396,8 +406,13 @@
             "file": "simulate_attack_live.py",
             "functions": [
                 {
-                    "name": "run_live_simulation",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "run_live_simulation",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
