@@ -1,10 +1,16 @@
 {
-    "timestamp": "2026-11-09 01:00:39 UTC",
+    "timestamp": "2026-11-09 01:10:35 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
             "file": "run.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "main",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
@@ -37,13 +43,25 @@
         },
         {
             "file": "audit_total.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "audit_total_workspace",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
         {
             "file": "fix_789_unificado.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "apply_fixes",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
@@ -61,13 +79,25 @@
         },
         {
             "file": "extract_all_code.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "extract_code",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
         {
             "file": "todo_en_pdf.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "generate_full_pdf",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
@@ -1043,6 +1073,28 @@
             "status": "OK"
         },
         {
+            "file": "guardian_modular_test_engine.py",
+            "functions": [
+                {
+                    "name": "run_fail_closed_check",
+                    "lineno": 11,
+                    "complexity": 1
+                },
+                {
+                    "name": "run_integrity_change_check",
+                    "lineno": 16,
+                    "complexity": 1
+                },
+                {
+                    "name": "run_multi_defense_correlation",
+                    "lineno": 21,
+                    "complexity": 1
+                }
+            ],
+            "raw_assert_detected": false,
+            "status": "OK"
+        },
+        {
             "file": "guardian_master_demo_7_pillars.py",
             "functions": [],
             "raw_assert_detected": false,
@@ -1161,6 +1213,33 @@
                     "name": "simulated_or_incomplete",
                     "lineno": 32,
                     "complexity": 2
+                }
+            ],
+            "raw_assert_detected": false,
+            "status": "OK"
+        },
+        {
+            "file": "guardian_fail_closed_engine.py",
+            "functions": [
+                {
+                    "name": "evaluate_initial_state",
+                    "lineno": 11,
+                    "complexity": 1
+                },
+                {
+                    "name": "simulate_anomaly_trigger",
+                    "lineno": 17,
+                    "complexity": 1
+                },
+                {
+                    "name": "enforce_fail_closed_action",
+                    "lineno": 23,
+                    "complexity": 2
+                },
+                {
+                    "name": "run_pipeline",
+                    "lineno": 31,
+                    "complexity": 1
                 }
             ],
             "raw_assert_detected": false,
