@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:15:57 UTC",
+    "timestamp": "2026-11-09 01:16:27 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -926,7 +926,13 @@
         },
         {
             "file": "generate_sbom_manifest.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "generate_sbom",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
@@ -976,13 +982,25 @@
         },
         {
             "file": "guardian_live_validation.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "live_validation",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
         {
             "file": "guardian_production_hardening.py",
-            "functions": [],
+            "functions": [
+                {
+                    "name": "production_hardening",
+                    "lineno": 3,
+                    "complexity": 1
+                }
+            ],
             "raw_assert_detected": false,
             "status": "OK"
         },
