@@ -1,0 +1,11 @@
+{
+    "timestamp": "2026-11-09 00:00:20 UTC",
+    "target_api": "https://api.sovereigncorp.com",
+    "status": "VERIFIED_SECURE",
+    "evidence": {
+        "timestamp": "2026-11-09 00:00:20 UTC",
+        "target": "https://api.sovereigncorp.com",
+        "vulnerability": "Broken Object Level Authorization (BOLA)",
+        "proof_hash": "72af6637752e21550e17ccbc83c2c6a73c347b41e35201cfdb11d87c41a9f695"
+    }
+}
