@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:27:04 UTC",
+    "timestamp": "2026-11-09 01:28:17 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -577,8 +577,13 @@
             "file": "add_final_levels.py",
             "functions": [
                 {
-                    "name": "register_final_levels",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "register_final_levels",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -589,8 +594,13 @@
             "file": "add_transcendent_level.py",
             "functions": [
                 {
-                    "name": "register_transcendent_level",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "register_transcendent_level",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -601,8 +611,13 @@
             "file": "ai_auditor_agent.py",
             "functions": [
                 {
-                    "name": "run_ai_auditor",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "run_ai_auditor",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -637,8 +652,13 @@
             "file": "guardian_live_prover.py",
             "functions": [
                 {
-                    "name": "verify_live_prover",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "verify_live_prover",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
