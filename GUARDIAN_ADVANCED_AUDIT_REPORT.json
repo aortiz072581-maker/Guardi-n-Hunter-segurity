@@ -1,13 +1,18 @@
 {
-    "timestamp": "2026-11-09 01:16:52 UTC",
+    "timestamp": "2026-11-09 01:24:53 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
             "file": "run.py",
             "functions": [
                 {
-                    "name": "main",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "main",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
