@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:16:27 UTC",
+    "timestamp": "2026-11-09 01:16:52 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -1146,9 +1146,9 @@
             "file": "guardian_sovereign_governance_gates.py",
             "functions": [
                 {
-                    "name": "verify_execution",
-                    "lineno": 18,
-                    "complexity": 8
+                    "name": "verify_governance_gates",
+                    "lineno": 3,
+                    "complexity": 1
                 }
             ],
             "raw_assert_detected": false,
