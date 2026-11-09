@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-09 01:26:31 UTC",
+    "timestamp": "2026-11-09 01:27:04 UTC",
     "status": "INTEGRITY_OK",
     "files_analyzed": [
         {
@@ -509,8 +509,13 @@
             "file": "add_advanced_modules.py",
             "functions": [
                 {
-                    "name": "register_advanced_modules",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "register_advanced_modules",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -521,8 +526,13 @@
             "file": "add_hyper_advanced.py",
             "functions": [
                 {
-                    "name": "register_hyper_advanced",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "register_hyper_advanced",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -533,8 +543,13 @@
             "file": "add_commercial_layer.py",
             "functions": [
                 {
-                    "name": "register_commercial_layer",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "register_commercial_layer",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
@@ -545,8 +560,13 @@
             "file": "add_next_level_two.py",
             "functions": [
                 {
-                    "name": "register_next_level_two",
+                    "name": "classify_evidence",
                     "lineno": 3,
+                    "complexity": 1
+                },
+                {
+                    "name": "register_next_level_two",
+                    "lineno": 12,
                     "complexity": 1
                 }
             ],
