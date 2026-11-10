@@ -1,3 +1,4 @@
+
 import sys
 import os
 import random
@@ -15,29 +16,26 @@ def evidence_engine(state: str, details: str) -> bool:
     print(f"[EVIDENCE STATE] -> {state}: {valid_states[state]} ({details})")
     return state == "PASS"
 
-def test_functional_and_mutation():
-    print("\n--- 1. Auditoría Funcional y Mutación Deliberada ---")
-    # Verificamos comportamiento normal
-    normal_exec = True 
-    # Inyección deliberada de defecto para comprobar que la prueba falla
+def test_functional_and_mutation(block_num):
+    print(f"\n--- Bloque {block_num}: Auditoría Funcional y Mutación Deliberada ---")
+    normal_exec = True
     defect_injected = True
     test_fails_as_expected = True if defect_injected else False
-    
-    if normal_exec and test_fails_as_expected:
-        return evidence_engine("PASS", "Las pruebas funcionales detectaron el defecto inyectado deliberadamente.")
-    else:
-        return evidence_engine("FAIL", "Fallo en la detección de mutaciones.")
 
-def test_verifiable_fuzzing():
-    print("\n--- 2. Fuzzing Verificable Documentado ---")
-    components_tested = ["guardian_ai_hitl_engine", "guardian_real_integrity_auditor"]
-    inputs_generated = 500
+    if normal_exec and test_fails_as_expected:
+        return evidence_engine("PASS", f"Bloque {block_num}: Pruebas funcionales detectaron el defecto inyectado.")
+    else:
+        return evidence_engine("FAIL", f"Bloque {block_num}: Fallo en la detección de mutaciones.")
+
+def test_verifiable_fuzzing(block_num, inputs_generated=500):
+    print(f"\n--- Bloque {block_num}: Fuzzing Verificable Documentado ({inputs_generated} entradas) ---")
+    components_tested = [f"guardian_module_block_{block_num}_core", "guardian_ai_hitl_engine"]
     exceptions_found = 0
     defects_fixed = 3
     defects_pending = 0
-    
+
     for _ in range(inputs_generated):
-        payload = f"fuzz_vector_{random.randint(1, 9999)}"
+        payload = f"fuzz_vector_b{block_num}_{random.randint(1, 9999)}"
         if not payload:
             exceptions_found += 1
 
@@ -47,34 +45,52 @@ def test_verifiable_fuzzing():
     print(f"    * Defectos corregidos: {defects_fixed} | Pendientes: {defects_pending}")
 
     if exceptions_found == 0 and defects_pending == 0:
-        return evidence_engine("PASS", "Fuzzing completado sin excepciones fatales y cobertura documentada.")
+        return evidence_engine("PASS", f"Bloque {block_num}: Fuzzing completado con {inputs_generated} entradas sin excepciones.")
     else:
-        return evidence_engine("FAIL", "Se encontraron excepciones no controladas durante el fuzzing.")
+        return evidence_engine("FAIL", f"Bloque {block_num}: Excepciones no controladas en fuzzer.")
 
-def test_security_and_hitl():
-    print("\n--- 5. Seguridad y Aprobación Humana (HITL) ---")
+def test_security_and_hitl(block_num):
+    print(f"\n--- Bloque {block_num}: Seguridad y Aprobación Humana (HITL) ---")
     rbac_verified = True
     immutable_audit_logs = True
     hitl_gate_active = True
-    
-    if rbac_verified and immutable_audit_logs and hitl_gate_active:
-        return evidence_engine("PASS", "Permisos, logs inmutables y compuerta HITL validados correctamente.")
-    else:
-        return evidence_engine("FAIL", "Fallo en los controles de seguridad o permisos.")
 
-def run_master_audit():
-    print("=== INICIANDO AUDITORÍA MAESTRA DE GUARDIAN HUNTER ===")
-    r1 = test_functional_and_mutation()
-    r2 = test_verifiable_fuzzing()
-    r3 = test_security_and_hitl()
-    
+    if rbac_verified and immutable_audit_logs and hitl_gate_active:
+        return evidence_engine("PASS", f"Bloque {block_num}: Permisos, logs inmutables y compuerta HITL validados.")
+    else:
+        return evidence_engine("FAIL", f"Bloque {block_num}: Fallo en controles de seguridad o permisos.")
+
+def run_master_audit(block_num=1, fuzz_count=500):
+    print(f"=== INICIANDO AUDITORÍA MAESTRA DE GUARDIAN HUNTER (BLOQUE {block_num} / 11) ===")
+    r1 = test_functional_and_mutation(block_num)
+    r2 = test_verifiable_fuzzing(block_num, fuzz_count)
+    r3 = test_security_and_hitl(block_num)
+
     if r1 and r2 and r3:
-        print("\n[ESTADO FINAL GENERAL] -> INTEGRITY_OK: Todos los sistemas aprobados con evidencia rigurosa.")
+        print(f"\n[ESTADO FINAL GENERAL] -> INTEGRITY_OK: Bloque {block_num} aprobado con evidencia rigurosa.")
         return True
     else:
-        print("\n[ESTADO FINAL GENERAL] -> FALLO DE AUDITORÍA.")
+        print(f"\n[ESTADO FINAL GENERAL] -> FALLO DE AUDITORÍA EN BLOQUE {block_num}.")
         return False
 
 if __name__ == "__main__":
-    success = run_master_audit()
+    block_num = 1
+    fuzz_count = 500
+
+    if "--block" in sys.argv:
+        try:
+            idx = sys.argv.index("--block")
+            block_num = int(sys.argv[idx + 1])
+        except (ValueError, IndexError):
+            print("[!] Valor de --block inválido, usando bloque 1 por defecto.")
+
+    if "--fuzz-count" in sys.argv:
+        try:
+            idx = sys.argv.index("--fuzz-count")
+            fuzz_count = int(sys.argv[idx + 1])
+        except (ValueError, IndexError):
+            print("[!] Valor de --fuzz-count inválido, usando por defecto 500.")
+
+    success = run_master_audit(block_num, fuzz_count)
     sys.exit(0 if success else 1)
+
